@@ -1,6 +1,3 @@
-.right {
-  float: right; }
-
 .box {
   height: 200px;
   width: 150px;
@@ -15,5 +12,20 @@
 
 .signup-login-btn {
   border-color: #FF7E82; }
+
+.home-img-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around; }
+
+.home-text-container {
+  text-align: center; }
+
+.home-listings-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around; }
 
 /*# sourceMappingURL=maps/styles.css.map */

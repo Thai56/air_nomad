@@ -1,5 +1,6 @@
 angular.module('myApp').service('loginService',function($http,$q){
   this.loginUser = function(credentials){
+    console.log('creds from login', credentials);
     const defer = $q.defer();
     $http({
       method:'post',

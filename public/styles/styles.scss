@@ -11,8 +11,11 @@
 @mixin left {
   float:left;
 }
-.right {
-  float:right;
+@mixin image-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 
 .box {
@@ -34,4 +37,19 @@ $pink : #FF7E82;
 }
 .signup-login-btn {
   border-color: $pink;
+}
+// =====================================================================================================================================
+// home template
+// ========================================================================================================================================================
+.home-img-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.home-text-container {
+  text-align: center;
+}
+.home-listings-container {
+  @include image-container;
 }

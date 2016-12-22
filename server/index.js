@@ -24,6 +24,8 @@ app.set('db',massiveInstance );
 
 const db = app.get('db');
 
+const Ctrl = require('./controllers/controller');
+
 app.use(session({
   secret:config.secret_Key,
   saveUninitialized: false,
@@ -34,13 +36,12 @@ app.use(session({
  */
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use('local', new LocalStrategy({
-    usernameField: 'email',
-    passwordField: 'password',
-    session: true
-  },
-  function(email, password, done) {
-    db.users.findOne({email: email}, function(err, user) {
+
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    console.log('username from local strategy def',username);
+    db.getUserByUsername([username], function(err, user) {
+      user = user[0];
       if (err) { return done(err); }
       if (!user) { return done(null, false); }
       if (user.password != password) { return done(null, false); }
@@ -50,16 +51,22 @@ passport.use('local', new LocalStrategy({
 ))
 
 passport.serializeUser(function(user, done) {
-  return done(null, user);
+  done(null, user.userid);
 })
 
-passport.deserializeUser(function(user, done) {
-  return done(null, user);
+passport.deserializeUser(function(id, done) {
+  db.getUserById([id], function(err, user) {
+    user = user[0];
+    if (err) console.log(err);
+    else console.log('RETRIEVED USER');
+    console.log(user);
+    done(null, user);
+  })
 })
 app.get('/test', function(req,res){
   console.log(req.user);
 })
-app.post('/auth/local', passport.authenticate('local'), function(req, res) {
+app.post('/users/auth/local', passport.authenticate('local'), function(req, res) {
   console.log('req.user',req.user);
   res.status(200).send('you made it')
 });
@@ -95,6 +102,7 @@ app.post('/users/auth/local',passport.authenticate('local'),function(req,res,nex
   res.status(200).redirect('/#/')
 })
 
+app.get('/rooms/search/:keyword', Ctrl.findLocationByKeyword)
 // ====================================================================================================
 // WATCH/LISTEN FUNCTION
 // ====================================================================================================

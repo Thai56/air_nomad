@@ -1,4 +1,4 @@
-angular.module('myApp',['ui.router','ngDialog']).config(function($stateProvider,$urlRouterProvider) {
+angular.module('myApp',['ui.router','ngDialog','ui.bootstrap']).config(function($stateProvider,$urlRouterProvider) {
   $stateProvider
   .state('home', {
     url:'/',
