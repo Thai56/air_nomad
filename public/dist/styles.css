@@ -1,0 +1,19 @@
+.right {
+  float: right; }
+
+.box {
+  height: 200px;
+  width: 150px;
+  border: 2px solid black; }
+
+.signup-modal {
+  text-align: center; }
+
+.signup-btn {
+  background: #FF7E82;
+  color: white; }
+
+.signup-login-btn {
+  border-color: #FF7E82; }
+
+/*# sourceMappingURL=maps/styles.css.map */
