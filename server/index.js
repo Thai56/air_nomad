@@ -103,6 +103,16 @@ app.post('/users/auth/local',passport.authenticate('local'),function(req,res,nex
 })
 
 app.get('/rooms/search/:keyword', Ctrl.findLocationByKeyword)
+
+app.get('/rooms/listings', Ctrl.getListingsForHome)
+
+app.get('/rooms/img/:room_id', Ctrl.getRoomListingMainPic)
+
+app.get('/rooms/desc/:room_id', Ctrl.getRoomListingMainDesc)
+
+app.get('/rooms/about/:room_id', Ctrl.getRoomListingMainAccessories)
+
+app.get('/rooms/carousel/:room_id', Ctrl.getRoomListMainCarousel)
 // ====================================================================================================
 // WATCH/LISTEN FUNCTION
 // ====================================================================================================

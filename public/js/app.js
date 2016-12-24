@@ -1,4 +1,4 @@
-angular.module('myApp',['ui.router','ngDialog','ui.bootstrap']).config(function($stateProvider,$urlRouterProvider) {
+angular.module('myApp',['ui.router','ngDialog','ngAnimate', 'ngSanitize','ui.bootstrap']).config(function($stateProvider,$urlRouterProvider) {
   $stateProvider
   .state('home', {
     url:'/',
@@ -8,6 +8,11 @@ angular.module('myApp',['ui.router','ngDialog','ui.bootstrap']).config(function(
   .state('test', {
     templateUrl:'./views/test.html',
     url:'/test'
+  })
+  .state('rooms', {
+    url:'/rooms/:room_id',
+    controller: 'roomsCtrl',
+    templateUrl:'./views/rooms/rooms.html'
   })
 
   $urlRouterProvider
