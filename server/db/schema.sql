@@ -28,3 +28,12 @@ insert into room_images (image_desc,image_url,room_accessories_id,room_id)
   join room_accessories on room_accessories.rooms_id = rooms.id
   join room_images on room_images.room_accessories_id = room_accessories.id
   limit 3;
+
+  select room_accessories.*,rooms.summary from room_accessories
+join rooms on rooms.id = room_accessories.rooms_id
+where room_accessories.rooms_id = 5
+
+insert into room_images (room_id,image_desc,image_url,room_accessories_id)
+values (4,'dining area','room_images/tokyo_japan.jpg',1)
+
+update room_images set image_url='room_images/tokyo_japan1.jpg' where id = 4

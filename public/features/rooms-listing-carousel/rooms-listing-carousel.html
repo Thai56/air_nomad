@@ -1,21 +1,6 @@
-<h2>{{message}}</h2>
-  <!-- <div style="height: 305px">
-    <div uib-carousel active="active" interval="myInterval" no-wrap="noWrapSlides">
-      <div uib-slide ng-repeat="slide in slides track by slide.id" index="slide.id">
-        <img ng-src="{{slide.image}}" style="margin:auto;"> -->
-        <!-- <div class="carousel-caption"> -->
-        <!--  <h4>Slide {{slide.id}}</h4> -->
-          <!-- <p>{{slide.text}}</p>
-        </div>
-      </div>
-    </div>
-  </div> -->
 
-
-
-
-
-  <div class='carousel-container'>
+<!-- *This carousel taken from teppNode project* -->
+ <div class='carousel-container'>
     <carousel interval="myInterval">
         <slide ng-repeat="slide in slides" active="slide.active">
           <a ui-sref='{{slide.type}}'><img ng-src="{{slide.image}}" style="margin:auto;"></a>
