@@ -1,5 +1,4 @@
 angular.module('myApp').service('roomsListingCarouselService', function($http,$q) {
-  
   this.getCarouselImages = (room_id) => {
     const defer = $q.defer();
     console.log('room_id from service on way out',room_id);

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp', ['ui.router', 'ui.bootstrap', 'ngAnimate', 'ngDialog']).config(function ($stateProvider, $urlRouterProvider) {
+angular.module('myApp', ['ui.router', 'ui.bootstrap', 'ngDialog']).config(function ($stateProvider, $urlRouterProvider) {
   $stateProvider.state('home', {
     url: '/',
     templateUrl: './views/home/home.html',
@@ -16,8 +16,43 @@ angular.module('myApp', ['ui.router', 'ui.bootstrap', 'ngAnimate', 'ngDialog']).
 
   $urlRouterProvider.otherwise('/');
 });
-//  dependency of ui-bootstrap carousel from DEMO 'ngSanitize'
+//  dependency of ui-bootstrap carousel from DEMO 'ngSanitize' / ,'ngAnimate'
 // Now going to check index.html for any script tags or links that may help carousel
+'use strict';
+
+angular.module('myApp').controller('homeHeaderCtrl', function ($scope, homeHeaderService) {
+  $scope.findLocationByKeyword = function (keyword) {
+    console.log('keyword from control first', keyword);
+    homeHeaderService.findLocationByKeyword(keyword).then(function (response) {
+      console.log(response);
+    });
+  };
+});
+'use strict';
+
+angular.module('myApp').service('homeHeaderService', function ($http, $q) {
+  this.findLocationByKeyword = function (keyword) {
+    var defer = $q.defer();
+    console.log('service call first', keyword.location);
+    $http({
+      method: "get",
+      url: 'rooms/search/' + keyword.location
+    }).then(function (response) {
+      console.log(response);
+      defer.resolve(response);
+    });
+    return defer.promise;
+  };
+});
+'use strict';
+
+angular.module('myApp').directive('homeHeader', function () {
+  return {
+    restrict: 'AE',
+    templateUrl: './features/home_header/homeHeader.html',
+    controller: 'homeHeaderCtrl'
+  };
+});
 'use strict';
 
 angular.module('myApp').controller('homeRoomListingsCtrl', function ($scope, homeRoomListingsService) {
@@ -132,23 +167,30 @@ angular.module('myApp').service('roomListingMainDescService', function ($http, $
 'use strict';
 
 angular.module('myApp').controller('roomsListingCarouselCtrl', function ($scope, $stateParams, roomsListingCarouselService) {
-  var room_id = $stateParams.room_id;
-  $scope.myInterval = 3000;
-  roomsListingCarouselService.getCarouselImages(room_id).then(function (response) {
-    $scope.slides = [];
-    console.log('resonse that is back from the carousel endpoint', response);
+    // ==========================================================================================
+    // variables
+    // ============================================================================================================
+    var room_id = $stateParams.room_id;
 
-    $scope.image_Array = response;
+    // ============================================================================================================
+    // carousel
+    // ============================================================================================================
+    roomsListingCarouselService.getCarouselImages(room_id).then(function (response) {
+        $scope.myInterval = 3000;
+        $scope.slides = [];
+        console.log('resonse that is back from the carousel endpoint', response);
 
-    for (var i = 0, j = $scope.image_Array.length; i < j; i++) {
-      $scope.slides.push({
-        image: '../../' + $scope.image_Array[i].image_url,
-        type: 'room images',
-        text: $scope.image_Array[i].image_desc
-      });
-    }
-    console.log('thiss is the scope slides within controller', $scope.slides);
-  });
+        $scope.image_Array = response;
+
+        for (var i = 0, j = $scope.image_Array.length; i < j; i++) {
+            $scope.slides.push({
+                image: '../../' + $scope.image_Array[i].image_url,
+                type: 'room images',
+                text: $scope.image_Array[i].image_desc
+            });
+        }
+        console.log('thiss is the scope slides within controller', $scope.slides);
+    });
 });
 
 // // // //
@@ -196,7 +238,6 @@ angular.module('myApp').directive('roomListingCarousel', function () {
 'use strict';
 
 angular.module('myApp').service('roomsListingCarouselService', function ($http, $q) {
-
   this.getCarouselImages = function (room_id) {
     var defer = $q.defer();
     console.log('room_id from service on way out', room_id);
@@ -309,41 +350,6 @@ angular.module('myApp').service('signupService', function ($http, $q) {
       defer.resolve(err);
     });
     return defer.promise;
-  };
-});
-'use strict';
-
-angular.module('myApp').controller('homeHeaderCtrl', function ($scope, homeHeaderService) {
-  $scope.findLocationByKeyword = function (keyword) {
-    console.log('keyword from control first', keyword);
-    homeHeaderService.findLocationByKeyword(keyword).then(function (response) {
-      console.log(response);
-    });
-  };
-});
-'use strict';
-
-angular.module('myApp').service('homeHeaderService', function ($http, $q) {
-  this.findLocationByKeyword = function (keyword) {
-    var defer = $q.defer();
-    console.log('service call first', keyword.location);
-    $http({
-      method: "get",
-      url: 'rooms/search/' + keyword.location
-    }).then(function (response) {
-      console.log(response);
-      defer.resolve(response);
-    });
-    return defer.promise;
-  };
-});
-'use strict';
-
-angular.module('myApp').directive('homeHeader', function () {
-  return {
-    restrict: 'AE',
-    templateUrl: './features/home_header/homeHeader.html',
-    controller: 'homeHeaderCtrl'
   };
 });
 'use strict';

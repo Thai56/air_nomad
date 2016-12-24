@@ -1,4 +1,4 @@
-angular.module('myApp',['ui.router','ui.bootstrap','ngAnimate','ngDialog']).config(function($stateProvider,$urlRouterProvider) {
+angular.module('myApp',['ui.router','ui.bootstrap','ngDialog']).config(function($stateProvider,$urlRouterProvider) {
   $stateProvider
   .state('home', {
     url:'/',
@@ -18,5 +18,5 @@ angular.module('myApp',['ui.router','ui.bootstrap','ngAnimate','ngDialog']).conf
   $urlRouterProvider
   .otherwise('/')
 });
-//  dependency of ui-bootstrap carousel from DEMO 'ngSanitize'
+//  dependency of ui-bootstrap carousel from DEMO 'ngSanitize' / ,'ngAnimate'
 // Now going to check index.html for any script tags or links that may help carousel
