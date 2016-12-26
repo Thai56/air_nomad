@@ -83,5 +83,33 @@ module.exports = {
         res.status(404).send('err from the ', err)
       }
     })
+  },
+  getRoomListingProfilePic: (req,res,next) => {
+    const room_id = req.params.room_id;
+    console.log('room_id from profile pic CTRL backend',room_id);
+    db.getRoomListingProfilePic(room_id,(err,pic) => {
+      if(!err){
+        console.log('this is the profile pic, users.firstname, and users.lst_name',pic);
+        res.status(200).send(pic)
+      }
+      else {
+        console.log('this is the error from prof pic ctrl backened',err);
+        res.status(422).send(err)
+      }
+    })
+  },
+  getRoomListingNightlyPrice : (req,res,next) => {
+    const room_id = req.params.room_id;
+    console.log('nightly price controller params', room_id);
+    db.getRoomListingNightlyPrice(room_id, (err,price) => {
+      if(!err){
+        console.log('backend nightly price =====> price',price);
+        res.status(200).send(price)
+      }
+      else {
+        console.log('backend nightly price ===== > err', err);
+        res.status(422).send(err)
+      }
+    })
   }
 }

@@ -18,6 +18,11 @@
   justify-content: space-around;
 }
 
+@mixin box {
+  height: 200px;
+  width:150px;
+  border:2px solid black;
+}
 .box {
   height: 200px;
   width:150px;
@@ -47,6 +52,12 @@ $pink : #FF7E82;
   flex-wrap: wrap;
   justify-content: space-around;
 }
+home-room-listings {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
 .home-text-container {
   text-align: center;
 }
@@ -55,6 +66,21 @@ $pink : #FF7E82;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
+}
+#amsterdam {
+  background: url('../home_images/amsterdam.jpg')no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+#new_york {
+  background: url('../home_images/new_york.jpg')no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+#london {
+  background: url('../home_images/london.jpg')no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
 // ================================================================================================================================================
@@ -67,6 +93,7 @@ $pink : #FF7E82;
 }
 .description-container {
   text-align: center;
+  // width: 40%;
 }
 .icon-wrapper {
   display: flex;
@@ -98,5 +125,78 @@ $pink : #FF7E82;
   margin: auto;
   img {
     width: 100%;
+  }
+}
+
+
+// // // //
+// * Profile Pic *
+// // // //
+.rooms-profile-pic-container {
+  height: 100px;
+  width: 100px;
+  border: 1px solid black;
+}
+
+// // // //
+// Content wrapper  **!!not yet using until booking controls are finished!!**// // // //
+// // // //
+.room-listing-content-wrapper {
+  display: flex;
+  flex-direction: row;
+  room-listing-main-desc {
+    width:450px;
+  }
+}
+
+// // // //
+// booking controls
+// // // //
+.rooms-listing-main-booking-container {
+  height: 380px;
+  width:  380px;
+  border: 1px solid black;
+  .price-per-night {
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding:0 6px 0 6px;
+    background: gray;
+    color:white;
+  }
+  .date-input-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin:10px 0 10px 0;
+    padding:0 6px 0 6px;
+    .date-input-wrapper {
+      display: flex;
+      flex-direction: column;
+      .check-in-out {
+        margin:10px 0 10px 0;
+      }
+    }
+  }
+  .days-total-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    .calculations-text {
+      width:80%;
+      border:1px solid gray;
+      font-size: 16px;
+    }
+    .days-total-count {
+      width: 20%;
+      border: 1px solid gray;
+    }
+  }
+  .book-now-btn {
+    width: 100%;
+    margin: auto;
+    background: $pink;
+    color: white;
   }
 }

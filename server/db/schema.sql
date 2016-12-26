@@ -37,3 +37,13 @@ insert into room_images (room_id,image_desc,image_url,room_accessories_id)
 values (4,'dining area','room_images/tokyo_japan.jpg',1)
 
 update room_images set image_url='room_images/tokyo_japan1.jpg' where id = 4
+
+  create table user_images (
+    id serial primary key,
+    user_id integer,
+    room_id integer,
+    image_url varchar(120)
+    )
+
+    select user_images.image_url, users.first_name, users.last_name from users
+    join user_images on users.id = user_images.user_id where user_images.room_id = 6

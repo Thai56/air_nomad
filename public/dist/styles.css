@@ -19,6 +19,12 @@
   flex-wrap: wrap;
   justify-content: space-around; }
 
+home-room-listings {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around; }
+
 .home-text-container {
   text-align: center; }
 
@@ -27,6 +33,21 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around; }
+
+#amsterdam {
+  background: url("../home_images/amsterdam.jpg") no-repeat;
+  background-size: cover;
+  background-position: center; }
+
+#new_york {
+  background: url("../home_images/new_york.jpg") no-repeat;
+  background-size: cover;
+  background-position: center; }
+
+#london {
+  background: url("../home_images/london.jpg") no-repeat;
+  background-size: cover;
+  background-position: center; }
 
 .room-listing-main-pic-container {
   width: 100%;
@@ -58,5 +79,56 @@
   margin: auto; }
   .carousel-container img {
     width: 100%; }
+
+.rooms-profile-pic-container {
+  height: 100px;
+  width: 100px;
+  border: 1px solid black; }
+
+.room-listing-content-wrapper {
+  display: flex;
+  flex-direction: row; }
+  .room-listing-content-wrapper room-listing-main-desc {
+    width: 450px; }
+
+.rooms-listing-main-booking-container {
+  height: 380px;
+  width: 380px;
+  border: 1px solid black; }
+  .rooms-listing-main-booking-container .price-per-night {
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 6px 0 6px;
+    background: gray;
+    color: white; }
+  .rooms-listing-main-booking-container .date-input-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 10px 0 10px 0;
+    padding: 0 6px 0 6px; }
+    .rooms-listing-main-booking-container .date-input-container .date-input-wrapper {
+      display: flex;
+      flex-direction: column; }
+      .rooms-listing-main-booking-container .date-input-container .date-input-wrapper .check-in-out {
+        margin: 10px 0 10px 0; }
+  .rooms-listing-main-booking-container .days-total-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; }
+    .rooms-listing-main-booking-container .days-total-wrapper .calculations-text {
+      width: 80%;
+      border: 1px solid gray;
+      font-size: 16px; }
+    .rooms-listing-main-booking-container .days-total-wrapper .days-total-count {
+      width: 20%;
+      border: 1px solid gray; }
+  .rooms-listing-main-booking-container .book-now-btn {
+    width: 100%;
+    margin: auto;
+    background: #FF7E82;
+    color: white; }
 
 /*# sourceMappingURL=maps/styles.css.map */

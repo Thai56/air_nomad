@@ -113,6 +113,10 @@ app.get('/rooms/desc/:room_id', Ctrl.getRoomListingMainDesc)
 app.get('/rooms/about/:room_id', Ctrl.getRoomListingMainAccessories)
 
 app.get('/rooms/carousel/:room_id', Ctrl.getRoomListMainCarousel)
+
+app.get('/rooms/profile-pic/:room_id', Ctrl.getRoomListingProfilePic)
+
+app.get('/rooms/nightly_price/:room_id', Ctrl.getRoomListingNightlyPrice)
 // ====================================================================================================
 // WATCH/LISTEN FUNCTION
 // ====================================================================================================
