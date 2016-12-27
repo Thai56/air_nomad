@@ -253,12 +253,51 @@ angular.module('myApp').service('roomsListingCarouselService', function ($http, 
 });
 'use strict';
 
+angular.module('myApp').controller('roomsListingMainAboutCtrl', function ($scope, $stateParams, roomsListingMainAboutService) {
+  var room_id = $stateParams.room_id;
+  roomsListingMainAboutService.getRoomListingMainAccessories(room_id).then(function (response) {
+    console.log('response from about CTrl', response);
+    $scope.accessories = response;
+    console.log('response [0]', $scope.accessories[0]);
+    $scope.obj = $scope.accessories[0];
+  });
+});
+'use strict';
+
+angular.module('myApp').directive('roomListingMainAbout', function () {
+  return {
+    restrict: 'AE',
+    templateUrl: './features/rooms-listing-main-about/rooms-listing-main-about.html',
+    controller: 'roomsListingMainAboutCtrl'
+  };
+});
+'use strict';
+
+angular.module('myApp').service('roomsListingMainAboutService', function ($http, $q) {
+  this.getRoomListingMainAccessories = function (room_id) {
+    var defer = $q.defer();
+    $http({
+      method: 'GET',
+      url: '/rooms/about/' + room_id
+    }).then(function (response) {
+      console.log('this is response from service on way bak', response);
+      defer.resolve(response.data);
+    });
+    return defer.promise;
+  };
+});
+'use strict';
+
 angular.module('myApp').controller('roomsListingMainBookingCtrl', function ($scope, $stateParams, roomsListingMainBookingService) {
   var room_id = $stateParams.room_id;
   $scope.message = roomsListingMainBookingService.getRoomListingNightlyPrice(room_id).then(function (response) {
     console.log('this is the price', response);
     $scope.price = response[0];
   });
+  $scope.bookNow = function (val) {
+    console.log('\\\\\\\\\\\\\\\\\\\\\\\\\\', val);
+    roomsListingMainBookingService.bookNow(val);
+  };
 });
 'use strict';
 
@@ -282,6 +321,15 @@ angular.module('myApp').service('roomsListingMainBookingService', function ($htt
       defer.resolve(response.data);
     });
     return defer.promise;
+  };
+
+  this.bookNow = function (val) {
+    var defer = $q.defer();
+    $http({
+      method: 'post',
+      url: 'http://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=DR8573HW7W9FC'
+    });
+    return defer.promsie;
   };
 });
 'use strict';
@@ -353,41 +401,6 @@ angular.module('myApp').service('roomsListingProfilePicService', function ($http
       url: '/rooms/profile-pic/' + room_id
     }).then(function (response) {
       console.log('this is the response from the profile pic service', response);
-      defer.resolve(response.data);
-    });
-    return defer.promise;
-  };
-});
-'use strict';
-
-angular.module('myApp').controller('roomsListingMainAboutCtrl', function ($scope, $stateParams, roomsListingMainAboutService) {
-  var room_id = $stateParams.room_id;
-  roomsListingMainAboutService.getRoomListingMainAccessories(room_id).then(function (response) {
-    console.log('response from about CTrl', response);
-    $scope.accessories = response;
-    console.log('response [0]', $scope.accessories[0]);
-    $scope.obj = $scope.accessories[0];
-  });
-});
-'use strict';
-
-angular.module('myApp').directive('roomListingMainAbout', function () {
-  return {
-    restrict: 'AE',
-    templateUrl: './features/rooms-listing-main-about/rooms-listing-main-about.html',
-    controller: 'roomsListingMainAboutCtrl'
-  };
-});
-'use strict';
-
-angular.module('myApp').service('roomsListingMainAboutService', function ($http, $q) {
-  this.getRoomListingMainAccessories = function (room_id) {
-    var defer = $q.defer();
-    $http({
-      method: 'GET',
-      url: '/rooms/about/' + room_id
-    }).then(function (response) {
-      console.log('this is response from service on way bak', response);
       defer.resolve(response.data);
     });
     return defer.promise;

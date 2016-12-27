@@ -1,49 +1,51 @@
-<section class='rooms-listing-main-booking-container'>
-<!-- ////////////
-price per night
-//////////// -->
-  <section class='price-per-night'>
-    <h4 class='nightly_price'>${{price.nightly_price}}</h4>
-    <h4>Per Night</h4>
-  </section>
-<!-- /////////
-DATE INPUTS
-//////////// -->
-  <section class='date-input-container'>
-    <div class="date-input-wrapper">
-      <span class='check-in-out'>Check In</span>
-      <input type="date" ng-model='startDate.value'>
-    </div>
-    <div class="date-input-wrapper">
-      <span class='check-in-out'>Check Out</span>
-      <input type="date" ng-model='endDate.value'>
-    </div>
-  </section>
-<!--////////
-CALCULATIONS
-/////////////  -->
-  <section class='calculations-container'>
-<!-- days -->
-    <div ng-if='startDate.value && endDate.value' class="days-total-wrapper">
-      <div class="calculations-text">
-        Day(s)
+<form class="" action="http://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=DR8573HW7W9FC" method="post">
+  <section class='rooms-listing-main-booking-container'>
+  <!-- ////////////
+  price per night
+  //////////// -->
+    <section class='price-per-night'>
+      <h4 class='nightly_price'>${{price.nightly_price}}</h4>
+      <h4>Per Night</h4>
+    </section>
+  <!-- /////////
+  DATE INPUTS
+  //////////// -->
+    <section class='date-input-container'>
+      <div class="date-input-wrapper">
+        <span class='check-in-out'>Check In</span>
+        <input class='input-date' type="date" ng-model='startDate.value'>
       </div>
-      <div class="days-total-count">
-        {{endDate.value - startDate.value | date : 'd'}}
+      <div class="date-input-wrapper">
+        <span class='check-in-out'>Check Out</span>
+        <input class='input-date' type="date" ng-model='endDate.value'>
       </div>
-    </div>
-<!-- Total -->
-    <div ng-if='startDate.value && endDate.value' class="days-total-wrapper">
-      <div class="calculations-text">
-        Total
+    </section>
+  <!--////////
+  CALCULATIONS
+  /////////////  -->
+    <section class='calculations-container'>
+  <!-- days -->
+      <div ng-if='startDate.value && endDate.value' class="days-total-wrapper">
+        <div class="calculations-text">
+          Day(s)
+        </div>
+        <div class="days-total-count">
+          {{endDate.value - startDate.value | date : 'd'}}
+        </div>
       </div>
-      <div class="days-total-count">
-        ${{(endDate.value - startDate.value | date: 'd') * price.nightly_price}}
+  <!-- Total -->
+      <div ng-if='startDate.value && endDate.value' class="days-total-wrapper">
+        <div class="calculations-text">
+          Total
+        </div>
+        <div class="days-total-count">
+          ${{(endDate.value - startDate.value | date: 'd') * price.nightly_price}}
+        </div>
       </div>
-    </div>
-<!-- End  -->
-  </section>
-<button class="book-now-btn">Book Now</button>
+  <!-- End  -->
+    </section>
+  <button class="book-now-btn">Book Now</button>
 
 
-</section>
+  </section>
+</form>

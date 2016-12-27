@@ -10,4 +10,13 @@ angular.module('myApp').service('roomsListingMainBookingService', function($http
     })
     return defer.promise
   }
+
+  this.bookNow = (val) => {
+    const defer = $q.defer();
+    $http({
+      method:'post',
+      url:'http://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=DR8573HW7W9FC'
+    })
+    return defer.promsie
+  }
 })

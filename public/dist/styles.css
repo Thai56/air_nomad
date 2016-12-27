@@ -1,3 +1,46 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
 .box {
   height: 200px;
   width: 150px;
@@ -81,19 +124,25 @@ home-room-listings {
     width: 100%; }
 
 .rooms-profile-pic-container {
-  height: 100px;
-  width: 100px;
+  height: 240px;
+  width: 140px;
   border: 1px solid black; }
+  .rooms-profile-pic-container .rooms-profile-pic {
+    margin: auto;
+    height: 100px;
+    width: 100px;
+    border: 1px solid black; }
 
 .room-listing-content-wrapper {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row; }
   .room-listing-content-wrapper room-listing-main-desc {
     width: 450px; }
 
 .rooms-listing-main-booking-container {
-  height: 380px;
-  width: 380px;
+  height: 280px;
+  width: 280px;
   border: 1px solid black; }
   .rooms-listing-main-booking-container .price-per-night {
     margin: auto;
@@ -112,6 +161,8 @@ home-room-listings {
     .rooms-listing-main-booking-container .date-input-container .date-input-wrapper {
       display: flex;
       flex-direction: column; }
+      .rooms-listing-main-booking-container .date-input-container .date-input-wrapper .input-date {
+        width: 120px; }
       .rooms-listing-main-booking-container .date-input-container .date-input-wrapper .check-in-out {
         margin: 10px 0 10px 0; }
   .rooms-listing-main-booking-container .days-total-wrapper {

@@ -4,4 +4,8 @@ angular.module('myApp').controller('roomsListingMainBookingCtrl', ($scope,$state
     console.log('this is the price',response);
     $scope.price = response[0]
   })
+  $scope.bookNow = (val) => {
+    console.log('\\\\\\\\\\\\\\\\\\\\\\\\\\',val)
+    roomsListingMainBookingService.bookNow(val)
+  }
 })
