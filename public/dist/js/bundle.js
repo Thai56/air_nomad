@@ -114,34 +114,51 @@ angular.module('myApp').service('loginService', function ($http, $q) {
 });
 'use strict';
 
-angular.module('myApp').controller('roomsListingMainAboutCtrl', function ($scope, $stateParams, roomsListingMainAboutService) {
-  var room_id = $stateParams.room_id;
-  roomsListingMainAboutService.getRoomListingMainAccessories(room_id).then(function (response) {
-    console.log('response from about CTrl', response);
-    $scope.accessories = response;
-    console.log('response [0]', $scope.accessories[0]);
-    $scope.obj = $scope.accessories[0];
-  });
-});
-'use strict';
-
-angular.module('myApp').directive('roomListingMainAbout', function () {
+angular.module('myApp').directive('myNav', function () {
   return {
-    restrict: 'AE',
-    templateUrl: './features/rooms-listing-main-about/rooms-listing-main-about.html',
-    controller: 'roomsListingMainAboutCtrl'
+    restrict: 'E',
+    templateUrl: './features/nav/navbarTmpl.html',
+    controller: function controller($scope, ngDialog) {
+      $scope.clickToRegister = function () {
+        ngDialog.open({ template: './features/signup/signup.html', className: 'ngdialog-theme-default', controller: 'signupCtrl' });
+      };
+      $scope.clickToLogin = function () {
+        ngDialog.open({ template: './features/login/login.html', className: 'ngdialog-theme-default', controller: 'loginCtrl' });
+      };
+    }
+
   };
 });
 'use strict';
 
-angular.module('myApp').service('roomsListingMainAboutService', function ($http, $q) {
-  this.getRoomListingMainAccessories = function (room_id) {
+angular.module('myApp').controller('roomListingMainDescCtrl', function ($scope, $stateParams, roomListingMainDescService) {
+  var room_id = $stateParams.room_id;
+
+  roomListingMainDescService.getRoomListingMainDesc(room_id).then(function (response) {
+    console.log('working from controller descripition service', response);
+    $scope.descriptions = response;
+    console.log('this is descriptions', $scope.descriptions);
+  });
+});
+'use strict';
+
+angular.module('myApp').directive('roomListingMainDesc', function () {
+  return {
+    restrict: 'AE',
+    templateUrl: './features/room-listing-main-desc/room-listing-main-desc.html',
+    controller: 'roomListingMainDescCtrl'
+  };
+});
+'use strict';
+
+angular.module('myApp').service('roomListingMainDescService', function ($http, $q) {
+  this.getRoomListingMainDesc = function (room_id) {
     var defer = $q.defer();
     $http({
       method: 'GET',
-      url: '/rooms/about/' + room_id
+      url: '/rooms/desc/' + room_id
     }).then(function (response) {
-      console.log('this is response from service on way bak', response);
+      console.log('response from service description', response);
       defer.resolve(response.data);
     });
     return defer.promise;
@@ -236,6 +253,41 @@ angular.module('myApp').service('roomsListingCarouselService', function ($http, 
 });
 'use strict';
 
+angular.module('myApp').controller('roomsListingMainAboutCtrl', function ($scope, $stateParams, roomsListingMainAboutService) {
+  var room_id = $stateParams.room_id;
+  roomsListingMainAboutService.getRoomListingMainAccessories(room_id).then(function (response) {
+    console.log('response from about CTrl', response);
+    $scope.accessories = response;
+    console.log('response [0]', $scope.accessories[0]);
+    $scope.obj = $scope.accessories[0];
+  });
+});
+'use strict';
+
+angular.module('myApp').directive('roomListingMainAbout', function () {
+  return {
+    restrict: 'AE',
+    templateUrl: './features/rooms-listing-main-about/rooms-listing-main-about.html',
+    controller: 'roomsListingMainAboutCtrl'
+  };
+});
+'use strict';
+
+angular.module('myApp').service('roomsListingMainAboutService', function ($http, $q) {
+  this.getRoomListingMainAccessories = function (room_id) {
+    var defer = $q.defer();
+    $http({
+      method: 'GET',
+      url: '/rooms/about/' + room_id
+    }).then(function (response) {
+      console.log('this is response from service on way bak', response);
+      defer.resolve(response.data);
+    });
+    return defer.promise;
+  };
+});
+'use strict';
+
 angular.module('myApp').controller('roomsListingMainBookingCtrl', function ($scope, $stateParams, $filter, roomsListingMainBookingService) {
   var room_id = $stateParams.room_id;
   $scope.message = roomsListingMainBookingService.getRoomListingNightlyPrice(room_id).then(function (response) {
@@ -298,25 +350,6 @@ angular.module('myApp').service('roomsListingMainBookingService', function ($htt
 });
 'use strict';
 
-angular.module('myApp').controller('roomsListingMainReviewsCtrl', function ($scope, roomsListingMainReviewsService) {
-  $scope.alert = function (val) {
-    alert(val);
-  };
-});
-'use strict';
-
-angular.module('myApp').directive('roomListingMainReviews', function () {
-  return {
-    restrict: 'AE',
-    templateUrl: './features/rooms-listing-main-reviews/rooms-listing-main-reviews.html',
-    controller: 'roomsListingMainReviewsCtrl'
-  };
-});
-'use strict';
-
-angular.module('myApp').service('roomsListingMainReviewsService', function ($http, $q) {});
-'use strict';
-
 angular.module('myApp').controller('roomsListingMainCtrl', function ($scope, $stateParams, roomListingMainPicService) {
   $scope.message = 'Hello IM A PICTURE!';
   console.log('$stateparams.room_id from rooms-listing main pic controller', $stateParams.room_id);
@@ -351,6 +384,26 @@ angular.module('myApp').directive('roomListingMainPic', function () {
     controller: 'roomsListingMainCtrl'
   };
 });
+'use strict';
+
+angular.module('myApp').controller('roomsListingMainReviewsCtrl', function ($scope, roomsListingMainReviewsService) {
+  $scope.clickHandler = function (val1, val2) {
+    console.log(val1, val2);
+  };
+});
+'use strict';
+
+angular.module('myApp').directive('roomListingMainReviews', function () {
+  return {
+    restrict: 'AE',
+    templateUrl: './features/rooms-listing-main-reviews/rooms-listing-main-reviews.html',
+    controller: 'roomsListingMainReviewsCtrl',
+    controllerAs: 'App'
+  };
+});
+'use strict';
+
+angular.module('myApp').service('roomsListingMainReviewsService', function ($http, $q) {});
 'use strict';
 
 angular.module('myApp').directive('starRating', function () {
@@ -391,26 +444,45 @@ angular.module('myApp').directive('starRating', function () {
 'use strict';
 
 angular.module('myApp').controller('roomsListingMapCtrl', function ($scope, $stateParams, roomsListingMapService) {
+  var room_id = $stateParams.room_id;
+  // =====================================================================================================
+  // START OF FUNCTION
+  // ==============================================================================================================
+  roomsListingMapService.getRoomListingCoordinates(room_id).then(function (response) {
+    console.log('this is the locations object', response[0]);
+    $scope.location = response[0];
+    console.log('scope locaitons', $scope.location);
+    $scope.coordinates = { lat: $scope.location.latitude * 1, lng: $scope.location.longitude * 1 };
+    console.log('here are the scope coordinates =======>', $scope.coordinates);
 
-  (function initMap() {
-    var uluru = { lat: -25.363, lng: 131.044 };
-    var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 4,
-      center: uluru
-    });
-    var marker = new google.maps.Marker({
-      position: uluru,
-      map: map
-    });
-  })();
+    // // // // //
+    //  * map *  // // // //
+    // // // // //
+    var coordinates = $scope.coordinates;
+    console.log('OUTSIDE OF COORDINTATES!!!', $scope.coordinates);
+    var initMap = function (coordinates, google) {
+      console.log('******within IIFE', coordinates);
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 10,
+        center: coordinates,
+        disableDefaultUI: false,
+        scrollwheel: true,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        maxZoom: 11,
+        minZoom: 9,
+        zoomControlOptions: {
+          position: google.maps.ControlPosition.BOTTOM_LEFT,
+          style: google.maps.ZoomControlStyle.SMALL
+        }
+      });
+      var marker = new google.maps.Marker({
+        position: coordinates,
+        map: map
+      });
+    }(coordinates, google);
+    // ==============================================================================================================
+  });
 });
-
-// $scope.googleMapsUrl="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLai2ASGmpS4sDCyIDXV18_rtWHz1V-eo";
-// NgMap.getMap().then(function(map) {
-//   console.log(map.getCenter());
-//   console.log('markers', map.markers);
-//   console.log('shapes', map.shapes);
-// });
 'use strict';
 
 angular.module('myApp').directive('roomListingMap', function () {
@@ -422,37 +494,14 @@ angular.module('myApp').directive('roomListingMap', function () {
 });
 'use strict';
 
-angular.module('myApp').service('roomsListingMapService', function ($http, $q) {});
-'use strict';
-
-angular.module('myApp').controller('roomListingMainDescCtrl', function ($scope, $stateParams, roomListingMainDescService) {
-  var room_id = $stateParams.room_id;
-
-  roomListingMainDescService.getRoomListingMainDesc(room_id).then(function (response) {
-    console.log('working from controller descripition service', response);
-    $scope.descriptions = response;
-    console.log('this is descriptions', $scope.descriptions);
-  });
-});
-'use strict';
-
-angular.module('myApp').directive('roomListingMainDesc', function () {
-  return {
-    restrict: 'AE',
-    templateUrl: './features/room-listing-main-desc/room-listing-main-desc.html',
-    controller: 'roomListingMainDescCtrl'
-  };
-});
-'use strict';
-
-angular.module('myApp').service('roomListingMainDescService', function ($http, $q) {
-  this.getRoomListingMainDesc = function (room_id) {
+angular.module('myApp').service('roomsListingMapService', function ($http, $q) {
+  this.getRoomListingCoordinates = function (room_id) {
     var defer = $q.defer();
     $http({
-      method: 'GET',
-      url: '/rooms/desc/' + room_id
+      method: 'get',
+      url: '/rooms/locations/' + room_id
     }).then(function (response) {
-      console.log('response from service description', response);
+      console.log('======MAP SERVICE response', response.data);
       defer.resolve(response.data);
     });
     return defer.promise;
@@ -524,23 +573,6 @@ angular.module('myApp').service('signupService', function ($http, $q) {
       defer.resolve(err);
     });
     return defer.promise;
-  };
-});
-'use strict';
-
-angular.module('myApp').directive('myNav', function () {
-  return {
-    restrict: 'E',
-    templateUrl: './features/nav/navbarTmpl.html',
-    controller: function controller($scope, ngDialog) {
-      $scope.clickToRegister = function () {
-        ngDialog.open({ template: './features/signup/signup.html', className: 'ngdialog-theme-default', controller: 'signupCtrl' });
-      };
-      $scope.clickToLogin = function () {
-        ngDialog.open({ template: './features/login/login.html', className: 'ngdialog-theme-default', controller: 'loginCtrl' });
-      };
-    }
-
   };
 });
 'use strict';

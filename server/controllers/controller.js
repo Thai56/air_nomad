@@ -126,5 +126,19 @@ module.exports = {
         res.status(422).send(err)
       }
     })
+  },
+  getRoomListingCoordinates: (req,res,next) => {
+    const room_id = req.params.room_id;
+    console.log('THIS IS THE COORDINATES BACK END CONTROLLER REQ.PARAMS.ROOM_ID',room_id);
+    db.getRoomListingCoordinates(room_id,(err,location) => {
+      if (!err) {
+        console.log('0o0o0o0This is the LOCATION', location);
+        res.status(200).send(location);
+      }
+      else {
+        console.log('o0o0o0o0THIS IS THE ERROR', err);
+        res.status(200).send(err)
+      }
+    })
   }
 }

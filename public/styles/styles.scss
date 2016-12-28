@@ -17,7 +17,9 @@
   flex-wrap: wrap;
   justify-content: space-around;
 }
-
+* {
+  box-sizing: border-box;
+}
 .box {
   height: 400px;
   width:30%;
@@ -62,11 +64,10 @@ home-room-listings {
   text-align: center;
 }
 .home-listings-container {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  width: 30%;
+  .box {
+    width: 100%;
+  }
 
 }
 #amsterdam {
@@ -90,7 +91,7 @@ home-room-listings {
 // ==============================================================================================================================================================
 .room-listing-main-pic-container {
   width: 100%;
-  height: 400px;
+  height: 736px;
   border:1px solid black;
 }
 .description-container {
@@ -109,10 +110,12 @@ home-room-listings {
   text-decoration: line-through;
 }
 .rooms-about-accessories-wrapper {
+  height:104px;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   .column {
+    height: 88px;
     display:flex;
     flex-direction: column;
     justify-content: space-around;
@@ -137,7 +140,8 @@ home-room-listings {
 .rooms-profile-pic-container {
   height: 240px;
   width: 140px;
-  border: 1px solid black;
+  // border: 1px solid black;
+  display: flex;
   .rooms-profile-pic {
     margin: auto;
     height: 100px;
@@ -155,7 +159,8 @@ home-room-listings {
   flex-wrap: wrap;
   flex-flow: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
+  margin-top: 46px;
   room-listing-main-desc {
     width:450px;
   }
@@ -164,10 +169,13 @@ home-room-listings {
 // // // //
 // booking controls
 // // // //
+.rooms-listing-main-about-container {
+  margin-bottom: 30px;
+}
 .rooms-listing-main-booking-container {
   height: 280px;
   width:  280px;
-  border: 1px solid black;
+  position:relative;
   .price-per-night {
     margin: auto;
     display: flex;
@@ -187,7 +195,7 @@ home-room-listings {
       display: flex;
       flex-direction: column;
       .input-date {
-        width: 120px;
+        width: 132px;
       }
       .check-in-out {
         margin:10px 0 10px 0;
@@ -210,18 +218,33 @@ home-room-listings {
   }
   .book-now-btn {
     width: 100%;
+    position: absolute;
     margin: auto;
     background: $pink;
     color: white;
+    bottom:20px;
   }
 }
 // // // // // //
 // * reviews * //
 // // // // // //
 
-.review-container {
+.reviews-container {
+  margin-top: 46px;
+  text-align: center;
   display: flex;
-  flex-direction: column;
+  flex-flow: column;
+  align-items: center;
+  #review-stars {
+    float:left;
+  }
+  #create-review-btn {
+    float: left;
+    clear:both;
+    margin-top: 16px;
+    background: $pink;
+    color:white
+  }
 }
 // // // // // // /
 // ===| Map |=== //

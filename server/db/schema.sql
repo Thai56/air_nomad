@@ -65,3 +65,15 @@ update room_images set image_url='room_images/tokyo_japan1.jpg' where id = 4
     select * from reservations join
 room_accessories on  room_accessories.rooms_id = reservations.room_id
 join users on room_accessories.user_id = users.id
+-- just incase we need to create this table again
+create table locations(
+    id serial primary key,
+    city varchar(80),
+    state varchar(25),
+    country varchar(50),
+    longitude decimal(9,6),
+    lattitude decimal(9,6),
+    room_id int
+    )
+-- * this may need to have a limit but maybe not since it has a room_id so no * --
+    select * from locations where room_id = $1;
