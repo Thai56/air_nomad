@@ -47,3 +47,21 @@ update room_images set image_url='room_images/tokyo_japan1.jpg' where id = 4
 
     select user_images.image_url, users.first_name, users.last_name from users
     join user_images on users.id = user_images.user_id where user_images.room_id = 6
+
+    insert into listings (room_accessories_id,room_id,user_id)
+    values (3,6,8)
+
+    -- may need to remake this table after tests *deletion*
+    create table reservations (
+    	id serial primary key,
+        user_id int,
+        room_id int,
+        room_accessories_id int,
+        start_date varchar(15),
+        end_date varchar(15)
+    )
+    -- -- -- -- -- -- -- -- --  * deletion *
+
+    select * from reservations join
+room_accessories on  room_accessories.rooms_id = reservations.room_id
+join users on room_accessories.user_id = users.id

@@ -111,5 +111,20 @@ module.exports = {
         res.status(422).send(err)
       }
     })
+  },
+  reserveDate: (req,res,next) => {
+    const data = req.body;
+    console.log('!!!!!data from req.body',req.body);
+    const dataArr = [data.room_id,data.start,data.end]
+    db.reserveDate(dataArr, (err,response) => {
+      if(!err){
+        console.log('!!!this is response from controller back eend reserveDAte', response);
+        res.status(200).send('your reservation has been booked')
+      }
+      else {
+        console.log('!!!!!this is error from backend reserveDAte', err);
+        res.status(422).send(err)
+      }
+    })
   }
 }

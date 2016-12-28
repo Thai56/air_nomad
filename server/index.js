@@ -117,6 +117,8 @@ app.get('/rooms/carousel/:room_id', Ctrl.getRoomListMainCarousel)
 app.get('/rooms/profile-pic/:room_id', Ctrl.getRoomListingProfilePic)
 
 app.get('/rooms/nightly_price/:room_id', Ctrl.getRoomListingNightlyPrice)
+
+app.post('/rooms/reservations', Ctrl.reserveDate)
 // ====================================================================================================
 // WATCH/LISTEN FUNCTION
 // ====================================================================================================
