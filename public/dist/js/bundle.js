@@ -386,9 +386,28 @@ angular.module('myApp').directive('roomListingMainPic', function () {
 });
 'use strict';
 
-angular.module('myApp').controller('roomsListingMainReviewsCtrl', function ($scope, roomsListingMainReviewsService) {
-  $scope.clickHandler = function (val1, val2) {
-    console.log(val1, val2);
+angular.module('myApp').controller('roomsListingMainReviewsCtrl', function ($scope, $stateParams, roomsListingMainReviewsService) {
+  $scope.noReviews = true;
+  $scope.reviewsLength = 0;
+  var room_id = $stateParams.room_id;
+  roomsListingMainReviewsService.getReviews(room_id).then(function (response) {
+    console.log('response from roomsListingMainReviewsCtrl', response);
+    $scope.reviews = response;
+    if (response.length > 0) {
+      $scope.noReviews = false;
+      $scope.reviewsLength = response.length;
+    }
+  });
+
+  // ==============================================================================================================
+  // ADD REVIEWS
+  // ==============================================================================================================
+  $scope.addReview = function (stars, text) {
+    if (!stars || !text) {
+      alert('cannot accept null values, please fill out the star and text input');
+    } else {
+      roomsListingMainReviewsService.addReview(stars, text, room_id);
+    }
   };
 });
 'use strict';
@@ -403,7 +422,38 @@ angular.module('myApp').directive('roomListingMainReviews', function () {
 });
 'use strict';
 
-angular.module('myApp').service('roomsListingMainReviewsService', function ($http, $q) {});
+angular.module('myApp').service('roomsListingMainReviewsService', function ($http, $q) {
+  this.getReviews = function (room_id) {
+    var defer = $q.defer();
+    $http({
+      method: 'get',
+      url: '/rooms/reviews/' + room_id
+    }).then(function (response) {
+      console.log('response from the service GET REVIEWS ====>', response.data);
+      defer.resolve(response.data);
+    });
+    return defer.promise;
+  };
+
+  // ========================================================================================
+  // ADD REVIEWS - I WANT TO ADD A TIME STAMP OPTION TO THIS FUNCTION
+  // ========================================================================================
+  this.addReview = function (stars, text, room_id) {
+    var defer = $q.defer();
+    $http({
+      method: 'post',
+      url: '/rooms/reviews',
+      data: {
+        stars: stars,
+        text: text,
+        room_id: room_id
+      }
+    }).then(function (response) {
+      return alert(response.data);
+    });
+    return defer.promise;
+  };
+});
 'use strict';
 
 angular.module('myApp').directive('starRating', function () {

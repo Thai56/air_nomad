@@ -1,13 +1,29 @@
 <section class='reviews-container'>
+  <h4>Reviews</h4>({{reviewsLength}})
   <form class='review-form-container' >
     <input-stars id='review-stars' max="5" on-star-click='clickHandler(App.value)' ng-model="App.value"></input-stars><br>
-    {{App.value}}
+
     <textarea name="name" rows="8" cols="80" placeholder="review here...." ng-model='review_body'></textarea>
-    {{review_body}}
-    <button id='create-review-btn' class='btn' ng-click='clickHandler(App.value,review_body)'>Create</button>
+
+    <button id='create-review-btn' class='btn' ng-click='addReview(App.value,review_body)'>Create</button>
   </form>
-  <h3>There is no Reviews yet</h3>
+  <h3 ng-if='noReviews'>There is no Review yet</h3>
 </section>
+<!-- ============================================================================================================================== -->
+<!-- REVIEWS -->
+<!-- ============================================================================================================================== -->
+<section class='reviews-stream-container'>
+  <section class='reviews-stream-each' ng-repeat='review in reviews'>
+    <div class="review-profile-info-wrapper">
+      <div class="review-user-profilpic" ng-style='{"background":"url({{review.image_url}})no-repeat","background-size":"cover","background-position": "center","background-origin":"inherit","cursor":"pointer"}'></div>
+      <span>{{review.first_name}}</span>
+    </div>
+    <div class="review-user-review_body">
+      <h4 ng-style='{"line-height":"1.5"}'>{{review.review_body}}</h4>
+    </div>
+  </section>
+</section>
+
 <!-- ===============THIS GOES BACK INSIDE OF THE FORM ONCE THE PAGE IS DONE========= -->
 <!-- action="index.html" method="post" -->
 <!-- ======================================================================================== -->

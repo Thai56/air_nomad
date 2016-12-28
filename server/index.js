@@ -121,6 +121,10 @@ app.get('/rooms/nightly_price/:room_id', Ctrl.getRoomListingNightlyPrice)
 app.post('/rooms/reservations', Ctrl.reserveDate)
 
 app.get('/rooms/locations/:room_id', Ctrl.getRoomListingCoordinates)
+
+app.post('/rooms/reviews', Ctrl.addReview)
+
+app.get('/rooms/reviews/:room_id', Ctrl.getReviews)
 // ====================================================================================================
 // WATCH/LISTEN FUNCTION
 // ====================================================================================================

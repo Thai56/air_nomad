@@ -140,5 +140,36 @@ module.exports = {
         res.status(200).send(err)
       }
     })
+  },
+  addReview: (req,res,next) => {
+    const data = req.body;
+    console.log('THIS IS THE DATA FROM ADDREVIEW CONTROLLER BACKEND', data);
+    const dataArray = [data.stars,data.text,data.room_id]
+    console.log('THIS IS THE ARRAY OF DATA',dataArray);
+    db.addReview(dataArray, (err,response) => {
+      //**  write a getReviews functions and add inside of this function once written **
+      if(!err){
+        console.log('response from Database ', response);
+        res.status(200).send('Your Review has Been Successfully Added!')
+      }
+      else {
+        console.log('error from DB', err);
+        res.status(422).send(err)
+      }
+    })
+  },
+  getReviews: (req,res,next) => {
+    const room_id = req.params.room_id;
+    console.log('This is the room_id from getReviews', room_id);
+    db.getReviews(room_id, (err,reviews) => {
+      if(!err){
+        console.log('this is reviews again from DB ===> ', reviews);
+        res.status(200).send(reviews)
+      }
+      else {
+        console.log('this is the error from DB getREviews', err);
+        res.status(422).send(err);
+      }
+    })
   }
 }

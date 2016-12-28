@@ -77,3 +77,15 @@ create table locations(
     )
 -- * this may need to have a limit but maybe not since it has a room_id so no * --
     select * from locations where room_id = $1;
+
+-- need this for setup with getReviews
+select reviews.*, user_images.image_url from reviews
+join user_images on reviews.user_id = user_images.user_id
+
+
+
+select reviews.*, user_images.image_url,users.first_name from reviews
+join user_images on reviews.user_id = user_images.user_id
+join users on users.id = user_images.user_id
+where reviews.room_id = 5
+order by reviews.id asc
