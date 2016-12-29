@@ -668,7 +668,9 @@ angular.module('myApp').service('usersProfileDescHeaderService', function ($http
 
 angular.module('myApp').controller('usersProfileListingsCtrl', function ($scope, $stateParams, userProfileListingsService) {
   var user_id = $stateParams.id;
-  userProfileListingsService.getHostListings(user_id).then(function (response) {});
+  userProfileListingsService.getHostListings(user_id).then(function (response) {
+    $scope.listings = response;
+  });
 });
 'use strict';
 
@@ -689,7 +691,7 @@ angular.module('myApp').service('userProfileListingsService', function ($http, $
       url: '/users/listings/' + room_id
     }).then(function (response) {
       console.log('this is the response in service getHostListings', response.data);
-      res.resolve(response.data);
+      defer.resolve(response.data);
     });
     return defer.promise;
   };
@@ -731,6 +733,18 @@ angular.module('myApp').service('usersProfilePicService', function ($http, $q) {
 });
 'use strict';
 
+angular.module('myApp').controller('start_datepickerCtrl', function ($scope) {});
+'use strict';
+
+angular.module('myApp').directive('startDatepicker', function () {
+  return {
+    restrict: 'AE',
+    templateUrl: './features/home_header/homeHeader-datepickers/start/start_datepicker.html',
+    controller: 'start_datepickerCtrl'
+  };
+});
+'use strict';
+
 angular.module('myApp').controller('endDatepickerCtrl', function ($scope) {});
 'use strict';
 
@@ -745,18 +759,6 @@ angular.module('myApp').directive('endDatepicker', function () {
         return console.log(ngModelCtrl);
       });
     }
-  };
-});
-'use strict';
-
-angular.module('myApp').controller('start_datepickerCtrl', function ($scope) {});
-'use strict';
-
-angular.module('myApp').directive('startDatepicker', function () {
-  return {
-    restrict: 'AE',
-    templateUrl: './features/home_header/homeHeader-datepickers/start/start_datepicker.html',
-    controller: 'start_datepickerCtrl'
   };
 });
 'use strict';

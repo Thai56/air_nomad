@@ -6,7 +6,7 @@ angular.module('myApp').service('userProfileListingsService', function($http,$q)
       url:'/users/listings/' + room_id
     }).then(response => {
       console.log('this is the response in service getHostListings', response.data);
-      res.resolve(response.data)
+      defer.resolve(response.data)
     })
     return defer.promise
   }

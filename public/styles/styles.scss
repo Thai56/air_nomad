@@ -1,377 +1,415 @@
 @mixin border-radius($radius) {
-  -webkit-border-radius: $radius;
-     -moz-border-radius: $radius;
-      -ms-border-radius: $radius;
-          border-radius: $radius;
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    -ms-border-radius: $radius;
+    border-radius: $radius;
 }
 @mixin right {
-  float:right;
+    float: right;
 }
-
 @mixin left {
-  float:left;
+    float: left;
 }
 @mixin image-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
+
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
+
 .box {
-  height: 400px;
-  width:30%;
-  border:2px solid black;
+    height: 400px;
+    width: 30%;
+    border: 2px solid black;
 }
 // .box {
 //   height: 200px;
 //   width:150px;
 //   border:2px solid black;
 // }
-
-$pink : #FF7E82;
-// ========================================================================================================================================================================
+$pink: #FF7E82; // ========================================================================================================================================================================
 // signup modal
 // ========================================================================================================================================================================
+
 .signup-modal {
-  text-align: center;
+    text-align: center;
 }
+
 .signup-btn {
-  background: $pink;
-  color:white;
+    background: $pink;
+    color: white;
 }
+
 .signup-login-btn {
-  border-color: $pink;
+    border-color: $pink;
 }
 // =====================================================================================================================================
 // home template
 // ========================================================================================================================================================
+
 .home-img-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
+
 home-room-listings {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
+
 .home-text-container {
-  text-align: center;
+    text-align: center;
 }
+
 .home-listings-container {
-  width: 30%;
-  .box {
-    width: 100%;
-  }
-  .home-listing-name-container {
-   height: 50px;
-   border: 1px solid black;
-   display: flex;
-   flex-flow: row;
-   align-items: center;
-   background: white;
-  }
-  .home-room-listing-profilepic {
-    height: 35px;
-    width: 35px;
+    width: 30%;
 
-    border-radius: 15px;
-  }
-  .listing_name {
-    // color:blue;
-  }
+    .box {
+        width: 100%;
+    }
+
+    .home-listing-name-container {
+        height: 50px;
+        border: 1px solid black;
+        display: flex;
+        flex-flow: row;
+        align-items: center;
+        background: white;
+    }
+
+    .home-room-listing-profilepic {
+        height: 35px;
+        width: 35px;
+        border-radius: 15px;
+    }
+
+    .listing_name {
+        // color:blue;
+    }
 }
+
 #amsterdam {
-  background: url('../home_images/amsterdam.jpg')no-repeat;
-  background-size: cover;
-  background-position: center;
-}
-#new_york {
-  background: url('../home_images/new_york.jpg')no-repeat;
-  background-size: cover;
-  background-position: center;
-}
-#london {
-  background: url('../home_images/london.jpg')no-repeat;
-  background-size: cover;
-  background-position: center;
+    background: url('../home_images/amsterdam.jpg')no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
+#new_york {
+    background: url('../home_images/new_york.jpg')no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+#london {
+    background: url('../home_images/london.jpg')no-repeat;
+    background-size: cover;
+    background-position: center;
+}
 // ================================================================================================================================================
 // rooms view
 // ==============================================================================================================================================================
+
 .room-listing-main-pic-container {
-  width: 100%;
-  height: 736px;
-  border:1px solid black;
+    width: 100%;
+    height: 736px;
+    border: 1px solid black;
 }
+
 .description-container {
-  height: 162px;
-  width: 500px;
-  margin: auto;
-  text-align: center;
-  display: flex;
-  flex-flow: column;
-  justify-content: space-between;
+    height: 162px;
+    width: 500px;
+    margin: auto;
+    text-align: center;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
 }
+
 .icon-wrapper {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
 // // //
 // * accessories container *
 //
+
 .strike {
-  text-decoration: line-through;
-}
-.rooms-about-accessories-wrapper {
-  height:104px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  .column {
-    height: 88px;
-    display:flex;
-    flex-direction: column;
-    justify-content: space-around;
-  }
+    text-decoration: line-through;
 }
 
+.rooms-about-accessories-wrapper {
+    height: 104px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+    .column {
+        height: 88px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+}
 // // // // //
 // CAROUSEL
 // // // // //
+
 .carousel-container {
-  width:80%;
-  margin: auto;
-  img {
-    width: 100%;
-  }
+    width: 80%;
+    margin: auto;
+
+    img {
+        width: 100%;
+    }
 }
-
-
 // // // //
 // * Profile Pic *
 // // // //
+
 .rooms-profile-pic-container {
-  height: 240px;
-  width: 200px;
-  display: flex;
-  text-align: center;
-  clear: both;
-  flex-direction: column;
-  .rooms-profile-pic {
+    // height: 240px;
+    // width: 200px;
+    display: flex;
+    text-align: center;
+    clear: both;
+    flex-direction: column;
+}
+
+.rooms-profile-pic {
     margin: auto;
     height: 200px;
     width: 200px;
     border: 1px solid black;
-  }
 }
-
-
 // // // //
 // Content wrapper  **!!not yet using until booking controls are finished!!**// // // //
 // // // //
-.room-listing-content-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  flex-flow: row;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 46px;
-}
 
+.room-listing-content-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    flex-flow: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 46px;
+}
 // // // //
 // booking controls
 // // // //
+
 .rooms-listing-main-about-container {
-  margin-bottom: 30px;
+    margin-bottom: 30px;
 }
+
 .rooms-listing-main-booking-container {
-  height: 280px;
-  width:  280px;
-  position:relative;
-  .price-per-night {
-    margin: auto;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding:0 6px 0 6px;
-    background: gray;
-    color:white;
-  }
-  .date-input-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin:10px 0 10px 0;
-    padding:0 6px 0 6px;
-    .date-input-wrapper {
-      display: flex;
-      flex-direction: column;
-      .input-date {
-        width: 132px;
-      }
-      .check-in-out {
-        margin:10px 0 10px 0;
-      }
+    height: 280px;
+    width: 280px;
+    position: relative;
+
+    .price-per-night {
+        margin: auto;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0 6px;
+        background: gray;
+        color: white;
     }
-  }
-  .days-total-wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    .calculations-text {
-      width:80%;
-      border:1px solid gray;
-      font-size: 16px;
+
+    .date-input-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin: 10px 0;
+        padding: 0 6px;
+
+        .date-input-wrapper {
+            display: flex;
+            flex-direction: column;
+
+            .input-date {
+                width: 132px;
+            }
+
+            .check-in-out {
+                margin: 10px 0;
+            }
+        }
     }
-    .days-total-count {
-      width: 20%;
-      border: 1px solid gray;
+
+    .days-total-wrapper {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        .calculations-text {
+            width: 80%;
+            border: 1px solid gray;
+            font-size: 16px;
+        }
+
+        .days-total-count {
+            width: 20%;
+            border: 1px solid gray;
+        }
     }
-  }
-  .book-now-btn {
-    width: 100%;
-    position: absolute;
-    margin: auto;
-    background: $pink;
-    color: white;
-    bottom:20px;
-  }
+
+    .book-now-btn {
+        width: 100%;
+        position: absolute;
+        margin: auto;
+        background: $pink;
+        color: white;
+        bottom: 20px;
+    }
 }
 // // // // // //
 // * reviews * //
 // // // // // //
 
 .reviews-container {
-  margin-top: 46px;
-  text-align: center;
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-  #review-stars {
-    float:left;
-  }
-  #create-review-btn {
-    float: left;
-    clear:both;
-    margin-top: 16px;
-    background: $pink;
-    color:white
-  }
-}
-.reviews-stream-container {
-
-}
-.reviews-stream-each {
-  display: flex;
-  flex-flow: row;
-  justify-content: space-around;
-  margin-top:90px;
-  margin-bottom:90px;
-  padding-bottom:90px;
-  border-bottom: 1px solid black;
-  .review-profile-info-wrapper {
-    display: inline-block;
+    margin-top: 46px;
     text-align: center;
-    .review-user-profilpic {
-      height: 80px;
-      width: 80px;
-      border: 1px solid black;
-      border-radius: 44px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+
+    #review-stars {
+        float: left;
     }
-  }
-  .review-user-review_body {
-    width: 80%;
-    text-align: center;
-    line-height: 1.5;
 
-  }
+    #create-review-btn {
+        float: left;
+        clear: both;
+        margin-top: 16px;
+        background: $pink;
+        color: white;
+    }
+}
+
+.reviews-stream-container {}
+
+.reviews-stream-each {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-around;
+    margin-top: 90px;
+    margin-bottom: 90px;
+    padding-bottom: 90px;
+    border-bottom: 1px solid black;
+
+    .review-profile-info-wrapper {
+        display: inline-block;
+        text-align: center;
+
+        .review-user-profilpic {
+            height: 80px;
+            width: 80px;
+            border: 1px solid black;
+            border-radius: 44px;
+        }
+    }
+
+    .review-user-review_body {
+        width: 80%;
+        text-align: center;
+        line-height: 1.5;
+    }
 }
 // // // // // // /
 // ===| Map |=== //
 // // // // // / //
 
 #map {
-        width: 100%;
-        height: 400px;
-        background-color: grey;
-      }
-
+    width: 100%;
+    height: 400px;
+    background-color: grey;
+}
 // ============================================================================================================================================
 // USERS VIEW
 // ================================================================================================================
 // // // // // //
 // user-profile-pic
 // // // // // //
+
 user-profile-pic {
-  width: 30%;
-  float: left;
-}
-.user-profile-pic {
-  height: 300px;
-  width: 250px;
-  border: 1px solid black;
+    width: 30%;
+    float: left;
 }
 
+.user-profile-pic {
+    height: 300px;
+    width: 250px;
+    border: 1px solid black;
+}
 // // // // // //
 // * send-message button *
 // // // // // // //
+
 #users-send-message-btn {
-  height: 50px;
-  width: 250px;
-  color: white;
-  background: $pink;
-
+    margin-top: 10px;
+    height: 50px;
+    width: 250px;
+    color: white;
+    background: $pink;
 }
-
 // // // // // //
 // * verification container *
 // // // // // //
-.verification-container {
-  margin-top: 10px;
-  width: 250px;
-  border: 1px solid gray;
-  .verification-text {
-    height: 40px;
-    width: 100%;
-    background: lightgray;
-    color:gray;
-    padding-left: 12px;
-    padding-top: 10px;
-    h4 {
-      margin:0;
-    }
-  }
-  .verification-info-container {
-    height: 65px;
-    width: 100%;
-    background: white;
-    display:block;
-    position: relative;
-    #users-email {
-      position: absolute;
-      top:7px;
-      left:12px;
-    }
-    #users-number {
-      position: absolute;
-      top:30px;
-      left: 12px;
-    }
-  }
-}
 
-// // // // //
-// * user-profile-desc-header
-// // // // //
-.user-profile-desc-header-container {
-  height: 600px;
-  border: 1px solid black;
+.verification-container {
+    margin-top: 10px;
+    width: 250px;
+    border: 1px solid gray;
+
+    .verification-text {
+        height: 40px;
+        width: 100%;
+        background: lightgray;
+        color: gray;
+        padding-left: 12px;
+        padding-top: 10px;
+
+        h4 {
+            margin: 0;
+        }
+    }
+
+    .verification-info-container {
+        height: 65px;
+        width: 100%;
+        background: white;
+        display: block;
+        position: relative;
+
+        #users-email {
+            position: absolute;
+            top: 7px;
+            left: 12px;
+        }
+
+        #users-number {
+            position: absolute;
+            top: 30px;
+            left: 12px;
+        }
+    }
+}
+// // // // // //
+// user-profile-listings
+// // // // // //
+
+.user-profile-listings-container {
+    position: relative;
+    clear: both;
+    margin: auto;
 }

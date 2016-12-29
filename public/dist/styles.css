@@ -146,17 +146,16 @@ home-room-listings {
     width: 100%; }
 
 .rooms-profile-pic-container {
-  height: 240px;
-  width: 200px;
   display: flex;
   text-align: center;
   clear: both;
   flex-direction: column; }
-  .rooms-profile-pic-container .rooms-profile-pic {
-    margin: auto;
-    height: 200px;
-    width: 200px;
-    border: 1px solid black; }
+
+.rooms-profile-pic {
+  margin: auto;
+  height: 200px;
+  width: 200px;
+  border: 1px solid black; }
 
 .room-listing-content-wrapper {
   display: flex;
@@ -178,22 +177,22 @@ home-room-listings {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 0 6px 0 6px;
+    padding: 0 6px;
     background: gray;
     color: white; }
   .rooms-listing-main-booking-container .date-input-container {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 10px 0 10px 0;
-    padding: 0 6px 0 6px; }
+    margin: 10px 0;
+    padding: 0 6px; }
     .rooms-listing-main-booking-container .date-input-container .date-input-wrapper {
       display: flex;
       flex-direction: column; }
       .rooms-listing-main-booking-container .date-input-container .date-input-wrapper .input-date {
         width: 132px; }
       .rooms-listing-main-booking-container .date-input-container .date-input-wrapper .check-in-out {
-        margin: 10px 0 10px 0; }
+        margin: 10px 0; }
   .rooms-listing-main-booking-container .days-total-wrapper {
     display: flex;
     flex-direction: row;
@@ -264,6 +263,7 @@ user-profile-pic {
   border: 1px solid black; }
 
 #users-send-message-btn {
+  margin-top: 10px;
   height: 50px;
   width: 250px;
   color: white;
@@ -297,8 +297,9 @@ user-profile-pic {
       top: 30px;
       left: 12px; }
 
-.user-profile-desc-header-container {
-  height: 600px;
-  border: 1px solid black; }
+.user-profile-listings-container {
+  position: relative;
+  clear: both;
+  margin: auto; }
 
 /*# sourceMappingURL=maps/styles.css.map */

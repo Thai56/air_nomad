@@ -103,3 +103,14 @@ join room_images on rooms.id = room_images.room_id
 where rooms.user_id = 8
 order by room_images.id
 limit 1
+
+
+select * from listings
+join listing_images on listings.id = listing_images.listing_id
+where listings.user_id = 8
+
+-- last solution to the query problem i've been having all morning
+select listings.*, listing_images.image_url, rooms.listing_name from rooms
+join listings on rooms.id = listings.room_id
+join listing_images on listings.id = listing_images.listing_id
+where listings.user_id = 6
