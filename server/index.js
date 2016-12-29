@@ -125,6 +125,12 @@ app.get('/rooms/locations/:room_id', Ctrl.getRoomListingCoordinates)
 app.post('/rooms/reviews', Ctrl.addReview)
 
 app.get('/rooms/reviews/:room_id', Ctrl.getReviews)
+
+app.get('/users/profile-pic/:user_id', Ctrl.getUsersProfilePic)
+
+app.get('/users/desc-header/:user_id', Ctrl.getHostDesc)
+
+app.get('/users/listings/:user_id', Ctrl.getHostListings)
 // ====================================================================================================
 // WATCH/LISTEN FUNCTION
 // ====================================================================================================

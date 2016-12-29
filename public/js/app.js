@@ -14,7 +14,11 @@ angular.module('myApp',['ui.router','ui.bootstrap','ngDialog','angular-input-sta
     controller: 'roomsCtrl',
     templateUrl:'./views/rooms/rooms.html'
   })
-
+  .state('users', {
+    url:'/users/:id',
+    controller:'usersCtrl',
+    templateUrl:'./views/users/users.html'
+  })
   $urlRouterProvider
   .otherwise('/')
 });

@@ -1,8 +1,10 @@
 
 <section class='home-listings-container' ng-repeat='listing in listings'>
 
-    <div class="box" ui-sref='rooms({room_id:listing.room_id})' ng-style='{"background":"url({{listing.image_url}})no-repeat","background-size":"cover","background-position": "center","background-origin":"inherit","cursor":"pointer"}'></div>
-
-
+    <div class="box" ui-sref='rooms({room_id:listing.room_id})' ng-style='{"background":"url({{listing.room_pic}})no-repeat","background-size":"cover","background-position": "center","background-origin":"inherit","cursor":"pointer"}'></div>
+    <div class="home-listing-name-container">
+      <div class="home-room-listing-profilepic" ng-style='{"background":"url({{listing.profile_pic}})no-repeat","background-size":"cover","background-position": "center","background-origin":"inherit","cursor":"pointer"}'></div>
+      <a ui-sref='rooms({room_id:listing.room_id})'><span class='listing_name' ng-style='{"cursor":"pointer"}'>{{listing.listing_name}}</span></a>
+    </div>
 
 </section>

@@ -4,8 +4,8 @@ angular.module('myApp').controller('roomListingMainDescCtrl', ($scope,$statePara
   roomListingMainDescService.getRoomListingMainDesc(room_id)
   .then((response) => {
     console.log('working from controller descripition service', response)
-    $scope.descriptions = response;
-    console.log('this is descriptions',$scope.descriptions);
+    $scope.desc = response[0];
+    console.log('this is descriptions',$scope.desc);
   })
 
 

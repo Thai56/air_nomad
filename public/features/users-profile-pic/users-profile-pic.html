@@ -1,0 +1,17 @@
+<div class="users-profile-pic-container" ng-repeat='pic in usersProfilePic'>
+  <div class="user-profile-pic" ng-style='{"background":"url({{pic.image_url}})no-repeat","background-size":"cover","background-position": "center","background-origin":"inherit","cursor":"pointer"}'>
+  </div>
+<!-- ================================================================================ -->
+<!-- BUTTON SEND MESSAGE -->
+<!-- ================================================================================ -->
+<button id='users-send-message-btn' class='btn'>Send Message</button>
+
+<div class="verification-container">
+  <div class="verification-text"><h4>Verification</h4></div>
+  <div class="verification-info-container">
+    <span id='users-email'>Email Address</span>
+    <span id='users-number'>Phone Number</span>
+  </div>
+
+</div>
+</div>

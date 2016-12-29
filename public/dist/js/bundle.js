@@ -12,8 +12,11 @@ angular.module('myApp', ['ui.router', 'ui.bootstrap', 'ngDialog', 'angular-input
     url: '/rooms/:room_id',
     controller: 'roomsCtrl',
     templateUrl: './views/rooms/rooms.html'
+  }).state('users', {
+    url: '/users/:id',
+    controller: 'usersCtrl',
+    templateUrl: './views/users/users.html'
   });
-
   $urlRouterProvider.otherwise('/');
 });
 //  dependency of ui-bootstrap carousel from DEMO 'ngSanitize' / ,'ngAnimate'
@@ -136,8 +139,8 @@ angular.module('myApp').controller('roomListingMainDescCtrl', function ($scope, 
 
   roomListingMainDescService.getRoomListingMainDesc(room_id).then(function (response) {
     console.log('working from controller descripition service', response);
-    $scope.descriptions = response;
-    console.log('this is descriptions', $scope.descriptions);
+    $scope.desc = response[0];
+    console.log('this is descriptions', $scope.desc);
   });
 });
 'use strict';
@@ -295,14 +298,18 @@ angular.module('myApp').controller('roomsListingMainBookingCtrl', function ($sco
     $scope.price = response[0];
   });
   $scope.reserveDate = function (start, end) {
-    $scope.chosenStartDate = $filter('date')(start, 'shortDate');
-    console.log('=================== this is the value from $scope.chosenStartDate', $scope.chosenStartDate);
-    $scope.chosenEndDate = $filter('date')(end, 'shortDate');
-    console.log('=================== this is the value from $scope.chosenEndDate', $scope.chosenEndDate);
-    roomsListingMainBookingService.reserveDate(room_id, $scope.chosenStartDate, $scope.chosenEndDate).then(function (response) {
-      console.log('response back into the controller on the way back ====> ', response);
-      alert(response);
-    });
+    if (!start || !end) {
+      alert('please pick a valid date');
+    } else {
+      $scope.chosenStartDate = $filter('date')(start, 'shortDate');
+      console.log('=================== this is the value from $scope.chosenStartDate', $scope.chosenStartDate);
+      $scope.chosenEndDate = $filter('date')(end, 'shortDate');
+      console.log('=================== this is the value from $scope.chosenEndDate', $scope.chosenEndDate);
+      roomsListingMainBookingService.reserveDate(room_id, $scope.chosenStartDate, $scope.chosenEndDate).then(function (response) {
+        console.log('response back into the controller on the way back ====> ', response);
+        alert(response);
+      });
+    }
   };
 });
 'use strict';
@@ -627,6 +634,103 @@ angular.module('myApp').service('signupService', function ($http, $q) {
 });
 'use strict';
 
+angular.module('myApp').controller('usersProfileDescHeaderCtrl', function ($scope, $stateParams, usersProfileDescHeaderService) {
+  var user_id = $stateParams.id;
+  usersProfileDescHeaderService.getHostDesc(user_id).then(function (response) {
+    $scope.hostDesc = response[0];
+    console.log($scope.hostDesc);
+  });
+});
+'use strict';
+
+angular.module('myApp').directive('userProfileDescHeader', function () {
+  return {
+    restrict: 'AE',
+    templateUrl: './features/users-profile-desc-header/users-profile-desc-header.html',
+    controller: 'usersProfileDescHeaderCtrl'
+  };
+});
+'use strict';
+
+angular.module('myApp').service('usersProfileDescHeaderService', function ($http, $q) {
+  this.getHostDesc = function (user_id) {
+    var defer = $q.defer();
+    $http({
+      method: 'get',
+      url: '/users/desc-header/' + user_id
+    }).then(function (response) {
+      defer.resolve(response.data);
+    });
+    return defer.promise;
+  };
+});
+'use strict';
+
+angular.module('myApp').controller('usersProfileListingsCtrl', function ($scope, $stateParams, userProfileListingsService) {
+  var user_id = $stateParams.id;
+  userProfileListingsService.getHostListings(user_id).then(function (response) {});
+});
+'use strict';
+
+angular.module('myApp').directive('userProfileListings', function () {
+  return {
+    restrict: 'AE',
+    templateUrl: './features/users-profile-listings/users-profile-listings.html',
+    controller: 'usersProfileListingsCtrl'
+  };
+});
+'use strict';
+
+angular.module('myApp').service('userProfileListingsService', function ($http, $q) {
+  this.getHostListings = function (room_id) {
+    var defer = $q.defer();
+    $http({
+      method: 'get',
+      url: '/users/listings/' + room_id
+    }).then(function (response) {
+      console.log('this is the response in service getHostListings', response.data);
+      res.resolve(response.data);
+    });
+    return defer.promise;
+  };
+});
+"use strict";
+'use strict';
+
+angular.module('myApp').controller('usersProfilePicCtrl', function ($scope, $stateParams, usersProfilePicService) {
+  var user_id = $stateParams.id;
+  usersProfilePicService.getUsersProfilePic(user_id).then(function (response) {
+    console.log('this is response from UsersProfilePicCtrl', response);
+    $scope.usersProfilePic = response;
+    console.log($scope.usersProfilePic);
+  });
+});
+'use strict';
+
+angular.module('myApp').directive('userProfilePic', function () {
+  return {
+    restrict: "AE",
+    templateUrl: './features/users-profile-pic/users-profile-pic.html',
+    controller: 'usersProfilePicCtrl'
+  };
+});
+'use strict';
+
+angular.module('myApp').service('usersProfilePicService', function ($http, $q) {
+  this.getUsersProfilePic = function (user_id) {
+    var defer = $q.defer();
+    $http({
+      method: 'get',
+      url: '/users/profile-pic/' + user_id
+    }).then(function (response) {
+      console.log(response.data);
+      defer.resolve(response.data);
+    });
+    return defer.promise;
+  };
+});
+'use strict';
+
 angular.module('myApp').controller('endDatepickerCtrl', function ($scope) {});
 'use strict';
 
@@ -675,5 +779,19 @@ angular.module('myApp').service('homeService', function ($http, $q) {
 angular.module('myApp').controller('roomsCtrl', function ($scope, $stateParams) {
   $scope.message = 'welcoming to the room view';
   console.log('log $stateParams', $stateParams);
+});
+'use strict';
+
+angular.module('myApp').controller('usersCtrl', function ($scope, $stateParams, usersService) {
+  $scope.message = usersService.getMessage() + 'and this is the $stateParams/Users.Id ' + $stateParams.id;
+  console.log('this is $state params', $stateParams.id);
+});
+'use strict';
+
+angular.module('myApp').service('usersService', function ($http, $q) {
+  var message = 'Hello from the Users State';
+  this.getMessage = function () {
+    return message;
+  };
 });
 //# sourceMappingURL=bundle.js.map

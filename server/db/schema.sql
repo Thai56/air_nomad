@@ -89,3 +89,17 @@ join user_images on reviews.user_id = user_images.user_id
 join users on users.id = user_images.user_id
 where reviews.room_id = 5
 order by reviews.id asc
+
+-- Can probably narrow this down by taking off distinct --
+select distinct on (rooms.listing_name)room_images.image_url, rooms.listing_name, room_images.room_id from room_images
+join rooms on room_images.room_id = rooms.id
+join listings on listings.room_id = rooms.id
+where rooms.user_id = 6
+and room_images.id < 4
+
+-- this is the edit of the one above ^ because we would need to get the top room_images.image url as a picture
+select rooms.listing_name,room_images.image_url,rooms.id  from rooms
+join room_images on rooms.id = room_images.room_id
+where rooms.user_id = 8
+order by room_images.id
+limit 1

@@ -79,6 +79,17 @@ home-room-listings {
   width: 30%; }
   .home-listings-container .box {
     width: 100%; }
+  .home-listings-container .home-listing-name-container {
+    height: 50px;
+    border: 1px solid black;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    background: white; }
+  .home-listings-container .home-room-listing-profilepic {
+    height: 35px;
+    width: 35px;
+    border-radius: 15px; }
 
 #amsterdam {
   background: url("../home_images/amsterdam.jpg") no-repeat;
@@ -101,7 +112,13 @@ home-room-listings {
   border: 1px solid black; }
 
 .description-container {
-  text-align: center; }
+  height: 162px;
+  width: 500px;
+  margin: auto;
+  text-align: center;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between; }
 
 .icon-wrapper {
   display: flex;
@@ -130,8 +147,11 @@ home-room-listings {
 
 .rooms-profile-pic-container {
   height: 240px;
-  width: 140px;
-  display: flex; }
+  width: 200px;
+  display: flex;
+  text-align: center;
+  clear: both;
+  flex-direction: column; }
   .rooms-profile-pic-container .rooms-profile-pic {
     margin: auto;
     height: 200px;
@@ -143,10 +163,8 @@ home-room-listings {
   flex-wrap: wrap;
   flex-flow: row;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   margin-top: 46px; }
-  .room-listing-content-wrapper room-listing-main-desc {
-    width: 450px; }
 
 .rooms-listing-main-about-container {
   margin-bottom: 30px; }
@@ -235,5 +253,52 @@ home-room-listings {
   width: 100%;
   height: 400px;
   background-color: grey; }
+
+user-profile-pic {
+  width: 30%;
+  float: left; }
+
+.user-profile-pic {
+  height: 300px;
+  width: 250px;
+  border: 1px solid black; }
+
+#users-send-message-btn {
+  height: 50px;
+  width: 250px;
+  color: white;
+  background: #FF7E82; }
+
+.verification-container {
+  margin-top: 10px;
+  width: 250px;
+  border: 1px solid gray; }
+  .verification-container .verification-text {
+    height: 40px;
+    width: 100%;
+    background: lightgray;
+    color: gray;
+    padding-left: 12px;
+    padding-top: 10px; }
+    .verification-container .verification-text h4 {
+      margin: 0; }
+  .verification-container .verification-info-container {
+    height: 65px;
+    width: 100%;
+    background: white;
+    display: block;
+    position: relative; }
+    .verification-container .verification-info-container #users-email {
+      position: absolute;
+      top: 7px;
+      left: 12px; }
+    .verification-container .verification-info-container #users-number {
+      position: absolute;
+      top: 30px;
+      left: 12px; }
+
+.user-profile-desc-header-container {
+  height: 600px;
+  border: 1px solid black; }
 
 /*# sourceMappingURL=maps/styles.css.map */

@@ -1,6 +1,13 @@
 <!-- <h2>{{message}}</h2> -->
-<section class='rooms-profile-pic-container'>
-  <div class='rooms-profile-pic' ng-repeat='pic in profilePic' ng-style='{"background":"url({{pic.image_url}})no-repeat","background-size":"cover","background-position": "center","background-origin":"inherit","cursor":"pointer"}'>
+<section class='rooms-profile-pic-container' ng-repeat='pic in profilePic'>
+  <a ui-sref="users({id:pic.id})">
 
-  </div>
+    <div class='rooms-profile-pic' ng-style='{"background":"url({{pic.image_url}})no-repeat","background-size":"cover","background-position": "center","background-origin":"inherit","cursor":"pointer"}'>
+
+    </div>
+
+  </a>
+
+  <a ui-sref="users({id:pic.id})"><span ng-style='{"cursor":"pointer"}'>{{pic.first_name}} {{pic.last_name}}</span></a>
+
 </section>

@@ -150,6 +150,14 @@ module.exports = {
       //**  write a getReviews functions and add inside of this function once written **
       if(!err){
         console.log('response from Database ', response);
+        db.getReviews(data.room_id,(err,reviews) => {
+          if(!err){
+            res.status(422).send(reviews)
+          }
+          else {
+            res.status(404).send(err)
+          }
+        });
         res.status(200).send('Your Review has Been Successfully Added!')
       }
       else {
@@ -169,6 +177,46 @@ module.exports = {
       else {
         console.log('this is the error from DB getREviews', err);
         res.status(422).send(err);
+      }
+    })
+  },
+  getUsersProfilePic:(req,res,next) => {
+    const user_id = req.params.user_id;
+    console.log('THIS IS USER_ID FROM GETUSERSPRFILEPIC', user_id);
+    db.getUsersProfilePic(user_id,(err,pic)=> {
+      if(!err){
+        res.status(200).send(pic)
+      }
+      else {
+        res.status(422).send(err)
+      }
+    })
+  },
+  getHostDesc : (req,res,next) => {
+    const user_id = req.params.user_id
+    console.log('THIS IS GETHOSTDESC BACKEND CTRL ENTERING', user_id);
+    db.getHostDesc(user_id, (err,desc) => {
+      if(!err) {
+        console.log("THIS IS DESC FROM BACKEND SEND",desc);
+        res.status(200).send(desc)
+      }
+      else {
+        console.log("THIS IS THE ERROR",err);
+        res.status(422).send(err)
+      }
+    })
+  },
+  getHostListings : (req,res,next) => {
+    const user_id = req.params.user_id;
+    console.log('This is USER ID BACKAEND CONTROLLER',user_id);
+    db.getHostListings(user_id, (err,listings) => {
+      if(!err){
+        console.log('WE GOT IT LISTINGS',listings );
+        res.status(200).send(listings)
+      }
+      else {
+        console.log('error',err);
+        res.status(422).send(err)
       }
     })
   }

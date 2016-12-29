@@ -5,14 +5,19 @@ angular.module('myApp').controller('roomsListingMainBookingCtrl', ($scope,$state
     $scope.price = response[0]
   })
   $scope.reserveDate = (start,end) => {
-    $scope.chosenStartDate = $filter('date')(start, 'shortDate')
-    console.log('=================== this is the value from $scope.chosenStartDate' , $scope.chosenStartDate)
-    $scope.chosenEndDate = $filter('date')(end,'shortDate')
-    console.log('=================== this is the value from $scope.chosenEndDate' , $scope.chosenEndDate)
-    roomsListingMainBookingService.reserveDate(room_id,$scope.chosenStartDate,$scope.chosenEndDate).then(response =>{
-      console.log('response back into the controller on the way back ====> ', response);
-      alert(response);
-    })
+    if(!start || !end){
+      alert('please pick a valid date')
+    }
+    else {
+      $scope.chosenStartDate = $filter('date')(start, 'shortDate')
+      console.log('=================== this is the value from $scope.chosenStartDate' , $scope.chosenStartDate)
+      $scope.chosenEndDate = $filter('date')(end,'shortDate')
+      console.log('=================== this is the value from $scope.chosenEndDate' , $scope.chosenEndDate)
+      roomsListingMainBookingService.reserveDate(room_id,$scope.chosenStartDate,$scope.chosenEndDate).then(response =>{
+        console.log('response back into the controller on the way back ====> ', response);
+        alert(response);
+      })
+    }
   }
 
 
