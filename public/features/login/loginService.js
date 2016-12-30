@@ -26,4 +26,9 @@ angular.module('myApp').service('loginService',function($http,$q){
     })
   }
 
+  this.checkForToken = function(token) {
+      if (token) {
+        sessionStorage.setItem('myToken', token)
+      }
+    }
 })

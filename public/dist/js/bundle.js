@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp', ['ui.router', 'ui.bootstrap', 'ngDialog', 'angular-input-stars']).config(function ($stateProvider, $urlRouterProvider) {
+angular.module('myApp', ['ui.router', 'ui.bootstrap', 'ngDialog', 'angular-input-stars', 'ngRoute']).config(function ($stateProvider, $urlRouterProvider) {
   $stateProvider.state('home', {
     url: '/',
     templateUrl: './views/home/home.html',
@@ -106,10 +106,10 @@ angular.module('myApp').controller('loginCtrl', function ($scope, loginService, 
   // ================================================================================================================================
   // check if logged in
   // ================================================================================================================================================================
-  userService.checkForToken($routeParams.token);
+  loginService.checkForToken($routeParams.token);
 
   function getUser() {
-    userService.getUser().then(function (user) {
+    loginService.getUser().then(function (user) {
       if (user) $scope.user = user.username;else $scope.user = 'NOT LOGGED IN';
     });
   }
@@ -140,6 +140,12 @@ angular.module('myApp').service('loginService', function ($http, $q) {
     }).catch(function (err) {
       console.log(err);
     });
+  };
+
+  this.checkForToken = function (token) {
+    if (token) {
+      sessionStorage.setItem('myToken', token);
+    }
   };
 });
 'use strict';

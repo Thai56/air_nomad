@@ -16,10 +16,10 @@ angular.module('myApp').controller('loginCtrl', ($scope, loginService, $routePar
 // ================================================================================================================================
 // check if logged in
 // ================================================================================================================================================================
-  userService.checkForToken($routeParams.token);
+  loginService.checkForToken($routeParams.token);
 
 function getUser() {
-  userService.getUser().then(function(user) {
+  loginService.getUser().then(function(user) {
     if (user) $scope.user = user.username;
     else   $scope.user = 'NOT LOGGED IN';
   })

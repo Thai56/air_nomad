@@ -1,4 +1,4 @@
-angular.module('myApp',['ui.router','ui.bootstrap','ngDialog','angular-input-stars']).config(function($stateProvider,$urlRouterProvider) {
+angular.module('myApp',['ui.router','ui.bootstrap','ngDialog','angular-input-stars','ngRoute']).config(function($stateProvider,$urlRouterProvider) {
   $stateProvider
   .state('home', {
     url:'/',
