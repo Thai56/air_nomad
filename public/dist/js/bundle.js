@@ -90,29 +90,56 @@ angular.module('myApp').directive('homeHeader', function () {
 });
 'use strict';
 
-angular.module('myApp').controller('loginCtrl', function ($scope, loginService) {
-  $scope.loginUser = function (credentials) {
-    console.log('ccreds from the loginCtrl', credentials);
-    loginService.loginUser(credentials).then(function (response) {
+angular.module('myApp').controller('loginCtrl', function ($scope, loginService, $routeParams) {
+  $scope.loginUser = function (email, password) {
+    console.log('ccreds from the loginCtrl', email, password);
+    loginService.loginUser({
+      username: email,
+      password: password
+    }).then(function (response) {
       alert('You are now logged in');
+    }).then(function (res) {
+      getUser();
     });
   };
+
+  // ================================================================================================================================
+  // check if logged in
+  // ================================================================================================================================================================
+  userService.checkForToken($routeParams.token);
+
+  function getUser() {
+    userService.getUser().then(function (user) {
+      if (user) $scope.user = user.username;else $scope.user = 'NOT LOGGED IN';
+    });
+  }
+
+  getUser();
 });
 'use strict';
 
 angular.module('myApp').service('loginService', function ($http, $q) {
   this.loginUser = function (credentials) {
-    console.log('creds from login', credentials);
-    var defer = $q.defer();
-    $http({
-      method: 'post',
-      url: '/users/auth/local',
+    return $http({
+      method: "POST",
+      url: '/login',
       data: credentials
-    }).then(function (response) {
-      console.log(response.data);
-      defer.resolve(response);
+    }).then(function (res) {
+      return res.data;
+    }).catch(function (err) {
+      console.log('ERROR LOGGING IN!', err);
     });
-    return defer.promise;
+  };
+
+  this.getUser = function () {
+    return $http({
+      method: 'GET',
+      url: '/auth/me'
+    }).then(function (res) {
+      return res.data;
+    }).catch(function (err) {
+      console.log(err);
+    });
   };
 });
 'use strict';
@@ -733,18 +760,6 @@ angular.module('myApp').service('usersProfilePicService', function ($http, $q) {
 });
 'use strict';
 
-angular.module('myApp').controller('start_datepickerCtrl', function ($scope) {});
-'use strict';
-
-angular.module('myApp').directive('startDatepicker', function () {
-  return {
-    restrict: 'AE',
-    templateUrl: './features/home_header/homeHeader-datepickers/start/start_datepicker.html',
-    controller: 'start_datepickerCtrl'
-  };
-});
-'use strict';
-
 angular.module('myApp').controller('endDatepickerCtrl', function ($scope) {});
 'use strict';
 
@@ -759,6 +774,18 @@ angular.module('myApp').directive('endDatepicker', function () {
         return console.log(ngModelCtrl);
       });
     }
+  };
+});
+'use strict';
+
+angular.module('myApp').controller('start_datepickerCtrl', function ($scope) {});
+'use strict';
+
+angular.module('myApp').directive('startDatepicker', function () {
+  return {
+    restrict: 'AE',
+    templateUrl: './features/home_header/homeHeader-datepickers/start/start_datepicker.html',
+    controller: 'start_datepickerCtrl'
   };
 });
 'use strict';

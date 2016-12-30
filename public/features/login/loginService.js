@@ -1,15 +1,29 @@
 angular.module('myApp').service('loginService',function($http,$q){
-  this.loginUser = function(credentials){
-    console.log('creds from login', credentials);
-    const defer = $q.defer();
-    $http({
-      method:'post',
-      url:'/users/auth/local',
-      data:credentials
-    }).then(response => {
-      console.log(response.data)
-      defer.resolve(response)
+  this.loginUser = function(credentials) {
+    return $http({
+      method: "POST",
+      url: '/login',
+      data: credentials
     })
-    return defer.promise
+    .then(function(res) {
+      return res.data;
+    })
+    .catch(function(err) {
+      console.log('ERROR LOGGING IN!', err);
+    })
   }
+
+  this.getUser = function() {
+    return $http({
+      method: 'GET',
+      url: '/auth/me'
+    })
+    .then(function(res) {
+      return res.data;
+    })
+    .catch(function(err) {
+      console.log(err);
+    })
+  }
+
 })
