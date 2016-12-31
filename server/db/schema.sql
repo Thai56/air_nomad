@@ -114,3 +114,16 @@ select listings.*, listing_images.image_url, rooms.listing_name from rooms
 join listings on rooms.id = listings.room_id
 join listing_images on listings.id = listing_images.listing_id
 where listings.user_id = 6
+
+
+select users.first_name,users.last_name,user_images.image_url,user_images.room_id from user_images
+join users on users.id = user_images.user_id where user_images.user_id = 7
+
+select * from locations where room_id != 4 and locations.city = 'Fairfield' limit 3
+
+select locations.*, listing_images.image_url, rooms.listing_name,rooms.id from rooms
+join locations on locations.room_id = rooms.id
+join listings on locations.room_id = listings.room_id
+join listing_images on listings.id = listing_images.listing_id
+where rooms.id != 8
+and locations.city = 'Seattle';

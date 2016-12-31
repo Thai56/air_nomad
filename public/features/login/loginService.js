@@ -6,6 +6,7 @@ angular.module('myApp').service('loginService',function($http,$q){
       data: credentials
     })
     .then(function(res) {
+      console.log('this is the res from loginUserService',res);
       return res.data;
     })
     .catch(function(err) {
@@ -28,6 +29,7 @@ angular.module('myApp').service('loginService',function($http,$q){
 
   this.checkForToken = function(token) {
       if (token) {
+        console.log('checkForToken',token);
         sessionStorage.setItem('myToken', token)
       }
     }

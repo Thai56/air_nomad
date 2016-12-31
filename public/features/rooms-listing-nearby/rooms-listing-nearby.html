@@ -1,0 +1,16 @@
+<h3>Near by</h3>
+<section class='rooms-nearby-container'>
+
+  <div class="" ng-repeat='room in roomsNearby' >
+    <div ui-sref='rooms({room_id:room.room_id})' class="rooms-nearby-img" ng-style='{"background":"url({{room.image_url}})no-repeat","background-size":"cover","background-position": "center","background-origin":"inherit","cursor":"pointer"}'>
+
+    </div>
+    <div ui-sref='rooms({room_id:room.room_id})' class='rooms-nearby-text-container'>
+      <a href="#"><h5>{{room.listing_name}} ({{room.dist}})</h5></a>
+    </div>
+
+  </div>
+
+
+
+</section>

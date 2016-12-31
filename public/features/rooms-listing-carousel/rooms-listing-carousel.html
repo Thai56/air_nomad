@@ -3,7 +3,7 @@
  <div class='carousel-container'>
     <carousel interval="myInterval">
         <slide ng-repeat="slide in slides" active="slide.active">
-          <a ui-sref='{{slide.type}}'><img ng-src="{{slide.image}}" style="margin:auto;"></a>
+          <a ui-sref='{{slide.type}}'><img ng-style='{"height":"544px"}' ng-src="{{slide.image}}" style="margin:auto;"></a>
           <div class="carousel-caption">
             <!-- <h4>Slide {{$index}}</h4> --><br>
             <!-- <h3 class='carousel-text'>{{slide.text}}</h3> -->

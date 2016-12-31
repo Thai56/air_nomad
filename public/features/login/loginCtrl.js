@@ -4,9 +4,8 @@ angular.module('myApp').controller('loginCtrl', ($scope, loginService, $routePar
     loginService.loginUser({
       username:email,
       password:password
-    }).then(response => {
-      alert('You are now logged in')
-    }).then(function(res) {
+    })
+    .then(function(res) {
       getUser();
     })
 

@@ -26,12 +26,19 @@
     width: 30%;
     border: 2px solid black;
 }
-// .box {
-//   height: 200px;
-//   width:150px;
-//   border:2px solid black;
-// }
-$pink: #FF7E82; // ========================================================================================================================================================================
+
+body {
+  background: lighten(lightgray,10%);
+}
+$pink: #FF7E82;
+// ================================================================================================================
+// bootstrap
+// ================================================================================================================================
+.jumbotron {
+  background: white;
+}
+
+ // ========================================================================================================================================================================
 // signup modal
 // ========================================================================================================================================================================
 
@@ -56,6 +63,11 @@ $pink: #FF7E82; // =============================================================
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
+    .home-img-text {
+      font-size: 3em;
+      font-weight:500;
+      color: white;
+    }
 }
 
 home-room-listings {
@@ -67,6 +79,8 @@ home-room-listings {
 
 .home-text-container {
     text-align: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 
 .home-listings-container {
@@ -86,13 +100,14 @@ home-room-listings {
     }
 
     .home-room-listing-profilepic {
+        margin-left: 8px;
         height: 35px;
         width: 35px;
         border-radius: 15px;
     }
 
     .listing_name {
-        // color:blue;
+      margin-left: 15px;
     }
 }
 
@@ -100,18 +115,27 @@ home-room-listings {
     background: url('../home_images/amsterdam.jpg')no-repeat;
     background-size: cover;
     background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #new_york {
     background: url('../home_images/new_york.jpg')no-repeat;
     background-size: cover;
     background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #london {
     background: url('../home_images/london.jpg')no-repeat;
     background-size: cover;
     background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 // ================================================================================================================================================
 // rooms view
@@ -221,7 +245,7 @@ home-room-listings {
         flex-direction: row;
         justify-content: space-between;
         padding: 0 6px;
-        background: gray;
+        background: darken(gray,12%);
         color: white;
     }
 
@@ -330,17 +354,51 @@ home-room-listings {
 // // // // // / //
 
 #map {
+    margin-top: 50px;
     width: 100%;
     height: 400px;
     background-color: grey;
+    margin-bottom: 50px;
 }
+
+// // // // // //
+// rooms nearby listings
+// // // // // //
+.rooms-nearby-container{
+  margin-top: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+}
+.rooms-nearby-img {
+  height: 200px;
+  width: 240px;
+  border: 1px solid black;
+}
+.rooms-nearby-text-container {
+  border: 1px solid black;
+  text-align: center;
+  cursor: pointer;
+}
+
 // ============================================================================================================================================
 // USERS VIEW
 // ================================================================================================================
 // // // // // //
 // user-profile-pic
 // // // // // //
-
+.users-profile-listings-container {
+  border: 1px solid black;
+  float: left;
+  margin-left: 25px;
+  margin-top: 50px;
+  .users-profile-listings-pic {
+    height:200px;
+    width: 180px;
+    margin: auto;
+  }
+}
 user-profile-pic {
     width: 30%;
     float: left;
@@ -404,12 +462,73 @@ user-profile-pic {
         }
     }
 }
-// // // // // //
-// user-profile-listings
-// // // // // //
 
-.user-profile-listings-container {
-    position: relative;
-    clear: both;
-    margin: auto;
+
+.users-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.users-listing_name {
+  background: white;
+  height: 40px;
+  text-align: center;
+}
+
+
+
+
+
+// ===================================================================================================
+// conversations view
+// ==============================================================================================================
+#conversations-view-jumbotron {
+  display: flex;
+  flex-direction:row;
+  justify-content: space-between;
+  width: 100%;
+}
+// // // // // //
+// conversations-profile-pic
+// // // // //
+.conversations-profile-pic-container {
+  float:left;
+  width: 250px;
+  margin-right: 30px;
+  // border: 1px solid black;
+  text-align: center;
+}
+.conversations-profile-pic {
+  height: 100px;
+  width: 95px;
+  border: 1px solid black;
+  margin: auto;
+}
+.conversations-view-profile-btn {
+  width: 100%;
+  background: none;
+  height: 50px;
+  margin-top: 10px;
+}
+// // // // // //
+// conversations-message-box //
+// /// // // //
+.conversations-message-box-container {
+  height: 250px;
+  width: 800px;
+  border: 1px solid black;
+  .conversations-message-box-header {
+    height: 50px;
+    background:lighten(gray,38%);
+    color:darken(gray,20%);
+    border: 1px solid black;
+    padding-left:10px;
+    padding-top: 6px;
+  }
+  #conversations-send-message-btn {
+    background: $pink;
+    color: white;
+    height: 50px;
+    width: 150px;
+  }
 }

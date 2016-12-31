@@ -108,15 +108,19 @@ module.exports = {
         const data = req.body;
         console.log('!!!!!data from req.body', req.body);
         const dataArr = [data.room_id, data.start, data.end]
-        db.reserveDate(dataArr, (err, response) => {
-            if (!err) {
-                console.log('!!!this is response from controller back eend reserveDAte', response);
-                res.status(200).send('your reservation has been booked')
-            } else {
-                console.log('!!!!!this is error from backend reserveDAte', err);
-                res.status(422).send(err)
-            }
-        })
+          console.log('||||||||||REQ.USER||||||||||',req.user);
+          const user_id = req.user.id;
+          dataArr.push(user_id)
+          console.log('|||||||||DATAARRAY||||||||||',dataArr);
+          db.reserveDate(dataArr, (err, response) => {
+              if (!err) {
+                  console.log('!!!this is response from controller back eend reserveDAte', response);
+                  res.status(200).send('your reservation has been booked')
+              } else {
+                  console.log('!!!!!this is error from backend reserveDAte', err);
+                  res.status(422).send(err)
+              }
+          })
     },
     getRoomListingCoordinates: (req, res, next) => {
         const room_id = req.params.room_id;
@@ -203,5 +207,59 @@ module.exports = {
                 res.status(422).send(err)
             }
         })
+    },
+    getConversationProfilePic: (req,res,next) => {
+      const user_id = req.params.user_id;
+      console.log('========>USER_ID FROM getconversations COMING IN',user_id);
+      db.getConversationProfilePic(user_id,(err,pic)=> {
+        if(!err) {
+          console.log('THIS IS ON THE WAY OUT FROM GETCONVPROFILEPIC',pic);
+          res.status(200).send(pic)
+        }
+        else {
+          console.log('THIS IS THE ERROR',err);
+          res.status(422).send(err);
+        }
+      })
+    },
+    getConversationUsername: (req,res,next) => {
+      const user_id = req.params.user_id;
+      db.getConversationUsername(user_id, (err,username) =>{
+        if(!err){
+          res.status(200).send(username)
+        }
+        else {
+          res.status(422).send(err)
+        }
+      })
+    },
+    getRoomThisLocationInfo: (req,res,next) => {
+      const room_id = req.params.room_id;
+      console.log('This is current location room_id',room_id);
+      db.getRoomThisLocationInfo(room_id,(err,location)=> {
+        if(!err){
+          console.log('this is the from controller backend getRoomThisLocationInfo',location);
+          res.status(200).send(location)
+        }
+        else {
+          console.log('this is the from controller backend getRoomThisLocationInfo',err);
+          res.status(422).send(err)
+        }
+      })
+    },
+    getRoomsNearby: (req,res,next) => {
+      const data = req.params;
+      const dataArr = [data.room_id,data.city_name];
+      console.log('this is the data array from getRoomsNearby', dataArr);
+      db.getRoomsNearby(dataArr, (err,nearbyRooms) => {
+        if(!err){
+          console.log('nearby rooms from getRoomsNearby',nearbyRooms);
+          res.status(200).send(nearbyRooms)
+        }
+        else {
+          console.log('err from nearbyRooms',err);
+          res.status(200).send(err)
+        }
+      })
     }
 }

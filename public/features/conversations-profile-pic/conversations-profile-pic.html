@@ -1,0 +1,15 @@
+<section class='conversations-profile-pic-container' ng-repeat='pic in profilePic'>
+  <div class="conversations-profile-pic" ng-style='{"background":"url({{pic.image_url}})no-repeat","background-size":"cover","background-position": "center","background-origin":"inherit","cursor":"pointer"}'>
+
+  </div>
+  <div class=""><strong>
+
+      <!-- user-profile-first_name   -->
+      {{pic.first_name}}
+      <!-- user-profile-last_name   -->
+      {{pic.last_name}}
+
+  </strong></div>
+  <button class='conversations-view-profile-btn' type="button" ui-sref='users({id:pic.user_id})'>View Profile</button>
+
+</section>

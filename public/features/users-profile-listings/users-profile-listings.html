@@ -1,7 +1,7 @@
-<section class='' ng-repeat='listing in listings'>
-  <div class="box" ui-sref='rooms({room_id:listing.room_id})' ng-style='{"background":"url({{listing.image_url}})no-repeat","background-size":"cover","background-position": "center","background-origin":"inherit","cursor":"pointer"}'>
+<section class='users-profile-listings-container' ng-repeat='listing in listings'>
+  <div class="users-profile-listings-pic" ui-sref='rooms({room_id:listing.room_id})' ng-style='{"background":"url({{listing.image_url}})no-repeat","background-size":"cover","background-position": "center","background-origin":"inherit","cursor":"pointer"}'>
 
   </div>
-  <a ui-sref="rooms({room_id:listing.room_id})"><div class="" ng-style='{"cursor":"pointer"}'>{{listing.listing_name}}</div></a>
+  <a ui-sref="rooms({room_id:listing.room_id})"><div class="users-listing_name" ng-style='{"cursor":"pointer"}'>{{listing.listing_name}}</div></a>
 
 </section>

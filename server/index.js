@@ -29,7 +29,8 @@ const Ctrl = require('./controllers/controller');
 app.use(session({
         secret: config.secret_Key,
         saveUninitialized: false,
-        resave: true
+        resave: true,
+        cookie : { httpOnly: true, maxAge: 2419200000 }
     }))
     /**
      * Local Auth
@@ -39,6 +40,8 @@ app.use(passport.session());
 
 passport.use(new LocalStrategy(
   function(username, password, done) {
+    console.log('LocalStrategy username argument',username);
+    console.log('LocalStrategy password argument',password);
     db.getUserByUsername([username], function(err, user) {
       user = user[0];
       if (err) { return done(err); }
@@ -50,19 +53,32 @@ passport.use(new LocalStrategy(
 ))
 
 passport.serializeUser(function(user, done) {
-    done(null, user.userid);
+  console.log('THIS IS THE USER FROM SERIALIZEUSER',user);
+    done(null, user);
 })
 
 passport.deserializeUser(function(id, done) {
-    db.getUserById([id], function(err, user) {
+  console.log('this is the id',id);
+    db.getUserById([id.id], function(err, user) {
         user = user[0];
+        console.log('This is the User deserializeUser',user);
         if (err) console.log(err);
         else console.log('RETRIEVED USER');
         console.log(user);
         done(null, user);
     })
 })
-
+// =============================================
+// auth middleware
+// ==========================================
+function isAuthenticated(req,res,next) {
+  if(req.user){
+    return next();
+  }
+  else {
+    res.status(401).redirect('/#/')
+  }
+}
 // ====================================================================================================
 // MIDDLEWARE
 // ====================================================================================================
@@ -82,14 +98,24 @@ app.post('/login', passport.authenticate('local'), function(req, res, next) {
     res.status(200).redirect('/#/')
 })
 
+// app.get('/auth/me', function(req, res) {
+//   if (req.user) {
+//     console.log(req.user);
+//     res.status(200).send(req.user);
+//   } else {
+//     console.log('NO user!')
+//     res.status(200).send();
+//   }
+// })
+
 app.get('/auth/me', function(req, res) {
-  if (req.user) {
-    console.log(req.user);
-    res.status(200).send(req.user);
-  } else {
-    console.log('NO user!')
-    res.status(200).send();
-  }
+  if (!req.user) return res.sendStatus(404);
+  res.status(200).send(req.user);
+})
+
+app.get('/logout', function(req, res) {
+  req.logout();
+  res.redirect('/#/');
 })
 
 app.get('/rooms/search/:keyword', Ctrl.findLocationByKeyword)
@@ -108,7 +134,7 @@ app.get('/rooms/profile-pic/:room_id', Ctrl.getRoomListingProfilePic)
 
 app.get('/rooms/nightly_price/:room_id', Ctrl.getRoomListingNightlyPrice)
 
-app.post('/rooms/reservations', Ctrl.reserveDate)
+app.post('/rooms/reservations',isAuthenticated, Ctrl.reserveDate)
 
 app.get('/rooms/locations/:room_id', Ctrl.getRoomListingCoordinates)
 
@@ -121,6 +147,14 @@ app.get('/users/profile-pic/:user_id', Ctrl.getUsersProfilePic)
 app.get('/users/desc-header/:user_id', Ctrl.getHostDesc)
 
 app.get('/users/listings/:user_id', Ctrl.getHostListings)
+
+app.get('/conversations/profile-pic/:user_id', Ctrl.getConversationProfilePic)
+
+app.get('/conversations/username/:user_id', Ctrl.getConversationUsername)
+
+app.get('/rooms/listings/current_location/:room_id', Ctrl.getRoomThisLocationInfo)
+
+app.get('/rooms/listings/nearby/:room_id/:city_name', Ctrl.getRoomsNearby)
     // ====================================================================================================
     // WATCH/LISTEN FUNCTION
     // ====================================================================================================

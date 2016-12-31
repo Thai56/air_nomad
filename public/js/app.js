@@ -19,6 +19,11 @@ angular.module('myApp',['ui.router','ui.bootstrap','ngDialog','angular-input-sta
     controller:'usersCtrl',
     templateUrl:'./views/users/users.html'
   })
+  .state('conversations', {
+    url:'/conversations/:user_id/messages',
+    controller:'conversationsCtrl',
+    templateUrl:'./views/conversations/conversations.html'
+  })
   $urlRouterProvider
   .otherwise('/')
 });

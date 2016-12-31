@@ -50,6 +50,12 @@ table {
   width: 30%;
   border: 2px solid black; }
 
+body {
+  background: #ededed; }
+
+.jumbotron {
+  background: white; }
+
 .signup-modal {
   text-align: center; }
 
@@ -65,6 +71,10 @@ table {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around; }
+  .home-img-container .home-img-text {
+    font-size: 3em;
+    font-weight: 500;
+    color: white; }
 
 home-room-listings {
   display: flex;
@@ -73,7 +83,9 @@ home-room-listings {
   justify-content: space-around; }
 
 .home-text-container {
-  text-align: center; }
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 50px; }
 
 .home-listings-container {
   width: 30%; }
@@ -87,24 +99,36 @@ home-room-listings {
     align-items: center;
     background: white; }
   .home-listings-container .home-room-listing-profilepic {
+    margin-left: 8px;
     height: 35px;
     width: 35px;
     border-radius: 15px; }
+  .home-listings-container .listing_name {
+    margin-left: 15px; }
 
 #amsterdam {
   background: url("../home_images/amsterdam.jpg") no-repeat;
   background-size: cover;
-  background-position: center; }
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
 
 #new_york {
   background: url("../home_images/new_york.jpg") no-repeat;
   background-size: cover;
-  background-position: center; }
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
 
 #london {
   background: url("../home_images/london.jpg") no-repeat;
   background-size: cover;
-  background-position: center; }
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
 
 .room-listing-main-pic-container {
   width: 100%;
@@ -178,7 +202,7 @@ home-room-listings {
     flex-direction: row;
     justify-content: space-between;
     padding: 0 6px;
-    background: gray;
+    background: #616161;
     color: white; }
   .rooms-listing-main-booking-container .date-input-container {
     display: flex;
@@ -249,9 +273,37 @@ home-room-listings {
     line-height: 1.5; }
 
 #map {
+  margin-top: 50px;
   width: 100%;
   height: 400px;
-  background-color: grey; }
+  background-color: grey;
+  margin-bottom: 50px; }
+
+.rooms-nearby-container {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around; }
+
+.rooms-nearby-img {
+  height: 200px;
+  width: 240px;
+  border: 1px solid black; }
+
+.rooms-nearby-text-container {
+  border: 1px solid black;
+  text-align: center;
+  cursor: pointer; }
+
+.users-profile-listings-container {
+  border: 1px solid black;
+  float: left;
+  margin-left: 25px;
+  margin-top: 50px; }
+  .users-profile-listings-container .users-profile-listings-pic {
+    height: 200px;
+    width: 180px;
+    margin: auto; }
 
 user-profile-pic {
   width: 30%;
@@ -297,9 +349,54 @@ user-profile-pic {
       top: 30px;
       left: 12px; }
 
-.user-profile-listings-container {
-  position: relative;
-  clear: both;
+.users-container {
+  display: flex;
+  flex-direction: row; }
+
+.users-listing_name {
+  background: white;
+  height: 40px;
+  text-align: center; }
+
+#conversations-view-jumbotron {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%; }
+
+.conversations-profile-pic-container {
+  float: left;
+  width: 250px;
+  margin-right: 30px;
+  text-align: center; }
+
+.conversations-profile-pic {
+  height: 100px;
+  width: 95px;
+  border: 1px solid black;
   margin: auto; }
+
+.conversations-view-profile-btn {
+  width: 100%;
+  background: none;
+  height: 50px;
+  margin-top: 10px; }
+
+.conversations-message-box-container {
+  height: 250px;
+  width: 800px;
+  border: 1px solid black; }
+  .conversations-message-box-container .conversations-message-box-header {
+    height: 50px;
+    background: #e1e1e1;
+    color: #4d4d4d;
+    border: 1px solid black;
+    padding-left: 10px;
+    padding-top: 6px; }
+  .conversations-message-box-container #conversations-send-message-btn {
+    background: #FF7E82;
+    color: white;
+    height: 50px;
+    width: 150px; }
 
 /*# sourceMappingURL=maps/styles.css.map */
