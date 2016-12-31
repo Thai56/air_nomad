@@ -11,8 +11,10 @@ const express = require('express'),
     passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
     cookieParser = require('cookie-parser')
-session = require('express-session'),
-    config = require('./config');
+    session = require('express-session'),
+    config = require('./config'),
+    server = require('http').createServer(app),
+    io = require('socket.io')(server);
 
 // ==================================================================================================
 // DATABASE
@@ -79,6 +81,15 @@ function isAuthenticated(req,res,next) {
     res.status(401).redirect('/#/')
   }
 }
+// ==============================================================================================================================
+// sockets.io
+// ==============================================================================================================================
+io.sockets.on('connection', function(socket){
+  socket.on('send message',function(data) {
+    io.sockets.emit('new message', data);
+  })
+})
+
 // ====================================================================================================
 // MIDDLEWARE
 // ====================================================================================================

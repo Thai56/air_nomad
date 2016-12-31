@@ -32,6 +32,27 @@ angular.module('myApp').controller('conversationsMessageBoxCtrl', function ($sco
   conversationsMessageBoxService.getConversationUsername(user_id).then(function (response) {
     $scope.username = response[0];
   });
+  // ===================================================================================================================
+  // jQuery
+  // ==========================================================================================================================================
+  // jQuery(function($) {
+  //   var socket = io.connect();
+  //   var $messageForm = $('#send-message');
+  //   var $messageBox = $('#message');
+  //   var $chat = $('#chat');
+  //
+  //   $messageForm.submit(function(e){
+  //     e.preventDefault();
+  //     socket.emit('send message', $messageBox.val());
+  //     $messageBox.val('')
+  //   })
+  //
+  //   socket.on('new message',function(data) {
+  //     console.log('this is the data',data);
+  //     $chat.append(data + '<br/>')
+  //   })
+  // });
+  // ==========================================================================================================================================
 });
 'use strict';
 
@@ -51,38 +72,6 @@ angular.module('myApp').service('conversationsMessageBoxService', function ($htt
       method: 'get',
       url: 'conversations/username/' + user_id
     }).then(function (response) {
-      defer.resolve(response.data);
-    });
-    return defer.promise;
-  };
-});
-'use strict';
-
-angular.module('myApp').controller('homeRoomListingsCtrl', function ($scope, homeRoomListingsService) {
-  homeRoomListingsService.getListingsForHome().then(function (response) {
-    console.log('response from homeListingCtrl', response);
-    $scope.listings = response;
-  });
-});
-'use strict';
-
-angular.module('myApp').directive('homeRoomListings', function () {
-  return {
-    restrict: 'AE',
-    controller: 'homeRoomListingsCtrl',
-    templateUrl: './features/home-room-listings/home-room-listings.html'
-  };
-});
-'use strict';
-
-angular.module('myApp').service('homeRoomListingsService', function ($http, $q) {
-  this.getListingsForHome = function () {
-    var defer = $q.defer();
-    $http({
-      method: 'get',
-      url: '/rooms/listings'
-    }).then(function (response) {
-      console.log('response from homeRoomListingsService', response);
       defer.resolve(response.data);
     });
     return defer.promise;
@@ -115,6 +104,38 @@ angular.module('myApp').service('conversationsProfilePicService', function ($htt
       url: '/conversations/profile-pic/' + user_id
     }).then(function (response) {
       console.log('this is the resposne.data', response.data);
+      defer.resolve(response.data);
+    });
+    return defer.promise;
+  };
+});
+'use strict';
+
+angular.module('myApp').controller('homeRoomListingsCtrl', function ($scope, homeRoomListingsService) {
+  homeRoomListingsService.getListingsForHome().then(function (response) {
+    console.log('response from homeListingCtrl', response);
+    $scope.listings = response;
+  });
+});
+'use strict';
+
+angular.module('myApp').directive('homeRoomListings', function () {
+  return {
+    restrict: 'AE',
+    controller: 'homeRoomListingsCtrl',
+    templateUrl: './features/home-room-listings/home-room-listings.html'
+  };
+});
+'use strict';
+
+angular.module('myApp').service('homeRoomListingsService', function ($http, $q) {
+  this.getListingsForHome = function () {
+    var defer = $q.defer();
+    $http({
+      method: 'get',
+      url: '/rooms/listings'
+    }).then(function (response) {
+      console.log('response from homeRoomListingsService', response);
       defer.resolve(response.data);
     });
     return defer.promise;
@@ -217,6 +238,41 @@ angular.module('myApp').service('loginService', function ($http, $q) {
 });
 'use strict';
 
+angular.module('myApp').controller('roomListingMainDescCtrl', function ($scope, $stateParams, roomListingMainDescService) {
+  var room_id = $stateParams.room_id;
+
+  roomListingMainDescService.getRoomListingMainDesc(room_id).then(function (response) {
+    console.log('working from controller descripition service', response);
+    $scope.desc = response[0];
+    console.log('this is descriptions', $scope.desc);
+  });
+});
+'use strict';
+
+angular.module('myApp').directive('roomListingMainDesc', function () {
+  return {
+    restrict: 'AE',
+    templateUrl: './features/room-listing-main-desc/room-listing-main-desc.html',
+    controller: 'roomListingMainDescCtrl'
+  };
+});
+'use strict';
+
+angular.module('myApp').service('roomListingMainDescService', function ($http, $q) {
+  this.getRoomListingMainDesc = function (room_id) {
+    var defer = $q.defer();
+    $http({
+      method: 'GET',
+      url: '/rooms/desc/' + room_id
+    }).then(function (response) {
+      console.log('response from service description', response);
+      defer.resolve(response.data);
+    });
+    return defer.promise;
+  };
+});
+'use strict';
+
 angular.module('myApp').directive('myNav', function () {
   return {
     restrict: 'E',
@@ -249,41 +305,6 @@ angular.module('myApp').service('navBarService', function ($http, $q) {
     }).catch(function (err) {
       console.log(err);
     });
-  };
-});
-'use strict';
-
-angular.module('myApp').controller('roomListingMainDescCtrl', function ($scope, $stateParams, roomListingMainDescService) {
-  var room_id = $stateParams.room_id;
-
-  roomListingMainDescService.getRoomListingMainDesc(room_id).then(function (response) {
-    console.log('working from controller descripition service', response);
-    $scope.desc = response[0];
-    console.log('this is descriptions', $scope.desc);
-  });
-});
-'use strict';
-
-angular.module('myApp').directive('roomListingMainDesc', function () {
-  return {
-    restrict: 'AE',
-    templateUrl: './features/room-listing-main-desc/room-listing-main-desc.html',
-    controller: 'roomListingMainDescCtrl'
-  };
-});
-'use strict';
-
-angular.module('myApp').service('roomListingMainDescService', function ($http, $q) {
-  this.getRoomListingMainDesc = function (room_id) {
-    var defer = $q.defer();
-    $http({
-      method: 'GET',
-      url: '/rooms/desc/' + room_id
-    }).then(function (response) {
-      console.log('response from service description', response);
-      defer.resolve(response.data);
-    });
-    return defer.promise;
   };
 });
 'use strict';
@@ -939,18 +960,6 @@ angular.module('myApp').service('usersProfilePicService', function ($http, $q) {
 });
 'use strict';
 
-angular.module('myApp').controller('start_datepickerCtrl', function ($scope) {});
-'use strict';
-
-angular.module('myApp').directive('startDatepicker', function () {
-  return {
-    restrict: 'AE',
-    templateUrl: './features/home_header/homeHeader-datepickers/start/start_datepicker.html',
-    controller: 'start_datepickerCtrl'
-  };
-});
-'use strict';
-
 angular.module('myApp').controller('endDatepickerCtrl', function ($scope) {});
 'use strict';
 
@@ -965,6 +974,18 @@ angular.module('myApp').directive('endDatepicker', function () {
         return console.log(ngModelCtrl);
       });
     }
+  };
+});
+'use strict';
+
+angular.module('myApp').controller('start_datepickerCtrl', function ($scope) {});
+'use strict';
+
+angular.module('myApp').directive('startDatepicker', function () {
+  return {
+    restrict: 'AE',
+    templateUrl: './features/home_header/homeHeader-datepickers/start/start_datepicker.html',
+    controller: 'start_datepickerCtrl'
   };
 });
 'use strict';
