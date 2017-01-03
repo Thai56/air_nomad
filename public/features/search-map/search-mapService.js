@@ -10,6 +10,8 @@ angular.module('myApp').service('searchMapService', function($http,$q) {
       data: {
         arr:arr
       }
+    }).then(response => {
+      return response.data
     })
     return defer.promise
   }

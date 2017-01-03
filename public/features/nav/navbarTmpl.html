@@ -1,21 +1,27 @@
 <!-- ============================================================================================================================================================================ -->
 <!-- THIS IS A TEMPLATE FOR THE NAVBAR DIRECTIVE -->
 <!-- ============================================================================================================================================================================ -->
-<section class="nav-bar-container">
-  <div class="nav-bar-float-left">
-    <h4>Logo</h4>
-    <nav-search-input></nav-search-input>
-  </div>
-  <div class="nav-bar-float-right">
-
-  </div>
-    <div ng-show='!userNotLoggedIn'>
-        drowpdown menu
+<div class="nav-bar-container-wrapper">
+  <section class="nav-bar-container">
+    <div class="nav-bar-float-left">
+      <h2 id='logo'>Air Nomad</h2>
+      <nav-search-input></nav-search-input>
     </div>
-    <button ng-show='userNotLoggedIn' type="button" ng-click='clickToRegister()' name="button">signup</button>
-  <button ng-show='userNotLoggedIn' type="button" name="button" ng-click='clickToLogin()'>Log In</button>
-  <a class='right' href="#">messages</a>
-  <a class='right' href="#">become a host</a>
+    <div class="nav-bar-float-right">
+        <button ng-show='userNotLoggedIn' type="button" ng-click='clickToRegister()' name="button">signup</button>
+        <button ng-show='userNotLoggedIn' type="button" name="button" ng-click='clickToLogin()'>Log In</button>
+        <div ng-show='!userNotLoggedIn'>
+          <navbar-dropdown></navbar-dropdown>
+        </div>
+        <a href="#">messages</a>
+        <a href="#">become a host</a>
+    </div>
+
+
+
+  </section>
+</div>
+<div ng-style'{"text-align":"center"}'>
   <button type="button" name="button" ng-click='logout()'>Log Out</button>
   <button type="button" name="button" ui-sref='home'>home</button>
-</section>
+</div>

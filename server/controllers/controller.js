@@ -294,16 +294,18 @@ module.exports = {
         }
       })
     },
-    getSearchMapLocations: (req,res,next) => {
-      console.log('this is the req.body',req.body)
-      const arr = req.body.arr;
-      var newArray = [];
-      for(var i = 0;i < arr.length; i++){
-        newArray.push(arr[i].room_id)
-      }
-      console.log('This is the newArray',newArray)
-      
-      // get geolocations for each of the objects in the array
-      // we may need the rooms.description locations.latitude locations.longitude,
+    getUserById: (req,res,next) => {
+      const user_id = req.params.user_id;
+      console.log('this is the user_Id',user_id);
+      db.getUserByIdForDropdown(user_id, (err,user_obj)=> {
+        if(!err){
+          console.log('This is the User Obj',user_obj);
+          res.status(200).send(user_obj)
+        }
+        else {
+          console.log('this is the error',err);
+          res.status(422).send(err)
+        }
+      })
     }
 }

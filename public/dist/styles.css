@@ -56,18 +56,76 @@ body {
 .jumbotron {
   background: white; }
 
-.nav-bar-container {
+#logo {
+  font-weight: 400;
+  color: #FF7E82;
+  line-height: 1.5em; }
+
+.nav-bar-container-wrapper {
   width: 100%;
+  background: white; }
+
+.nav-bar-container {
+  width: 1140px;
+  margin: auto;
   background: white;
-  border: 1px solid black; }
+  border: 1px solid black;
+  position: relative; }
 
 .nav-bar-float-left {
-  width: 24%;
   border: 1px solid black;
+  width: 26em;
+  position: relative;
   display: flex;
-  flex-flow: row;
-  justify-content: space-around;
+  flex-direction: row;
   align-items: center; }
+
+.nav-bar-float-right {
+  float: right;
+  width: 350px;
+  border: 1px solid black;
+  position: absolute;
+  right: 56px;
+  top: 36px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; }
+
+nav-search-input {
+  position: absolute;
+  right: 0; }
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  /* Dropdown Content (Hidden by Default) */
+  /* Show the dropdown menu on hover */
+  /* Change the background color of the dropdown button when the dropdown content is shown */ }
+  .dropdown .dropdown-content {
+    display: none;
+    position: absolute;
+    list-style: none;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    /* Links inside the dropdown */ }
+    .dropdown .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      /* Change color of dropdown links on hover */ }
+      .dropdown .dropdown-content a:hover {
+        background-color: #f1f1f1; }
+  .dropdown:hover .dropdown-content {
+    display: block;
+    cursor: pointer; }
+  .dropdown:hover .dropbtn {
+    background-color: #ff3333;
+    cursor: pointer; }
 
 .signup-modal {
   text-align: center; }

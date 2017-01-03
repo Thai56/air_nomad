@@ -34,6 +34,6 @@ angular.module('myApp').directive('myNav', function(){
       getUser()
       // $scope.$watch('userNotLoggedIn')
     }
-
+    
   }
 })

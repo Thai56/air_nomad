@@ -109,16 +109,6 @@ app.post('/login', passport.authenticate('local'), function(req, res, next) {
     res.status(200).send({redirect:'home'})
 })
 
-// app.get('/auth/me', function(req, res) {
-//   if (req.user) {
-//     console.log(req.user);
-//     res.status(200).send(req.user);
-//   } else {
-//     console.log('NO user!')
-//     res.status(200).send();
-//   }
-// })
-
 app.get('/auth/me', function(req, res) {
   console.log('this is the req.user from auth/me',req.user);
   if (!req.user) return res.sendStatus(404);
@@ -172,7 +162,8 @@ app.get('/search', Ctrl.getSearchListings)
 
 app.post('/search/filter_listings', Ctrl.filterSearchListings)
 
-app.post('/search/map_locations' , Ctrl.getSearchMapLocations)
+app.get('/users/:user_id', Ctrl.getUserById)
+
     // ====================================================================================================
     // WATCH/LISTEN FUNCTION
     // ====================================================================================================
