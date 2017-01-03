@@ -24,6 +24,18 @@ angular.module('myApp',['ui.router','ui.bootstrap','ngDialog','angular-input-sta
     controller:'conversationsCtrl',
     templateUrl:'./views/conversations/conversations.html'
   })
+  .state('search', {
+    url:'/search',
+    controller:'searchCtrl',
+    templateUrl:'./views/search/search.html'
+  })
+  .state('search.listings', {
+    templateUrl:'./views/search-listings/search-listings.html',
+    url:'/listings/:search_id/',
+    controller:'searchListingsCtrl',
+    params:{myParam:null}
+  })
+
   $urlRouterProvider
   .otherwise('/')
 });

@@ -20,5 +20,10 @@ angular.module('myApp').controller('roomsListingMainBookingCtrl', ($scope,$state
     }
   }
 
+  $scope.valuationDate = new Date();
+  $scope.valuationDatePickerIsOpen = false;
+  $scope.valuationDatePickerOpen = () => {
+    $scope.valuationDatePickerIsOpen = true;
+  }
 
 })

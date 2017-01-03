@@ -26,7 +26,10 @@ angular.module('myApp').service('roomsListingMainReviewsService', function($http
         text:text,
         room_id:room_id
       }
-    }).then(response => alert(response.data))
+    }).then(response => {
+      alert(response.data)
+      defer.resolve(response.data)
+    })
     return defer.promise
   }
 })

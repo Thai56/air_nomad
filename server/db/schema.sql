@@ -127,3 +127,25 @@ join listings on locations.room_id = listings.room_id
 join listing_images on listings.id = listing_images.listing_id
 where rooms.id != 8
 and locations.city = 'Seattle';
+
+
+select listing_images.image_url, rooms.listing_name, rooms.id, rooms.user_id from rooms
+join listings on listings.room_id = rooms.id
+join listing_images on listings.id = listing_images.listing_id
+where lower(rooms.address) like lower('%'|| 'Fairfield' || '%');
+
+
+    select room_accessories.*, listing_images.image_url, rooms.listing_name, rooms.id, rooms.user_id from rooms
+join room_accessories on room_accessories.rooms_id = rooms.id
+join listings on listings.room_id = room_accessories.rooms_id
+join listing_images on listings.id = listing_images.listing_id
+where lower(rooms.address) like lower('%'|| 'Fairfield' || '%')
+	and room_accessories.tv = false
+    and room_accessories.heating = true
+    and room_accessories.internet = false
+    and room_accessories.ac = true
+    and room_accessories.kitchen = false
+    and rooms.accomodate = 1
+    and rooms.bathrooms = 2
+    and rooms.bedrooms = 1
+    and room_accessories.nightly_price between 0 and 1000;

@@ -1,4 +1,4 @@
-<form class="" action="http://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=DR8573HW7W9FC" method="post"> -->
+<form class="" action="http://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
   <section class='rooms-listing-main-booking-container'>
   <!-- ////////////
   price per night
@@ -13,11 +13,13 @@
     <section class='input-group input-group-lg date-input-container'>
       <div class="input-group date-input-wrapper">
         <h4 class='check-in-out'>Check In</h4>
-        <input class='form-controler input-date' type="date" ng-model='startDate.value'>
+        <input class='form-controller input-date' type="date" ng-model='startDate.value'>
+        <!-- <input type="text" class='form-control' uib-datepicker-popup is-open='valuationsDatePIckerIsOpen' ng-click='valuationDatePickerOpen()' ng-model='valuationDate'> -->
       </div>
       <div class="input-group date-input-wrapper">
         <h4 class='check-in-out'>Check Out</h4>
-        <input class='form-controler input-date' type="date" ng-model='endDate.value'>
+        <input class='form-controller input-date' type="date" ng-model='endDate.value'>
+        <!-- <input type="text" class='form-control' uib-datepicker-popup is-open='valuationsDatePIckerIsOpen' ng-click='valuationDatePickerOpen()' ng-model='valuationDate'> -->
       </div>
     </section>
   <!--////////

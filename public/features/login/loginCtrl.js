@@ -1,4 +1,4 @@
-angular.module('myApp').controller('loginCtrl', ($scope, loginService, $routeParams) => {
+angular.module('myApp').controller('loginCtrl', ($scope, loginService, $routeParams,$rootScope) => {
   $scope.loginUser = function(email,password) {
     console.log('ccreds from the loginCtrl',email,password)
     loginService.loginUser({
@@ -19,8 +19,14 @@ angular.module('myApp').controller('loginCtrl', ($scope, loginService, $routePar
 
 function getUser() {
   loginService.getUser().then(function(user) {
-    if (user) $scope.user = user.username;
-    else   $scope.user = 'NOT LOGGED IN';
+    if (user){
+       $scope.user = user.username;
+      console.log('this is user not logged in ==> ',$scope.userNotLoggedIn);
+      $rootScope.userNotLoggedIn = false;
+    }
+    else  {
+        $scope.user = 'NOT LOGGED IN'
+    };
   })
 }
 

@@ -138,19 +138,21 @@ module.exports = {
     addReview: (req, res, next) => {
         const data = req.body;
         console.log('THIS IS THE DATA FROM ADDREVIEW CONTROLLER BACKEND', data);
-        const dataArray = [data.stars, data.text, data.room_id]
+        const user_id = req.user.id
+        console.log('this is the user id', user_id);
+        const dataArray = [data.stars, data.text, data.room_id,user_id]
         console.log('THIS IS THE ARRAY OF DATA', dataArray);
         db.addReview(dataArray, (err, response) => {
             //**  write a getReviews functions and add inside of this function once written **
             if (!err) {
                 console.log('response from Database ', response);
-                db.getReviews(data.room_id, (err, reviews) => {
-                    if (!err) {
-                        res.status(422).send(reviews)
-                    } else {
-                        res.status(404).send(err)
-                    }
-                });
+                // db.getReviews(data.room_id, (err, reviews) => {
+                //     if (!err) {
+                //         res.status(200).send(reviews)
+                //     } else {
+                //         res.status(404).send(err)
+                //     }
+                // });
                 res.status(200).send('Your Review has Been Successfully Added!')
             } else {
                 console.log('error from DB', err);
@@ -261,5 +263,47 @@ module.exports = {
           res.status(200).send(err)
         }
       })
+    },
+    getSearchListings: (req,res,next) => {
+      console.log('This is the req.query.search',req.query.search);
+      const search_string = req.query.search;
+      db.getSearchListings(search_string, (err,listings) => {
+        if(!err){
+          console.log('these are the listings from getSearchListings',listings);
+          res.status(200).send(listings)
+        }
+        else {
+          console.log("this is the err",err);
+          res.status(422).send(err)
+        }
+      })
+    },
+    filterSearchListings: (req,res,next) => {
+      console.log(req.body);
+      const obj = req.body;
+      const filterArr = [obj.minPrice,obj.maxPrice,obj.acc,obj.bath,obj.bed,obj.tv,obj.kitchen,obj.internet,obj.heating,obj.ac,obj.searchString]
+      console.log(filterArr);
+      db.filterSearchListings(filterArr, (err,results) => {
+        if(!err){
+          console.log('||||||||||||||results from filterSearchListings',results);
+          res.status(200).send(results)
+        }
+        else {
+          console.log('error from filterSearchListings', err);
+          res.status(422).send(err)
+        }
+      })
+    },
+    getSearchMapLocations: (req,res,next) => {
+      console.log('this is the req.body',req.body)
+      const arr = req.body.arr;
+      var newArray = [];
+      for(var i = 0;i < arr.length; i++){
+        newArray.push(arr[i].room_id)
+      }
+      console.log('This is the newArray',newArray)
+      
+      // get geolocations for each of the objects in the array
+      // we may need the rooms.description locations.latitude locations.longitude,
     }
 }

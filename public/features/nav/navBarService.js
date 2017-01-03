@@ -13,4 +13,17 @@ angular.module('myApp').service('navBarService', function($http,$q) {
       console.log(err);
     })
   }
+
+  this.getUser = function() {
+    return $http({
+      method: 'GET',
+      url: '/auth/me'
+    })
+    .then(function(res) {
+      return res.data;
+    })
+    .catch(function(err) {
+      console.log(err);
+    })
+  }
 })

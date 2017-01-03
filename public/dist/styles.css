@@ -56,6 +56,19 @@ body {
 .jumbotron {
   background: white; }
 
+.nav-bar-container {
+  width: 100%;
+  background: white;
+  border: 1px solid black; }
+
+.nav-bar-float-left {
+  width: 24%;
+  border: 1px solid black;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-around;
+  align-items: center; }
+
 .signup-modal {
   text-align: center; }
 

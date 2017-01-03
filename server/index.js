@@ -106,7 +106,7 @@ app.use('/lib', express.static(__dirname + '/../node_modules'))
 
 app.post('/login', passport.authenticate('local'), function(req, res, next) {
     console.log(req.body);
-    res.status(200).redirect('/#/')
+    res.status(200).send({redirect:'home'})
 })
 
 // app.get('/auth/me', function(req, res) {
@@ -120,6 +120,7 @@ app.post('/login', passport.authenticate('local'), function(req, res, next) {
 // })
 
 app.get('/auth/me', function(req, res) {
+  console.log('this is the req.user from auth/me',req.user);
   if (!req.user) return res.sendStatus(404);
   res.status(200).send(req.user);
 })
@@ -149,7 +150,7 @@ app.post('/rooms/reservations',isAuthenticated, Ctrl.reserveDate)
 
 app.get('/rooms/locations/:room_id', Ctrl.getRoomListingCoordinates)
 
-app.post('/rooms/reviews', Ctrl.addReview)
+app.post('/rooms/reviews',isAuthenticated, Ctrl.addReview)
 
 app.get('/rooms/reviews/:room_id', Ctrl.getReviews)
 
@@ -166,6 +167,12 @@ app.get('/conversations/username/:user_id', Ctrl.getConversationUsername)
 app.get('/rooms/listings/current_location/:room_id', Ctrl.getRoomThisLocationInfo)
 
 app.get('/rooms/listings/nearby/:room_id/:city_name', Ctrl.getRoomsNearby)
+
+app.get('/search', Ctrl.getSearchListings)
+
+app.post('/search/filter_listings', Ctrl.filterSearchListings)
+
+app.post('/search/map_locations' , Ctrl.getSearchMapLocations)
     // ====================================================================================================
     // WATCH/LISTEN FUNCTION
     // ====================================================================================================
