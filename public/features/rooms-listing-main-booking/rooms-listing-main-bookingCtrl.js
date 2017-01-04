@@ -10,20 +10,41 @@ angular.module('myApp').controller('roomsListingMainBookingCtrl', ($scope,$state
     }
     else {
       $scope.chosenStartDate = $filter('date')(start, 'shortDate')
-      console.log('=================== this is the value from $scope.chosenStartDate' , $scope.chosenStartDate)
       $scope.chosenEndDate = $filter('date')(end,'shortDate')
-      console.log('=================== this is the value from $scope.chosenEndDate' , $scope.chosenEndDate)
+      if($scope.chosenStartDate >= $scope.chosenEndDate){
+        alert('They are the same day')
+      }
       roomsListingMainBookingService.reserveDate(room_id,$scope.chosenStartDate,$scope.chosenEndDate).then(response =>{
         console.log('response back into the controller on the way back ====> ', response);
         alert(response);
       })
     }
   }
+// =====================================================================================================================
 
-  $scope.valuationDate = new Date();
-  $scope.valuationDatePickerIsOpen = false;
-  $scope.valuationDatePickerOpen = () => {
-    $scope.valuationDatePickerIsOpen = true;
-  }
 
+
+  // $scope.minDate = $filter('date')(new Date(), 'yyyy-MM-dd')
+  //
+  //
+  //   var date = new Date();
+  //   date.setDate(date.getDate() + 1)
+  //   $scope.maxDate =  $filter('date')(date, 'yyyy-MM-dd')
+  //
+  // console.log($scope.minDate);
+  // $scope.$watch('minDate', () => {
+  //   if($scope.minDate > $filter('date')(date, 'yyyy-MM-dd')){
+  //     date.setDate(date.getDate() + 1)
+  //     $scope.maxDate = $filter('date')(date, 'yyyy-MM-dd')
+  //     console.log($scope.maxDate);
+  //   }
+  // })
+
+  $scope.today = $filter('date')(new Date(), 'yyyy-MM-dd');
+
+  $scope.$watch('startDate.value', (newVal,oldVal)=> {
+    newVal.setDate(newVal.getDate()+1)
+    $scope.changedDate = $filter('date')(newVal, 'yyyy-MM-dd')
+    console.log($scope.changedDate);
+  })
 })

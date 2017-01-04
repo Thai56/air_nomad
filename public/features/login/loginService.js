@@ -14,6 +14,7 @@ angular.module('myApp').service('loginService',function($http,$q,$state){
       return res.data;
     })
     .catch(function(err) {
+      alert('please log in or click to sign up ')
       console.log('ERROR LOGGING IN!', err);
     })
   }

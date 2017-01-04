@@ -13,9 +13,14 @@ const express = require('express'),
     cookieParser = require('cookie-parser')
     session = require('express-session'),
     config = require('./config'),
-    server = require('http').createServer(app),
-    io = require('socket.io')(server);
+    client = require('braintree-web/client'),
+    paypal = require('braintree-web/paypal');
 
+    // ====================================================================================================
+    // WATCH/LISTEN FUNCTION
+    // ====================================================================================================
+    var server = app.listen(3000)
+    io = require('socket.io').listen(server);
 // ==================================================================================================
 // DATABASE
 // ==================================================================================================
@@ -78,7 +83,7 @@ function isAuthenticated(req,res,next) {
     return next();
   }
   else {
-    res.status(401).redirect('/#/')
+    res.status(401).send('please sign in to continue')
   }
 }
 // ==============================================================================================================================
@@ -163,8 +168,3 @@ app.get('/search', Ctrl.getSearchListings)
 app.post('/search/filter_listings', Ctrl.filterSearchListings)
 
 app.get('/users/:user_id', Ctrl.getUserById)
-
-    // ====================================================================================================
-    // WATCH/LISTEN FUNCTION
-    // ====================================================================================================
-app.listen(port, () => console.log('You are now listening on port', port))

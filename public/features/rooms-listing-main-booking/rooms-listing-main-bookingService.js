@@ -24,13 +24,12 @@ angular.module('myApp').service('roomsListingMainBookingService', function($http
         end:end
       }
     }).then(response => {
-      if (response.data === 'please sign in') {
-        alert('Please sign in to proceed')
-      }
-      else {
-        console.log('!!!response back in service',response.data);
-        defer.resolve(response.data)
-      }
+      console.log('!!!response back in service',response.data);
+      defer.resolve(response.data)
+    })
+    .catch(err => {
+      alert('please log in or click to sign up ')
+      console.log('ERROR LOGGING IN!', err);
     })
     return defer.promise
   }

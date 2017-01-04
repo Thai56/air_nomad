@@ -127,6 +127,19 @@ nav-search-input {
     background-color: #ff3333;
     cursor: pointer; }
 
+.nav-menu-profile-pic {
+  height: 40px;
+  width: 60px;
+  border: 1px solid black;
+  border-radius: 54px; }
+
+.caret {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid gray; }
+
 .signup-modal {
   text-align: center; }
 
@@ -235,7 +248,6 @@ home-room-listings {
     justify-content: space-around; }
 
 .carousel-container {
-  width: 80%;
   margin: auto; }
   .carousel-container img {
     width: 100%; }

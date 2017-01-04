@@ -2,6 +2,26 @@
   <div class="conversations-message-box-header">
     <h4>conversation with {{username.first_name}} {{username.last_name}}</h4>
   </div>
-  <textarea ng-model='message' name="name" rows="4" cols="80" placeholder="  Add a personal message"></textarea>
-  <button id='conversations-send-message-btn' class='btn' name="button">Send Message</button>
+  <form id="send-message" action="index.html" method="post">
+    <textarea id='message' ng-model='message' name="name" rows="4" cols="80" placeholder="  Add a personal message"></textarea>
+    <button id='conversations-send-message-btn' class='btn' name="button">Send Message</button>
+  </form>
+
 </section>
+
+<!-- message container -->
+<section>
+  <div id='chat'>
+
+  </div>
+
+
+</section>
+
+<!-- ================================================================================================================================ -->
+<!-- original socket -->
+<!-- ================================================================================================================================ -->
+<!-- <form id="send-message" action="index.html" method="post">
+  <input size='35'id='message'></input>
+  <input size='25' type='submit'></input>
+</form> -->

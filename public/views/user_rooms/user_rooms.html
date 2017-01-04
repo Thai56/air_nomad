@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="jumbotron">
+    <section>
+      <div ng-style='{"height":"40px","width":"30%","border":"1px solid black","text-align":"center","padding-top":"8px"}'>
+        <a ui-sref="user_rooms.user_listings({viewParam:usr})">Your Listing</a>
+      </div>
+      <div ng-style='{"height":"40px","width":"30%","border":"1px solid black","text-align":"center","padding-top":"8px"}'>
+        <a ui-sref="user_rooms.user_reservations({viewParam:usr})">Your Reservation</a>
+      </div>
+      <div ng-style='{"height":"40px","width":"30%","border":"1px solid black","text-align":"center","padding-top":"8px"}'>
+        <a ui-sref="user_rooms.user_trips({viewParam:usr})">Your Trips</a>
+      </div>
+    </section>
+
+<!-- ============================================================================================================ -->
+<!-- ui view child of user_rooms -->
+<!-- ============================================================================================================ -->
+  <div ng-style='{"height":"400px","width":"600px","border":"1px solid black"}' ui-view>
+
+  </div>
+  </div>
+</div>

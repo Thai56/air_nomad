@@ -1,4 +1,4 @@
-<form class="" action="http://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
+
   <section class='rooms-listing-main-booking-container'>
   <!-- ////////////
   price per night
@@ -13,13 +13,13 @@
     <section class='input-group input-group-lg date-input-container'>
       <div class="input-group date-input-wrapper">
         <h4 class='check-in-out'>Check In</h4>
-        <input class='form-controller input-date' type="date" ng-model='startDate.value'>
+        <input class='form-controller input-date' min='{{today}}' type="date" ng-model='startDate.value'>
         <!-- <input type="text" class='form-control' uib-datepicker-popup is-open='valuationsDatePIckerIsOpen' ng-click='valuationDatePickerOpen()' ng-model='valuationDate'> -->
       </div>
       <div class="input-group date-input-wrapper">
         <h4 class='check-in-out'>Check Out</h4>
-        <input class='form-controller input-date' type="date" ng-model='endDate.value'>
-        <!-- <input type="text" class='form-control' uib-datepicker-popup is-open='valuationsDatePIckerIsOpen' ng-click='valuationDatePickerOpen()' ng-model='valuationDate'> -->
+        <input class='form-controller input-date' min='{{changedDate}}' type="date" ng-model='endDate.value'>
+        <!-- {{startDate.value  | date : 'yyyy-MM-dd'}} -->
       </div>
     </section>
   <!--////////
@@ -46,7 +46,19 @@
       </div>
   <!-- End  -->
     </section>
+<!-- ============================================================================================================================= -->
+<!-- form where our values will go -->
+<!-- ============================================================================================================================= -->
+  <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
+  <input type="hidden" name="cmd" value="_xclick">
+  <input type="hidden" name="item_name" value="{{price.listing_name}}">
+  <input type="hidden" name="item_number" value="{{price.room_id}}">
+  <input type="hidden" name="business" value="ppaprogrammer@gmail.com">
+  <input type="hidden" name="quantity" value="1">
+  <input type="hidden" name="currency_code" value="USD">
+  <input type="hidden" name="first_name" value="Thai">
+  <input type="hidden" name="last_name" value="Tran">
+  <input type="hidden" name="amount" value="{{(endDate.value - startDate.value | date: 'd') * price.nightly_price}}">
   <button class="btn book-now-btn" ng-click='reserveDate(startDate.value,endDate.value)'>Book Now</button>
-
+  </form>
   </section>
-</form>

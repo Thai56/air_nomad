@@ -3,7 +3,7 @@ angular.module('myApp').directive('myNav', function(){
     restrict:'E',
     templateUrl:'./features/nav/navbarTmpl.html',
     controller: function($scope,ngDialog,navBarService,$rootScope) {
-
+      
       $rootScope.userNotLoggedIn = true;
 
       $scope.clickToRegister = () => {
@@ -34,6 +34,6 @@ angular.module('myApp').directive('myNav', function(){
       getUser()
       // $scope.$watch('userNotLoggedIn')
     }
-    
+
   }
 })

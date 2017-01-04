@@ -5,10 +5,6 @@ angular.module('myApp',['ui.router','ui.bootstrap','ngDialog','angular-input-sta
     templateUrl:'./views/home/home.html',
     controller:'homeCtrl'
   })
-  .state('test', {
-    templateUrl:'./views/test.html',
-    url:'/test'
-  })
   .state('rooms', {
     url:'/rooms/:room_id',
     controller: 'roomsCtrl',
@@ -34,6 +30,27 @@ angular.module('myApp',['ui.router','ui.bootstrap','ngDialog','angular-input-sta
     url:'/listings/:search_id/',
     controller:'searchListingsCtrl',
     params:{myParam:null}
+  })
+  .state('user_rooms', {
+    url:'/user_rooms',
+    templateUrl:'./views/user_rooms/user_rooms.html',
+    controller:'userRoomsCtrl'
+  })
+  .state('user_rooms.user_listings', {
+    url:'/user_listings',
+    templateUrl:'./views/user_rooms-listings/user_rooms-listings.html',
+    controller:'userRoomsListingsCtrl',
+    params:{viewParam:null}
+  })
+  .state('user_rooms.user_reservations', {
+    url:'/user_reservations',
+    templateUrl:'./views/user_rooms-reservations/user_rooms-reservations.html',
+    params:{viewParam:null}
+  })
+  .state('user_rooms.user_trips', {
+    url:'/user_trips',
+    templateUrl:'./views/user_rooms-trips/user_rooms-trips.html',
+    params:{viewParam:null}
   })
 
   $urlRouterProvider
