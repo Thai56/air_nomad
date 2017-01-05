@@ -91,65 +91,14 @@ function isAuthenticated(req,res,next) {
 // ==============================================================================================================================
 // sockets.io
 // ==============================================================================================================================
-var rooms = ['room1','maxsRoom','ronniesRoom'];
-var usernames = {}
+
 io.sockets.on('connection', function(socket){
-  io.sockets.on('connection', function(socket) {
-    console.log('user sort of connected');
-  })
-  socket.emit('addUser', function(username){
-    socket.username = username;
-    console.log(username + 'las logged');
 
-    socket.room = rooms [0];
-
-    usernames[username] = socket.username;
-
-    socket.join(socket.room)
-    // emit to the client that he has joined a room
-    updateClient(socket, username, socket.room);
-
-    updateChat(socket,'connected');
-
-    //TODO: add updating the room list
-
-  });
-  //send messages
-  socket.on('sendChat', function(data){
-    console.log(socket.username + 'sent a message');
-    io.sockets.in(socket.room).emit('updateChat', socket.username,data)
+  socket.on('send message',function(data) {
+    io.sockets.emit('new message', data);
   })
 
-  socket.on('disconnect', function(){
-    delete usernames[socket.username];
-
-    io.sockets.emit('updateUsers', usernames);
-    updateGlobal(socket,'disconnected')
-    socket.leave(socket.leave)
-  })
-});
-// ================================================
-// functions for socket.io
-// ================================================
-function updateClient(socket,username,newRoom) {
-  socket.emit('updateChat', 'SERVER', 'You\'ve connected to' + newRoom);
-}
-
-function updateChatRoom(socket, message) {
-  socket.broadcast.to(socket.room).emit('updateChat','SERVER',socket.username + ' has ' + message)
-}
-
-function updateGlobal(socket,message) {
-  socket.broadcase.emit('updateChat', 'SERVER', socket.username + 'have' + message)
-}
-
-// io.sockets.on('connection', function(socket){
-//
-//   socket.on('send message',function(data) {
-//     io.sockets.emit('new message', data);
-//   })
-//
-// })
+})
 // ====================================================================================================
 // MIDDLEWARE
 // ====================================================================================================
