@@ -1,1 +1,50 @@
-<h3>THIS IS THE LISTINGS VIEW FOR THE USER</h3>
+<header ng-style='{
+  "width":"100%",
+  "height":"70px",
+  "background":"#F2F2F2",
+  "border":"1px solid black",
+  "border-radius":"4px"
+}'>
+<h3 ng-style='{"margin-left":"16px","font-weight":"430"}'>Listings</h3>
+</header>
+<!-- this ng-repeat section needs a border bottom -->
+<section ng-repeat='listing in yourlistings' ng-style='{
+  "text-align":"center",
+  "width":"100%",
+  "border":"1px solid black",
+  "display":"flex",
+  "flex-direction":"row",
+  "align-content":"center",
+  "justify-content":"space-between",
+  "padding-top":"54px",
+  "padding-bottom":"54px"
+}'>
+  <!-- div for the image -->
+  <div ng-style='{
+    "width":"220px",
+    "height":"180px",
+    "margin-left":"24px",
+    "background":"url({{listing.image_url}})no-repeat",
+    "background-size":"cover",
+    "background-position": "center",
+    "background-origin":"inherit",
+    "cursor":"pointer"}'>
+
+  </div>
+  <!-- listing name -->
+  <h3 ng-style='{
+    "margin-top":"50px",
+    "margin-right":"64px"
+  }'>  {{listing.listing_name}}
+</h3>
+  <!-- button inside of the listings section -->
+  <button type="button" class='btn' ng-style='{
+    "margin-top":"54px",
+    "height":"60px",
+    "width":"160px",
+    "background":"#FF4D54",
+    "color":"white",
+    "font-size":"32px",
+    "margin-right":"40px"
+  }'>Update</button>
+</section>

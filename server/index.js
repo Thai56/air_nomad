@@ -13,9 +13,11 @@ const express = require('express'),
     cookieParser = require('cookie-parser')
     session = require('express-session'),
     config = require('./config'),
-    client = require('braintree-web/client'),
-    paypal = require('braintree-web/paypal');
-
+    path = require('path');
+// ===========================================================================================
+// socket.io angular variables
+// ===========================================================================================
+// var users = [];
     // ====================================================================================================
     // WATCH/LISTEN FUNCTION
     // ====================================================================================================
@@ -89,12 +91,65 @@ function isAuthenticated(req,res,next) {
 // ==============================================================================================================================
 // sockets.io
 // ==============================================================================================================================
+var rooms = ['room1','maxsRoom','ronniesRoom'];
+var usernames = {}
 io.sockets.on('connection', function(socket){
-  socket.on('send message',function(data) {
-    io.sockets.emit('new message', data);
+  io.sockets.on('connection', function(socket) {
+    console.log('user sort of connected');
   })
-})
+  socket.emit('addUser', function(username){
+    socket.username = username;
+    console.log(username + 'las logged');
 
+    socket.room = rooms [0];
+
+    usernames[username] = socket.username;
+
+    socket.join(socket.room)
+    // emit to the client that he has joined a room
+    updateClient(socket, username, socket.room);
+
+    updateChat(socket,'connected');
+
+    //TODO: add updating the room list
+
+  });
+  //send messages
+  socket.on('sendChat', function(data){
+    console.log(socket.username + 'sent a message');
+    io.sockets.in(socket.room).emit('updateChat', socket.username,data)
+  })
+
+  socket.on('disconnect', function(){
+    delete usernames[socket.username];
+
+    io.sockets.emit('updateUsers', usernames);
+    updateGlobal(socket,'disconnected')
+    socket.leave(socket.leave)
+  })
+});
+// ================================================
+// functions for socket.io
+// ================================================
+function updateClient(socket,username,newRoom) {
+  socket.emit('updateChat', 'SERVER', 'You\'ve connected to' + newRoom);
+}
+
+function updateChatRoom(socket, message) {
+  socket.broadcast.to(socket.room).emit('updateChat','SERVER',socket.username + ' has ' + message)
+}
+
+function updateGlobal(socket,message) {
+  socket.broadcase.emit('updateChat', 'SERVER', socket.username + 'have' + message)
+}
+
+// io.sockets.on('connection', function(socket){
+//
+//   socket.on('send message',function(data) {
+//     io.sockets.emit('new message', data);
+//   })
+//
+// })
 // ====================================================================================================
 // MIDDLEWARE
 // ====================================================================================================
@@ -117,7 +172,22 @@ app.post('/login', passport.authenticate('local'), function(req, res, next) {
 app.get('/auth/me', function(req, res) {
   console.log('this is the req.user from auth/me',req.user);
   if (!req.user) return res.sendStatus(404);
-  res.status(200).send(req.user);
+  else {
+    db.getUserById(req.user.id, (err,user)=> {
+      const userObj = user [0]
+      req.user.first_name = userObj.first_name;
+      req.user.last_name = userObj.last_name;
+      for (var k in userObj){
+        console.log('this is the k',k)
+        console.log('this is the value',userObj[k]);
+        req.user[k] = userObj[k]
+      }
+      console.log('!!!!!!!!!!!!!!! this is the user req.user after for loop', req.user);
+      console.log('this is the req.user from /auth/me',req.user);
+      res.status(200).send(req.user);
+    })
+  }
+
 })
 
 app.get('/logout', function(req, res) {
@@ -168,3 +238,11 @@ app.get('/search', Ctrl.getSearchListings)
 app.post('/search/filter_listings', Ctrl.filterSearchListings)
 
 app.get('/users/:user_id', Ctrl.getUserById)
+
+app.post('/conversations/insert_message', isAuthenticated, Ctrl.insertMessage)
+
+app.get('/conversations/messages/:host_id', isAuthenticated, Ctrl.getConversation)
+
+app.post('/users/profile/edit', isAuthenticated, Ctrl.saveChanges)
+
+app.get('/user_rooms/user_listings', isAuthenticated, Ctrl.getListingsForView)

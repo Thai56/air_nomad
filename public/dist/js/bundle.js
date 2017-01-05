@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp', ['ui.router', 'ui.bootstrap', 'ngDialog', 'angular-input-stars', 'ngRoute']).config(function ($stateProvider, $urlRouterProvider) {
+angular.module('myApp', ['ui.router', 'ui.bootstrap', 'ngDialog', 'angular-input-stars', 'ngRoute', 'ngStorage']).config(function ($stateProvider, $urlRouterProvider) {
   $stateProvider.state('home', {
     url: '/',
     templateUrl: './views/home/home.html',
@@ -43,6 +43,14 @@ angular.module('myApp', ['ui.router', 'ui.bootstrap', 'ngDialog', 'angular-input
     url: '/user_trips',
     templateUrl: './views/user_rooms-trips/user_rooms-trips.html',
     params: { viewParam: null }
+  }).state('users_edit_profile', {
+    url: '/users/profile/edit',
+    templateUrl: './views/users-edit-profile/users-edit-profile.html',
+    params: { viewParam: null },
+    controller: 'usersEditProfileCtrl'
+  }).state('error', {
+    url: '/error',
+    templateUrl: './views/err/err.html'
   });
 
   $urlRouterProvider.otherwise('/');
@@ -51,33 +59,31 @@ angular.module('myApp', ['ui.router', 'ui.bootstrap', 'ngDialog', 'angular-input
 // Now going to check index.html for any script tags or links that may help carousel
 'use strict';
 
-angular.module('myApp').controller('conversationsMessageBoxCtrl', function ($scope, $stateParams, conversationsMessageBoxService) {
-  var user_id = $stateParams.user_id;
-  conversationsMessageBoxService.getConversationUsername(user_id).then(function (response) {
-    $scope.username = response[0];
+angular.module('myApp').controller('conversationsMessageBoxCtrl', function ($scope, $stateParams, $location, $localStorage, conversationsMessageBoxService, loginService) {
+
+  var socket = io.connect();
+
+  socket.on('connect', function () {
+    socket.emit('addUser', prompt('What\'s your name?'));
   });
-  // ===================================================================================================================
-  // jQuery
-  // ==========================================================================================================================================
 
-  jQuery(function ($) {
-    var socket = io.connect();
-    var $messageForm = $('#send-message');
-    var $messageBox = $('#message');
-    var $chat = $('#chat');
+  $(function () {
+    $('#datasend').click(function () {
+      var message = $('#data').val();
+      $('#data').val('');
+      $('$data').focus();
 
-    $messageForm.submit(function (e) {
-      e.preventDefault();
-      socket.emit('send message', $messageBox.val());
-      $messageBox.val('');
+      socket.emit('sendChat', message);
     });
+    $('#data').keypress(function (e) {
+      if (e.which == 13) {
+        $(this).blur();
 
-    socket.on('new message', function (data) {
-      console.log('this is the data', data);
-      $chat.append(data + '<br/>');
+        $('#datasend').focus().click();
+        $('#data').focus();
+      }
     });
   });
-  // ==========================================================================================================================================
 });
 'use strict';
 
@@ -90,7 +96,7 @@ angular.module('myApp').directive('conversationMessageBox', function () {
 });
 'use strict';
 
-angular.module('myApp').service('conversationsMessageBoxService', function ($http, $q) {
+angular.module('myApp').service('conversationsMessageBoxService', function ($http, $q, $rootScope) {
   this.getConversationUsername = function (user_id) {
     var defer = $q.defer();
     $http({
@@ -101,6 +107,69 @@ angular.module('myApp').service('conversationsMessageBoxService', function ($htt
     });
     return defer.promise;
   };
+
+  this.insertMessage = function (user_message, message_recepient, message_time) {
+    console.log(user_message, message_recepient, message_time);
+    var defer = $q.defer();
+    $http({
+      method: 'post',
+      url: '/conversations/insert_message',
+      data: {
+        message_recepient: message_recepient * 1,
+        user_message: user_message,
+        message_time: message_time
+      }
+    }).then(function (response) {
+      console.log('response'.response.data);
+      defer.resolve(response.data);
+    });
+    return defer.promise;
+  };
+  // ================================================================
+  // get conversations
+  // ========================================================================
+  this.getConversation = function (host_id) {
+    var defer = $q.defer();
+    $http({
+      method: 'get',
+      url: '/conversations/messages/' + host_id
+    }).then(function (response) {
+      console.log('this is the response . data', response.data);
+      defer.resolve(response.data);
+    });
+    return defer.promise;
+  };
+  // ===========================================================================================v==========================
+  // angular socket.io still trying to make work but too tired at the moment
+  // ==================================================================================================================================
+  //   this.socket = ($rootScope) => {
+  //   let socket =io.connect()
+  //
+  //   return {
+  //     on:on,
+  //     emit:emit
+  //   }
+  // //Socket 'on' and 'emit' methods here
+  // this.on = (eventName,callBack) => {
+  //   socket.on(eventname, () => {
+  //     let args = arguments;
+  //     $rootScope.$apply(() => {
+  //       callback.apply(socket,args);
+  //     });
+  //   });
+  // };
+  //
+  // this.emit =(eventName,data,callback) => {
+  //   socket.emit(evenName,data,() => {
+  //     let args = arguments;
+  //     $rootScope.$apply(() => {
+  //       if(callback){
+  //         callback.apply(socket,args);
+  //       }
+  //     });
+  //   });
+  // };
+  // }
 });
 'use strict';
 
@@ -171,13 +240,15 @@ angular.module('myApp').directive('homeHeader', function () {
 });
 'use strict';
 
-angular.module('myApp').controller('loginCtrl', function ($scope, loginService, $routeParams, $rootScope) {
+angular.module('myApp').controller('loginCtrl', function ($scope, loginService, $routeParams, $rootScope, navbarDropdownService) {
   $scope.loginUser = function (email, password) {
     console.log('ccreds from the loginCtrl', email, password);
     loginService.loginUser({
       username: email,
       password: password
     }).then(function (res) {
+      $scope.email = '';
+      $scope.password = '';
       getUser();
     });
   };
@@ -190,8 +261,9 @@ angular.module('myApp').controller('loginCtrl', function ($scope, loginService, 
   function getUser() {
     loginService.getUser().then(function (user) {
       if (user) {
-        $scope.user = user.username;
-        console.log('this is user not logged in ==> ', $scope.userNotLoggedIn);
+        //  $scope.user = user.username;
+        $rootScope.user = user;
+        console.log('this is user not logged in ==> ', $rootScope.userNotLoggedIn);
         $rootScope.userNotLoggedIn = false;
       } else {
         $scope.user = 'NOT LOGGED IN';
@@ -211,10 +283,10 @@ angular.module('myApp').service('loginService', function ($http, $q, $state) {
       data: credentials
     }).then(function (res) {
       console.log('this is the res from loginUserService', res);
-      if (typeof res.data.redirect == 'string') {
-        console.log('res.data.redirect', res.data.redirect);
-        $state.go(res.data.redirect);
-      }
+      // if( typeof res.data.redirect =='string'){
+      //   console.log('res.data.redirect',res.data.redirect);
+      //   // $state.go(res.data.redirect)
+      // }
       return res.data;
     }).catch(function (err) {
       alert('please log in or click to sign up ');
@@ -238,62 +310,6 @@ angular.module('myApp').service('loginService', function ($http, $q, $state) {
       console.log('checkForToken', token);
       sessionStorage.setItem('myToken', token);
     }
-  };
-});
-'use strict';
-
-angular.module('myApp').controller('conversationsProfilePicCtrl', function ($scope, $stateParams, conversationsProfilePicService) {
-  var user_id = $stateParams.user_id;
-  conversationsProfilePicService.getConversationProfilePic(user_id).then(function (response) {
-    $scope.profilePic = response;
-  });
-});
-'use strict';
-
-angular.module('myApp').directive('conversationProfilePic', function () {
-  return {
-    restrict: 'AE',
-    templateUrl: './features/conversations-profile-pic/conversations-profile-pic.html',
-    controller: 'conversationsProfilePicCtrl'
-  };
-});
-'use strict';
-
-angular.module('myApp').service('conversationsProfilePicService', function ($http, $q) {
-  this.getConversationProfilePic = function (user_id) {
-    var defer = $q.defer();
-    $http({
-      method: 'get',
-      url: '/conversations/profile-pic/' + user_id
-    }).then(function (response) {
-      console.log('this is the resposne.data', response.data);
-      defer.resolve(response.data);
-    });
-    return defer.promise;
-  };
-});
-'use strict';
-
-angular.module('myApp').controller('navSearchInputCtrl', function ($scope, $state, $stateParams, navSearchInputService) {
-  $scope.goToSearchState = function (search_id) {
-    console.log('search_id', search_id);
-    $state.go('search.listings', { search_id: search_id });
-  };
-});
-'use strict';
-
-angular.module('myApp').directive('navSearchInput', function () {
-  return {
-    restrict: 'AE',
-    templateUrl: './features/nav-search-input/nav-search-input.html',
-    controller: 'navSearchInputCtrl'
-  };
-});
-'use strict';
-
-angular.module('myApp').service('navSearchInputService', function ($http, $q) {
-  this.getMessage = function () {
-    return 'Hello from the nav search input service there willl be an input form here to search for nearest cities and maybe states and countries ';
   };
 });
 'use strict';
@@ -322,16 +338,22 @@ angular.module('myApp').directive('myNav', function () {
       function getUser() {
         navBarService.getUser().then(function (user) {
           if (user) {
+            console.log(user);
             console.log('user not logged in is ===> ', $scope.userNotLoggedIn);
-            $scope.user = user.username;
-            // $scope.userNotLoggedIn = false;
+            $rootScope.user = user.username;
+            $rootScope.userNotLoggedIn = false;
           } else {
             $scope.user = 'NOT LOGGED IN';
           }
         });
       }
       getUser();
-      // $scope.$watch('userNotLoggedIn')
+      // $rootScope.$watch('userNotLoggedIn', (oldVal,newVal) => {
+      //   if(newVal){
+      //     getUser();
+      //     oldVal = newVal;
+      //   }
+      // })
     }
 
   };
@@ -365,11 +387,37 @@ angular.module('myApp').service('navBarService', function ($http, $q) {
 });
 'use strict';
 
+angular.module('myApp').controller('navSearchInputCtrl', function ($scope, $state, $stateParams, navSearchInputService) {
+  $scope.goToSearchState = function (search_id) {
+    console.log('search_id', search_id);
+    $state.go('search.listings', { search_id: search_id });
+  };
+});
+'use strict';
+
+angular.module('myApp').directive('navSearchInput', function () {
+  return {
+    restrict: 'AE',
+    templateUrl: './features/nav-search-input/nav-search-input.html',
+    controller: 'navSearchInputCtrl'
+  };
+});
+'use strict';
+
+angular.module('myApp').service('navSearchInputService', function ($http, $q) {
+  this.getMessage = function () {
+    return 'Hello from the nav search input service there willl be an input form here to search for nearest cities and maybe states and countries ';
+  };
+});
+'use strict';
+
 angular.module('myApp').controller('navbarDropdownCtrl', function ($scope, $stateParams, $rootScope, navbarDropdownService, $log) {
   function getUser() {
     navbarDropdownService.getUser().then(function (user) {
       if (user) {
         console.log(user);
+        $rootScope.currentUser = user;
+        console.log('This is the use that is signed in ===>', $rootScope.user);
         $scope.user = user.username;
         navbarDropdownService.getUserById(user.id).then(function (response) {
           $scope.userData = response;
@@ -380,6 +428,10 @@ angular.module('myApp').controller('navbarDropdownCtrl', function ($scope, $stat
       };
     });
   }
+  $rootScope.$watch('user', function (oldVal, newVal) {
+    console.log('This function is firing/working');
+    getUser();
+  });
 
   getUser();
   //   //    //
@@ -1398,6 +1450,50 @@ angular.module('myApp').service('usersProfilePicService', function ($http, $q) {
 });
 'use strict';
 
+angular.module('myApp').controller('conversationsProfilePicCtrl', function ($scope, $stateParams, conversationsProfilePicService) {
+  var user_id = $stateParams.user_id;
+  conversationsProfilePicService.getConversationProfilePic(user_id).then(function (response) {
+    $scope.profilePic = response;
+  });
+});
+'use strict';
+
+angular.module('myApp').directive('conversationProfilePic', function () {
+  return {
+    restrict: 'AE',
+    templateUrl: './features/conversations-profile-pic/conversations-profile-pic.html',
+    controller: 'conversationsProfilePicCtrl'
+  };
+});
+'use strict';
+
+angular.module('myApp').service('conversationsProfilePicService', function ($http, $q) {
+  this.getConversationProfilePic = function (user_id) {
+    var defer = $q.defer();
+    $http({
+      method: 'get',
+      url: '/conversations/profile-pic/' + user_id
+    }).then(function (response) {
+      console.log('this is the resposne.data', response.data);
+      defer.resolve(response.data);
+    });
+    return defer.promise;
+  };
+});
+'use strict';
+
+angular.module('myApp').controller('start_datepickerCtrl', function ($scope) {});
+'use strict';
+
+angular.module('myApp').directive('startDatepicker', function () {
+  return {
+    restrict: 'AE',
+    templateUrl: './features/home_header/homeHeader-datepickers/start/start_datepicker.html',
+    controller: 'start_datepickerCtrl'
+  };
+});
+'use strict';
+
 angular.module('myApp').controller('endDatepickerCtrl', function ($scope) {});
 'use strict';
 
@@ -1412,18 +1508,6 @@ angular.module('myApp').directive('endDatepicker', function () {
         return console.log(ngModelCtrl);
       });
     }
-  };
-});
-'use strict';
-
-angular.module('myApp').controller('start_datepickerCtrl', function ($scope) {});
-'use strict';
-
-angular.module('myApp').directive('startDatepicker', function () {
-  return {
-    restrict: 'AE',
-    templateUrl: './features/home_header/homeHeader-datepickers/start/start_datepicker.html',
-    controller: 'start_datepickerCtrl'
   };
 });
 'use strict';
@@ -1508,7 +1592,7 @@ angular.module('myApp').controller('searchListingsCtrl', function ($scope, $stat
 });
 'use strict';
 
-angular.module('myApp').service('searchListingsService', function ($http, $q) {
+angular.module('myApp').service('searchListingsService', function ($http, $q, $state) {
   this.getSearchListings = function (string) {
     var defer = $q.defer();
     $http({
@@ -1516,7 +1600,13 @@ angular.module('myApp').service('searchListingsService', function ($http, $q) {
       url: '/search' + '?search=' + string
     }).then(function (response) {
       console.log('response from getSearchListings in service', response.data);
-      defer.resolve(response.data);
+      console.log('this is the response.data.length', response.data.length);
+      if (response.data.length < 1) {
+        console.log('This is the response length', response.data.length);
+        $state.go('error');
+      } else {
+        defer.resolve(response.data);
+      }
     });
     return defer.promise;
   };
@@ -1529,8 +1619,10 @@ angular.module('myApp').service('searchListingsService', function ($http, $q) {
       data: obj
     }).then(function (response) {
       console.log('response in searchListingsService filterSearchListings', response.data);
+
       defer.resolve(response.data);
     });
+
     return defer.promise;
   };
 });
@@ -1542,13 +1634,42 @@ angular.module('myApp').controller('userRoomsCtrl', function ($scope, $statePara
 angular.module('myApp').service('userRoomsService', function ($http, $q) {});
 'use strict';
 
-angular.module('myApp').controller('userRoomsListingsCtrl', function ($scope, $stateParams, $rootScope, userRoomsListingsService) {
-  var check = $stateParams.viewParam;
-  console.log(check);
+angular.module('myApp').controller('userRoomsListingsCtrl', function ($scope, $stateParams, $rootScope, userRoomsListingsService, loginService) {
+  loginService.getUser().then(function (user) {
+    if (user) {
+      $scope.user = user;
+      console.log(user);
+      userRoomsListingsService.getListingsForView($scope.user.id).then(function (response) {
+        $scope.yourlistings = response;
+        console.log($scope.yourlistings);
+      });
+    } else {
+      $scope.user = 'NOT LOGGED IN';
+    };
+  });
 });
+// select * from listing_images
+// join listings on listings.id = listing_images.listing_id
+// join rooms on rooms.id = listings.room_id
+// where listings.user_id = 6
 'use strict';
 
-angular.module('myApp').service('userRoomsListingsService', function ($http, $q) {});
+angular.module('myApp').service('userRoomsListingsService', function ($http, $q, $state) {
+  this.getListingsForView = function (user_id) {
+    console.log(user_id);
+    var defer = $q.defer();
+    $http({
+      method: 'get',
+      url: '/user_rooms/user_listings' + '?user_id=' + user_id
+    }).then(function (response) {
+      console.log(response.data);
+      defer.resolve(response.data);
+    }).catch(function (err) {
+      state.go('err');
+    });
+    return defer.promise;
+  };
+});
 'use strict';
 
 angular.module('myApp').controller('usersCtrl', function ($scope, $stateParams, usersService) {
@@ -1561,6 +1682,53 @@ angular.module('myApp').service('usersService', function ($http, $q) {
   var message = 'Hello from the Users State';
   this.getMessage = function () {
     return message;
+  };
+});
+'use strict';
+
+angular.module('myApp').controller('usersEditProfileCtrl', function ($scope, $rootScope, $stateParams, loginService, usersEditProfileService) {
+  loginService.getUser().then(function (user) {
+    if (user) {
+      $scope.user = user;
+      console.log(user);
+    } else {
+      $scope.user = 'NOT LOGGED IN';
+    };
+  });
+
+  // Check user object
+  $scope.saveChanges = function (editObj) {
+    console.log(editObj);
+    if (!editObj) {
+      return alert('you need to change something');
+    }
+    var confirm = prompt('are you sure you want about these changes?', 'yes! I am Positive! Press OK!');
+    console.log(confirm);
+    if (confirm !== null) {
+      // call usersEditProfileService.saveChanges and pass editObj
+      usersEditProfileService.saveChanges(editObj).then(function (res) {
+        return alert(res);
+      });
+    }
+  };
+});
+'use strict';
+
+angular.module('myApp').service('usersEditProfileService', function ($http, $q) {
+  this.saveChanges = function (userObj) {
+    console.log(userObj);
+    var defer = $q.defer();
+    $http({
+      method: 'post',
+      url: '/users/profile/edit',
+      data: userObj
+    }).then(function (response) {
+      console.log(response.data);
+      defer.resolve(response.data);
+    }).catch(function (err) {
+      alert(err.data);
+    });
+    return defer.promise;
   };
 });
 //# sourceMappingURL=bundle.js.map

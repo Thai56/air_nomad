@@ -93,8 +93,9 @@ module.exports = {
     },
     getRoomListingNightlyPrice: (req, res, next) => {
         const room_id = req.params.room_id;
+        console.log('||||||||||||!!!!!!!THIS IS THE REQ.USER LOCATIED IN GETROOMSLISTNIGHTLYPRICE |||||||||||',req.user);
         console.log('nightly price controller params', room_id);
-        db.getRoomListingNightlyPrice(room_id, (err, price) => {
+        db.getRoomListingNightlyPrice(room_id,(err, price) => {
             if (!err) {
                 console.log('backend nightly price =====> price', price);
                 res.status(200).send(price)
@@ -307,5 +308,92 @@ module.exports = {
           res.status(422).send(err)
         }
       })
+    },
+    insertMessage: (req,res,next) => {
+      const messageObj = req.body;
+      const currentUser = req.user;
+      // function() {
+        //check to see if room exists
+        
+        // if not create room set counter variable
+
+      // }
+      // req.seession.room8 = [{message:'',sender_id:6},reciever_id:8]
+      // req.seession.room8.push({message:messageObj.message,sender_id:messsageObj.sender,reciever_id:messageObj.reciever})
+      console.log(req.body.message_recepient,req.user.id);
+      const dataArr = [messageObj.user_message, currentUser.id,messageObj.message_recepient,messageObj.message_time]
+      console.log('this is the data array',dataArr);
+      db.insertMessage(dataArr, (err, message) => {
+        if(!err){
+
+        }
+        else {
+          console.log('This is the err from insertMessage backend',err);
+          res.status(422).send(err)
+        }
+      })
+    },
+  getConversation: (req,res,next) => {
+    const host_id = req.params.host_id;
+    const user_id = req.user.id
+    db.getConversation([host_id,user_id], (err,messages)=> {
+      if(!err){
+        console.log('these are the messages from getCONVERSATIONS',messages);
+        res.status(200).send(messages)
+      }
+      else {
+        console.log('this is the err from get conversations',err);
+        res.status(422).send(err)
+      }
+    })
+  },
+  saveChanges: (req,res,next)=> {
+    const editObj = req.body;
+    console.log('!!!!!this is the editObj', editObj);
+    console.log('!!!!!this is the req.user',req.user);
+    for(var k in req.user){
+      console.log('%%%%%%THIS IS K%%%%%',k);
+      for(var j in editObj){
+        console.log("$$$$$J$$$$$$",j);
+        if(k === j){
+          console.log('@@@@@@@@@@@@@@THESE MATCH@@@@@@@@@', k)
+          console.log('########### AND THESE ARE THEIR VALUES  ####', req.user[k]);
+          console.log('^^^^^^^^^^ AND THESE ARE THEIR NEW VALUES ^^^^',editObj[j]);
+          req.user[k] = editObj[j]
+
+        }
+      }
     }
+    console.log('&&&&&&&&&&&THIS IS THE NEW REQ.USER&&&&&&&&',req.user);
+    const newUser = req.user
+    const newUserArr = [newUser.first_name,newUser.last_name,newUser.email,newUser.gender,newUser.where_you_live,newUser.preffered_currency,newUser.password,newUser.id]
+    // db.update_user_in_users()
+    console.log('++++++++++++++++ NEWUSER ++++++++++++',newUser);
+    console.log('|||||||||||||| NEWUSERARRAY ||||||||||||',newUserArr);
+    // now to write a schema for the updating the user in the users table
+    //db.updateUserInUsers => update_user_in_users
+    db.update_user_in_users(newUserArr, (err, success) => {
+      if(!err){
+        console.log('~~~~~~~~~~~~~~ this is the success ~~~~~~~~~~~',success);
+        res.status(200).send('Your User Profile has been Successfully Updated')
+      }
+      else {
+        console.log('=========== this is the error ========',err);
+        res.status(422).send(err)
+      }
+    })
+
+  },
+  getListingsForView: (req,res,next) => {
+    console.log('!@#$%^&*( THIS IS REQ.QUERY.USER_ID ))(*&^%$#@!)',req.query.user_id);
+    db.getListingsForView(req.query.user_id, (err,listings) => {
+      if(!err){
+        console.log('!@#$%^&*() LISTINGS )(*&^%$#@!)',listings);
+        res.status(200).send(listings)
+      }
+      else {
+        res.status(422).send(err)
+      }
+    })
+  }
 }

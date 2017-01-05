@@ -1,13 +1,40 @@
-<div class="container">
-  <div class="jumbotron">
-    <section>
-      <div ng-style='{"height":"40px","width":"30%","border":"1px solid black","text-align":"center","padding-top":"8px"}'>
+  <div class="container" ng-style='{
+    "width":"80%",
+    "background":"#F9F5FA",
+    "border":"1px solid black",
+    "padding":"0px",
+    "display":"flex",
+    "flex-direction":"row"
+  }'>
+    <section ng-style='{
+      "border":"1px solid black",
+      "width":"400px"
+    }'>
+      <div ng-style='{
+        "height":"40px",
+        "width":"100%",
+        "border-bottom":"1px solid black",
+        "text-align":"center",
+        "padding-top":"8px"
+      }'>
         <a ui-sref="user_rooms.user_listings({viewParam:usr})">Your Listing</a>
       </div>
-      <div ng-style='{"height":"40px","width":"30%","border":"1px solid black","text-align":"center","padding-top":"8px"}'>
+      <div ng-style='{
+        "height":"40px",
+        "width":"100%",
+        "border-bottom":"1px solid black",
+        "text-align":"center",
+        "padding-top":"8px"
+      }'>
         <a ui-sref="user_rooms.user_reservations({viewParam:usr})">Your Reservation</a>
       </div>
-      <div ng-style='{"height":"40px","width":"30%","border":"1px solid black","text-align":"center","padding-top":"8px"}'>
+      <div ng-style='{
+        "height":"40px",
+        "width":"100%",
+        "border-bottom":"1px solid black",
+        "text-align":"center",
+        "padding-top":"8px"
+      }'>
         <a ui-sref="user_rooms.user_trips({viewParam:usr})">Your Trips</a>
       </div>
     </section>
@@ -15,8 +42,11 @@
 <!-- ============================================================================================================ -->
 <!-- ui view child of user_rooms -->
 <!-- ============================================================================================================ -->
-  <div ng-style='{"height":"400px","width":"600px","border":"1px solid black"}' ui-view>
+  <div ng-style='{
+    "width":"100%",
+    "border":"1px solid black",
+    "margin-left":"40px"
+  }' ui-view>
 
   </div>
   </div>
-</div>

@@ -1,6 +1,17 @@
-<section ng-style='{"display":"flex","flex-direction":"row"}' ng-repeat='usr in userData'>
-  <div class='nav-menu-profile-pic'  ng-style='{"background":"url({{usr.image_url}})no-repeat","background-size":"cover","background-position": "center","background-origin":"inherit","cursor":"pointer"}'>
+<section ng-style='{
+  "display":"flex",
+  "flex-direction":"row",
+  "align-items":"center"
+}' ng-repeat='usr in userData'>
 
+  <div class='nav-menu-profile-pic'  ng-style='{
+    "margin-right":"11px",
+    "background":"url({{usr.image_url}})no-repeat",
+    "background-size":"cover",
+    "background-position": "center",
+    "background-origin":"inherit",
+    "cursor":"pointer"
+}'>
   </div>
   <li class="dropdown"><a class='drop-btn'>{{usr.first_name}}</a><span class='caret'></span>
 
@@ -9,7 +20,7 @@
           <li><a ui-sref="user_rooms.user_reservations({viewParam:usr})">Your Reservations</a></li>
           <li><a ui-sref="user_rooms.user_trips({viewParam:usr})">Your Trips</a></li>
           <li><a ui-sref="#">Wish Lists</a></li>
-          <li><a ui-sref="#">Edit Profile</a></li>
+          <li><a ui-sref="users_edit_profile({viewParam:usr})">Edit Profile</a></li>
           <hr>
           <li><a ui-sref="#">Account Settings</a></li>
           <li><a ui-sref='#' ng-click='logout()'>Log Out</a></li>

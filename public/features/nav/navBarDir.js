@@ -3,7 +3,7 @@ angular.module('myApp').directive('myNav', function(){
     restrict:'E',
     templateUrl:'./features/nav/navbarTmpl.html',
     controller: function($scope,ngDialog,navBarService,$rootScope) {
-      
+
       $rootScope.userNotLoggedIn = true;
 
       $scope.clickToRegister = () => {
@@ -22,9 +22,10 @@ angular.module('myApp').directive('myNav', function(){
       function getUser() {
         navBarService.getUser().then(function(user) {
           if (user) {
+            console.log(user);
             console.log('user not logged in is ===> ', $scope.userNotLoggedIn);
-            $scope.user = user.username;
-            // $scope.userNotLoggedIn = false;
+            $rootScope.user = user.username;
+            $rootScope.userNotLoggedIn = false;
           }
           else  {
             $scope.user = 'NOT LOGGED IN';
@@ -32,7 +33,13 @@ angular.module('myApp').directive('myNav', function(){
         })
       }
       getUser()
-      // $scope.$watch('userNotLoggedIn')
+      // $rootScope.$watch('userNotLoggedIn', (oldVal,newVal) => {
+      //   if(newVal){
+      //     getUser();
+      //     oldVal = newVal;
+      //   }
+      // })
+
     }
 
   }

@@ -3,6 +3,8 @@ angular.module('myApp').controller('navbarDropdownCtrl', ($scope,$stateParams,$r
     navbarDropdownService.getUser().then(function(user) {
       if (user){
         console.log(user);
+        $rootScope.currentUser = user;
+        console.log('This is the use that is signed in ===>',$rootScope.user);
          $scope.user = user.username;
          navbarDropdownService.getUserById(user.id).then(response => {
            $scope.userData = response
@@ -14,6 +16,10 @@ angular.module('myApp').controller('navbarDropdownCtrl', ($scope,$stateParams,$r
       };
     })
   }
+  $rootScope.$watch('user', (oldVal,newVal)=> {
+    console.log('This function is firing/working');
+      getUser()
+  })
 
   getUser();
   //   //    //

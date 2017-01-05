@@ -7,10 +7,10 @@ angular.module('myApp').service('loginService',function($http,$q,$state){
     })
     .then(function(res) {
       console.log('this is the res from loginUserService',res);
-      if( typeof res.data.redirect =='string'){
-        console.log('res.data.redirect',res.data.redirect);
-        $state.go(res.data.redirect)
-      }
+      // if( typeof res.data.redirect =='string'){
+      //   console.log('res.data.redirect',res.data.redirect);
+      //   // $state.go(res.data.redirect)
+      // }
       return res.data;
     })
     .catch(function(err) {

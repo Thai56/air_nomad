@@ -149,3 +149,20 @@ where lower(rooms.address) like lower('%'|| 'Fairfield' || '%')
     and rooms.bathrooms = 2
     and rooms.bedrooms = 1
     and room_accessories.nightly_price between 0 and 1000;
+
+
+    update users
+    	set first_name = 'Ronda',
+        	last_name = 'Justice',
+            email = 'Rhonda@gmail.com',
+            gender = 'F',
+            where_you_live='491 S Freedom Blvd Provo UT',
+            preffered_currency='USD',
+            password='woohoo'
+        where id = 2
+
+        select distinct rooms.*, listing_images.image_url, listings.id as listing_id, room_accessories.* from listing_images
+        join listings on listings.id = listing_images.listing_id
+        join rooms on rooms.id = listings.room_id
+        join room_accessories on rooms.id = room_accessories.rooms_id
+        where listings.user_id = 8

@@ -1,4 +1,30 @@
-<input type="text" ng-model='userpicked.location'>
-<start-datepicker ng-model='userpicked.startdate'></start-datepicker>
-<end-datepicker ng-model='userpicked.enddate'></end-datepicker>
-<button type="button" ng-click='findLocationByKeyword(userpicked)' name="button">Search</button>
+<div ng-style='{
+  "margin-top":"15px",
+  "width":"80%",
+  "margin":"auto",
+  "height":"60px",
+  "border":"1px solid black",
+  "display":"flex",
+  "align-items":"center",
+  "margin-bottom":"20px"
+}'>
+  <input type="text" placeholder="Where are you going?"
+  ng-style='{
+    "margin-left":"40px",
+    "height":"40px",
+    "width":"600px",
+    "padding-left":"24px"
+    }'
+  ng-model='userpicked.location'>
+
+  <start-datepicker ng-style='{"margin-left":"40px","height":"40px"}'ng-model='userpicked.startdate'></start-datepicker>
+  <end-datepicker ng-style='{"margin-left":"40px","height":"40px"}'ng-model='userpicked.enddate'></end-datepicker>
+  <button type="button" ng-style='{
+    "margin-left":"40px",
+    "height":"40px",
+    "width":"92px",
+    "background":"#FF7E82",
+    "color":"white"
+  }'
+  class='btn' ng-click='findLocationByKeyword(userpicked)' name="button">Search</button>
+</div>

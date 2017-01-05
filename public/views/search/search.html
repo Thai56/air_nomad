@@ -1,9 +1,18 @@
-<h2>{{messages}}</h2>
 <section class='container'>
-  <div class="jumbotron">
-    <search-filter></search-filter>
-    <div ng-style='{"width":"60%","border":"1px solid black"}' ui-view></div>
-    <div search-map>
+  <div class="jumbotron" ng-style='{
+    "padding":"24px",
+    "background":"#efefef",
+    "position":"relative"
+    }'>
+    <div search-map ng-style='{
+      "margin-left":"40px",
+      "position":"absolute",
+      "top":"0",
+      "right":"0"
+    }'>
     </div>
+    <search-filter></search-filter>
+    <div ng-style='{"width":"680px","border":"1px solid black"}' ui-view></div>
+
   </div>
 </section>

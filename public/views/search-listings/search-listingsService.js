@@ -1,4 +1,4 @@
-angular.module('myApp').service('searchListingsService', function($http,$q){
+angular.module('myApp').service('searchListingsService', function($http,$q,$state){
   this.getSearchListings = (string) => {
     const defer = $q.defer()
     $http({
@@ -7,7 +7,14 @@ angular.module('myApp').service('searchListingsService', function($http,$q){
     })
     .then((response) => {
       console.log('response from getSearchListings in service',response.data);
-      defer.resolve(response.data)
+      console.log('this is the response.data.length',response.data.length);
+      if(response.data.length < 1) {
+        console.log('This is the response length',response.data.length);
+        $state.go('error')
+      }
+      else {
+        defer.resolve(response.data)
+      }
     })
     return defer.promise;
   }
@@ -20,8 +27,10 @@ angular.module('myApp').service('searchListingsService', function($http,$q){
       data:obj
     }).then(response => {
       console.log('response in searchListingsService filterSearchListings',response.data);
+
     defer.resolve(response.data)
     })
+
     return defer.promise
   }
 })

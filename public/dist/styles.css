@@ -69,12 +69,10 @@ body {
   width: 1140px;
   margin: auto;
   background: white;
-  border: 1px solid black;
   position: relative; }
 
 .nav-bar-float-left {
-  border: 1px solid black;
-  width: 26em;
+  width: 29em;
   position: relative;
   display: flex;
   flex-direction: row;
@@ -89,7 +87,8 @@ body {
   top: 36px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between; }
+  justify-content: space-between;
+  align-items: center; }
 
 nav-search-input {
   position: absolute;
@@ -129,7 +128,7 @@ nav-search-input {
 
 .nav-menu-profile-pic {
   height: 40px;
-  width: 60px;
+  width: 40px;
   border: 1px solid black;
   border-radius: 54px; }
 
@@ -220,7 +219,7 @@ home-room-listings {
   border: 1px solid black; }
 
 .description-container {
-  height: 162px;
+  height: 192px;
   width: 500px;
   margin: auto;
   text-align: center;
@@ -237,17 +236,20 @@ home-room-listings {
   text-decoration: line-through; }
 
 .rooms-about-accessories-wrapper {
-  height: 104px;
+  margin-top: 50px;
+  height: 164px;
   display: flex;
   flex-direction: row;
-  justify-content: space-around; }
+  justify-content: space-around;
+  margin-bottom: 70px; }
   .rooms-about-accessories-wrapper .column {
-    height: 88px;
+    height: 94px;
     display: flex;
     flex-direction: column;
     justify-content: space-around; }
 
 .carousel-container {
+  width: 80%;
   margin: auto; }
   .carousel-container img {
     width: 100%; }
@@ -270,14 +272,14 @@ home-room-listings {
   flex-flow: row;
   align-items: center;
   justify-content: space-between;
-  margin-top: 46px; }
+  margin-top: 88px; }
 
 .rooms-listing-main-about-container {
   margin-bottom: 30px; }
 
 .rooms-listing-main-booking-container {
-  height: 280px;
-  width: 280px;
+  height: 340px;
+  width: 292px;
   position: relative; }
   .rooms-listing-main-booking-container .price-per-night {
     margin: auto;
@@ -297,7 +299,7 @@ home-room-listings {
       display: flex;
       flex-direction: column; }
       .rooms-listing-main-booking-container .date-input-container .date-input-wrapper .input-date {
-        width: 132px; }
+        width: 138px; }
       .rooms-listing-main-booking-container .date-input-container .date-input-wrapper .check-in-out {
         margin: 10px 0; }
   .rooms-listing-main-booking-container .days-total-wrapper {
@@ -307,10 +309,17 @@ home-room-listings {
     .rooms-listing-main-booking-container .days-total-wrapper .calculations-text {
       width: 80%;
       border: 1px solid gray;
-      font-size: 16px; }
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      padding-left: 8px; }
     .rooms-listing-main-booking-container .days-total-wrapper .days-total-count {
       width: 20%;
-      border: 1px solid gray; }
+      height: 60px;
+      border: 1px solid gray;
+      display: flex;
+      align-items: center;
+      padding-left: 8px; }
   .rooms-listing-main-booking-container .book-now-btn {
     width: 100%;
     position: absolute;
@@ -334,11 +343,14 @@ home-room-listings {
     background: #FF7E82;
     color: white; }
 
+.reviews-stream-container {
+  margin-top: 85px; }
+
 .reviews-stream-each {
   display: flex;
   flex-flow: row;
   justify-content: space-around;
-  margin-top: 90px;
+  margin-top: 150px;
   margin-bottom: 90px;
   padding-bottom: 90px;
   border-bottom: 1px solid black; }
@@ -356,21 +368,23 @@ home-room-listings {
     line-height: 1.5; }
 
 #map {
-  margin-top: 50px;
+  margin-top: 169px;
   width: 100%;
-  height: 400px;
+  height: 553px;
   background-color: grey;
-  margin-bottom: 50px; }
+  margin-bottom: 83px; }
 
 .rooms-nearby-container {
   margin-top: 40px;
   display: flex;
   flex-direction: row;
-  justify-content: space-around; }
+  justify-content: space-around;
+  padding-bottom: 80px; }
 
 .rooms-nearby-img {
-  height: 200px;
-  width: 240px;
+  margin-top: 75px;
+  height: 370px;
+  width: 440px;
   border: 1px solid black; }
 
 .rooms-nearby-text-container {
@@ -384,8 +398,8 @@ home-room-listings {
   margin-left: 25px;
   margin-top: 50px; }
   .users-profile-listings-container .users-profile-listings-pic {
-    height: 200px;
-    width: 180px;
+    height: 240px;
+    width: 280px;
     margin: auto; }
 
 user-profile-pic {
@@ -468,7 +482,9 @@ user-profile-pic {
 .conversations-message-box-container {
   height: 250px;
   width: 800px;
-  border: 1px solid black; }
+  border: 1px solid black;
+  position: relative;
+  background: white; }
   .conversations-message-box-container .conversations-message-box-header {
     height: 50px;
     background: #e1e1e1;
@@ -480,6 +496,11 @@ user-profile-pic {
     background: #FF7E82;
     color: white;
     height: 50px;
-    width: 150px; }
+    width: 150px;
+    position: absolute;
+    bottom: 14px;
+    left: 106px; }
+  .conversations-message-box-container #message {
+    margin-top: 16px; }
 
 /*# sourceMappingURL=maps/styles.css.map */

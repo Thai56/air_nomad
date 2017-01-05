@@ -1,0 +1,74 @@
+<div class="container">
+    <h1>Edit Profile</h1>
+  	<hr>
+	<div class="row">
+        <h3>Personal info</h3>
+
+        <form class="form-horizontal" role="form">
+          <div class="form-group">
+            <label class="col-lg-3 control-label">First name:</label>
+            <div class="col-lg-8">
+              <input class="form-control" ng-model='editObj.first_name' type="text" placeholder="{{user.first_name}}">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Last name:</label>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" ng-model='editObj.last_name' placeholder="{{user.last_name}}">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Email:</label>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" ng-model='editObj.email' placeholder="{{user.email}}">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Gender:</label>
+            <div class="col-lg-8">
+              <div class="ui-select">
+                <select id="user_gender" ng-model='editObj.gender' class="form-control">
+                  <option value="M">Male</option>
+                  <option value="F">Female</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label">Where You Live:</label>
+            <div class="col-md-8">
+              <input class="form-control" type="text" ng-model='editObj.where_you_live' placeholder="{{user.where_you_live}}">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label">Preferred Currency:</label>
+            <div class="col-md-8">
+              <input class="form-control" type="text" ng-model='editObj.preffered_currency' placeholder="{{user.preffered_currency}}">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label">Password:</label>
+            <div class="col-md-8">
+              <input class="form-control" type="password" ng-model='editObj.password' placeholder="{{user.password}}">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label">Confirm password:</label>
+            <div class="col-md-8">
+              <input class="form-control" type="password" placeholder="{{user.password}}">
+            </div>
+          </div>
+          {{editObj}}
+          <div class="form-group">
+            <label class="col-md-3 control-label"></label>
+            <div class="col-md-8">
+              <input type="button" class="btn btn-primary" ng-click='saveChanges(editObj)' value="Save Changes">
+              <span></span>
+              <input type="reset" class="btn btn-default" value="Cancel">
+            </div>
+          </div>
+        </form>
+      </div>
+  </div>
+</div>
+<hr>

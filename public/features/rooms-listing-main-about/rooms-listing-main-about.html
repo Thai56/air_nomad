@@ -1,17 +1,17 @@
 <!-- {{message}} -->
 <section class='rooms-listing-main-about-container'>
-  <h2>About this Listing</h2>
-    <h5>{{obj.summary}}</h5>
-  <h5>Amentities:</h5>
+  <h2 ng-style='{"margin-top":"80px"}'>About this Listing</h2>
+    <h4 ng-style='{"margin-top":"30px"}'>{{obj.summary}}</h4>
+  <h3 ng-style='{"margin-top":"50px"}'>Amentities:</h3>
     <div class="rooms-about-accessories-wrapper">
+      <section ng-style='{"height":"145px"}'class='column'>
+        <span ng-style='{"font-size":"16px"}' ng-class='{strike:!obj.tv}' ng-model='obj.tv'>TV</span>
+        <span ng-style='{"font-size":"16px"}' ng-class='{strike:!obj.kitchen}' ng-model='obj.kitchen'>Kitchen</span>
+        <span ng-style='{"font-size":"16px"}' ng-class='{strike:!obj.internet}' ng-model='obj.internet'>Internet</span>
+      </section>
       <section class='column'>
-        <span ng-class='{strike:!obj.tv}' ng-model='obj.tv'>TV</span>
-        <span ng-class='{strike:!obj.kitchen}' ng-model='obj.kitchen'>Kitchen</span>
-      </section> 
-      <section class='column'>
-        <span ng-class='{strike:!obj.internet}' ng-model='obj.internet'>Internet</span>
-        <span ng-class='{strike:!obj.heating}' ng-model='obj.heating'>Heating</span>
-        <span ng-class='{strike:!obj.ac}' ng-model='obj.ac'>Air Conditioning</span>
+        <span ng-style='{"font-size":"16px"}' ng-class='{strike:!obj.heating}' ng-model='obj.heating'>Heating</span>
+        <span ng-style='{"font-size":"16px"}' ng-class='{strike:!obj.ac}' ng-model='obj.ac'>Air Conditioning</span>
       </section>
 
     </div>

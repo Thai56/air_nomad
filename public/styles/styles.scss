@@ -54,13 +54,13 @@ $pink: #FF7E82;
   width: 1140px;
   margin: auto;
   background: white;
-  border: 1px solid black;
+  // border: 1px solid black;
   position: relative;
 }
 
 .nav-bar-float-left {
-  border: 1px solid black;
-  width: 26em;
+  // border: 1px solid black;
+  width: 29em;
   position: relative;
   display: flex;
   flex-direction: row;
@@ -77,6 +77,7 @@ $pink: #FF7E82;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 }
 
 nav-search-input {
@@ -126,7 +127,7 @@ nav-search-input {
 }
 .nav-menu-profile-pic {
   height: 40px;
-  width: 60px;
+  width: 40px;
   border: 1px solid black;
   border-radius: 54px;
 }
@@ -248,7 +249,7 @@ home-room-listings {
 }
 
 .description-container {
-    height: 162px;
+    height: 192px;
     width: 500px;
     margin: auto;
     text-align: center;
@@ -271,13 +272,14 @@ home-room-listings {
 }
 
 .rooms-about-accessories-wrapper {
-    height: 104px;
+    margin-top: 50px;
+    height: 164px;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-
+    margin-bottom: 70px;
     .column {
-        height: 88px;
+        height: 94px;
         display: flex;
         flex-direction: column;
         justify-content: space-around;
@@ -288,7 +290,7 @@ home-room-listings {
 // // // // //
 
 .carousel-container {
-    // width: 80%;
+    width: 80%;
     margin: auto;
 
     img {
@@ -324,7 +326,7 @@ home-room-listings {
     flex-flow: row;
     align-items: center;
     justify-content: space-between;
-    margin-top: 46px;
+    margin-top: 88px;
 }
 // // // //
 // booking controls
@@ -335,8 +337,8 @@ home-room-listings {
 }
 
 .rooms-listing-main-booking-container {
-    height: 280px;
-    width: 280px;
+    height: 340px;
+    width: 292px;
     position: relative;
 
     .price-per-night {
@@ -361,7 +363,7 @@ home-room-listings {
             flex-direction: column;
 
             .input-date {
-                width: 132px;
+                width: 138px;
             }
 
             .check-in-out {
@@ -379,11 +381,18 @@ home-room-listings {
             width: 80%;
             border: 1px solid gray;
             font-size: 16px;
+            display: flex;
+            align-items: center;
+            padding-left: 8px;
         }
 
         .days-total-count {
             width: 20%;
+            height: 60px;
             border: 1px solid gray;
+            display: flex;
+            align-items: center;
+            padding-left: 8px;
         }
     }
 
@@ -420,13 +429,15 @@ home-room-listings {
     }
 }
 
-.reviews-stream-container {}
+.reviews-stream-container {
+  margin-top:85px;
+}
 
 .reviews-stream-each {
     display: flex;
     flex-flow: row;
     justify-content: space-around;
-    margin-top: 90px;
+    margin-top: 150px;
     margin-bottom: 90px;
     padding-bottom: 90px;
     border-bottom: 1px solid black;
@@ -454,11 +465,11 @@ home-room-listings {
 // // // // // / //
 
 #map {
-    margin-top: 50px;
+    margin-top: 169px;
     width: 100%;
-    height: 400px;
+    height: 553px;
     background-color: grey;
-    margin-bottom: 50px;
+    margin-bottom: 83px;
 }
 
 // // // // // //
@@ -469,11 +480,15 @@ home-room-listings {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-
+  // border-top: 7px solid lighten(gray,15%);
+  // border-bottom: 7px solid lighten(gray,15%);
+  // border-radius: 18px;
+  padding-bottom: 80px;
 }
 .rooms-nearby-img {
-  height: 200px;
-  width: 240px;
+  margin-top: 75px;
+  height: 370px;
+  width: 440px;
   border: 1px solid black;
 }
 .rooms-nearby-text-container {
@@ -494,8 +509,8 @@ home-room-listings {
   margin-left: 25px;
   margin-top: 50px;
   .users-profile-listings-pic {
-    height:200px;
-    width: 180px;
+    height:240px;
+    width: 280px;
     margin: auto;
   }
 }
@@ -617,6 +632,8 @@ user-profile-pic {
   height: 250px;
   width: 800px;
   border: 1px solid black;
+  position:relative;
+  background: white;
   .conversations-message-box-header {
     height: 50px;
     background:lighten(gray,38%);
@@ -630,5 +647,17 @@ user-profile-pic {
     color: white;
     height: 50px;
     width: 150px;
+    position: absolute;
+    bottom: 14px;
+    left:106px
+  }
+  #message {
+    margin-top: 16px;
   }
 }
+
+// on of Corey's media queries
+// @media (max-width: 1920px) {
+//     .menu {
+//         display:none;
+//     }

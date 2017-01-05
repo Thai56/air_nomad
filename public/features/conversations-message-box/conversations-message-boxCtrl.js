@@ -1,29 +1,26 @@
-angular.module('myApp').controller('conversationsMessageBoxCtrl', ($scope,$stateParams,conversationsMessageBoxService) => {
-  const user_id = $stateParams.user_id;
-  conversationsMessageBoxService.getConversationUsername(user_id)
-  .then(response => {
-    $scope.username = response[0];
-  })
-// ===================================================================================================================
-// jQuery
-// ==========================================================================================================================================
-  
-jQuery(function($) {
-  var socket = io.connect();
-  var $messageForm = $('#send-message');
-  var $messageBox = $('#message');
-  var $chat = $('#chat');
+angular.module('myApp').controller('conversationsMessageBoxCtrl', ($scope,$stateParams,$location,$localStorage,conversationsMessageBoxService,loginService) => {
 
-  $messageForm.submit(function(e){
-    e.preventDefault();
-    socket.emit('send message', $messageBox.val());
-    $messageBox.val('')
+var socket = io.connect();
+
+socket.on('connect', function() {
+  socket.emit('addUser', prompt('What\'s your name?'))
   })
 
-  socket.on('new message',function(data) {
-    console.log('this is the data',data);
-    $chat.append(data + '<br/>')
+  $(function() {
+    $('#datasend').click(function(){
+      var message = $('#data').val();
+      $('#data').val('');
+      $('$data').focus();
+
+      socket.emit('sendChat', message);
+    })
+    $('#data').keypress(function(e) {
+      if(e.which == 13){
+        $(this).blur();
+
+        $('#datasend').focus().click();
+        $('#data').focus();
+      }
+    })
   })
-});
-// ==========================================================================================================================================
 })

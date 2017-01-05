@@ -1,4 +1,4 @@
-angular.module('myApp',['ui.router','ui.bootstrap','ngDialog','angular-input-stars','ngRoute']).config(function($stateProvider,$urlRouterProvider) {
+angular.module('myApp',['ui.router','ui.bootstrap','ngDialog','angular-input-stars','ngRoute','ngStorage']).config(function($stateProvider,$urlRouterProvider) {
   $stateProvider
   .state('home', {
     url:'/',
@@ -51,6 +51,16 @@ angular.module('myApp',['ui.router','ui.bootstrap','ngDialog','angular-input-sta
     url:'/user_trips',
     templateUrl:'./views/user_rooms-trips/user_rooms-trips.html',
     params:{viewParam:null}
+  })
+  .state('users_edit_profile', {
+    url:'/users/profile/edit',
+    templateUrl:'./views/users-edit-profile/users-edit-profile.html',
+    params:{viewParam:null},
+    controller:'usersEditProfileCtrl'
+  })
+  .state('error', {
+    url:'/error',
+    templateUrl:'./views/err/err.html'
   })
 
   $urlRouterProvider

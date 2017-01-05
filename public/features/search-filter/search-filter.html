@@ -1,18 +1,49 @@
-<section class="search-filter-container">
+<section class="search-filter-container" ng-style='{
+  "width":"670px",
+  "border":"1px solid black",
+  "height":"500px"
+}'>
 
 <!--Search Input Date and Price Input Container  -->
   <div class="search-input-date-price-container">
     <!-- the input dates will need logic for null and for the date from today -->
-    <input type="date" ng-model='search_filter.startDate'>
-    <input type="date" ng-model='search_filter.endDate'>
-    <input type="text" placeholder="Min Price" ng-model='search_filter.minPrice'>
-    <input type="text" placeholder="Max Price" ng-model='search_filter.maxPrice'>
+    <input type="date" ng-style='{
+      "height":"40px",
+      "margin-left":"6px"
+    }'ng-model='search_filter.startDate'>
+    <input type="date" ng-style='{
+      "height":"40px",
+      "margin-left":"6px"
+    }'ng-model='search_filter.endDate'>
+    <input type="text" ng-style='{
+      "height":"40px",
+      "margin-left":"6px"
+    }'placeholder="Min Price" ng-model='search_filter.minPrice'>
+    <input type="text" ng-style='{
+      "height":"40px",
+      "margin-left":"6px"
+    }'placeholder="Max Price" ng-model='search_filter.maxPrice'>
   </div>
 <!-- search room_type checkbox container -->
   <div class="search-room_type-checkbox-container">
-    <input type="checkbox" ng-model="search_filter.room_type.entire">Entire Room</input>
-    <input type="checkbox" ng-model="search_filter.room_type.private">Private Room</input>
-    <input type="checkbox" ng-model="search_filter.room_type.shared">Shared Room</input>
+    <input ng-style='{
+      "margin-top":"24px",
+      "margin-bottom":"24px",
+      "margin-left":"84px"
+    }'
+    type="checkbox" ng-model="search_filter.room_type.entire"> Entire Room</input>
+    <input ng-style='{
+      "margin-top":"24px",
+      "margin-bottom":"24px",
+      "margin-left":"84px"
+    }'
+    type="checkbox" ng-model="search_filter.room_type.private"> Private Room</input>
+    <input ng-style='{
+      "margin-top":"24px",
+      "margin-bottom":"24px",
+      "margin-left":"84px"
+    }'
+    type="checkbox" ng-model="search_filter.room_type.shared"> Shared Room</input>
   </div>
 <!-- search room_descriptions accommodations/rooms/bathrooms container-->
   <div class="search-room-listing-desc-container">

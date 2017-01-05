@@ -8,8 +8,10 @@
       <nav-search-input></nav-search-input>
     </div>
     <div class="nav-bar-float-right">
-        <button ng-show='userNotLoggedIn' type="button" ng-click='clickToRegister()' name="button">signup</button>
-        <button ng-show='userNotLoggedIn' type="button" name="button" ng-click='clickToLogin()'>Log In</button>
+        <a ng-show='userNotLoggedIn' ng-style='{"cursor":"pointer"}' ng-click='clickToRegister()'>signup</a>
+        <!-- <button ng-show='userNotLoggedIn' type="button" ng-click='clickToRegister()' name="button">signup</button> -->
+        <a ng-show='userNotLoggedIn' ng-style='{"cursor":"pointer"}' ng-click='clickToLogin()'>Log In</a>
+        <!-- <button ng-show='userNotLoggedIn' type="button" name="button" ng-click='clickToLogin()'>Log In</button> -->
         <div ng-show='!userNotLoggedIn'>
           <navbar-dropdown></navbar-dropdown>
         </div>
