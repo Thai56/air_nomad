@@ -71,10 +71,15 @@ passport.deserializeUser(function(id, done) {
     db.getUserById([id.id], function(err, user) {
         user = user[0];
         console.log('This is the User deserializeUser',user);
-        if (err) console.log(err);
-        else console.log('RETRIEVED USER');
+        if (err) {
+          console.log(err);
+          return done(err);
+        }
+        else {
+        console.log('RETRIEVED USER');
         console.log(user);
         done(null, user);
+      }
     })
 })
 // =============================================
@@ -195,3 +200,5 @@ app.get('/conversations/messages/:host_id', isAuthenticated, Ctrl.getConversatio
 app.post('/users/profile/edit', isAuthenticated, Ctrl.saveChanges)
 
 app.get('/user_rooms/user_listings', isAuthenticated, Ctrl.getListingsForView)
+
+app.post('/users/edit', Ctrl.addUser)

@@ -47,11 +47,19 @@ table {
 
 .box {
   height: 400px;
-  width: 30%;
-  border: 2px solid black; }
+  width: 30%; }
 
 body {
   background: #ededed; }
+
+input[type="date"]:before {
+  content: attr(placeholder) !important;
+  color: #aaa;
+  margin-right: 0.5em; }
+
+input[type="date"]:focus:before,
+input[type="date"]:valid:before {
+  content: ""; }
 
 .jumbotron {
   background: white; }
@@ -63,7 +71,8 @@ body {
 
 .nav-bar-container-wrapper {
   width: 100%;
-  background: white; }
+  background: white;
+  margin-bottom: 45px; }
 
 .nav-bar-container {
   width: 1140px;
@@ -80,8 +89,7 @@ body {
 
 .nav-bar-float-right {
   float: right;
-  width: 350px;
-  border: 1px solid black;
+  width: 460px;
   position: absolute;
   right: 56px;
   top: 36px;
@@ -176,7 +184,6 @@ home-room-listings {
     width: 100%; }
   .home-listings-container .home-listing-name-container {
     height: 50px;
-    border: 1px solid black;
     display: flex;
     flex-flow: row;
     align-items: center;

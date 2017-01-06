@@ -7,9 +7,9 @@ angular.module('myApp').service('signupService',function($http,$q){
       data:user
     }).then(function(response){
       console.log(response)
-      defer.resolve(response)
+      defer.resolve(response.data)
     }).catch(function(err){
-      defer.resolve(err)
+      alert(err.data)
     })
     return defer.promise
   }

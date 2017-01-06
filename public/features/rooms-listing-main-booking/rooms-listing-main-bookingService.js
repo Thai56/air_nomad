@@ -12,7 +12,7 @@ angular.module('myApp').service('roomsListingMainBookingService', function($http
     return defer.promise
   }
 
-  this.reserveDate = (room_id,start,end) => {
+  this.reserveDate = (room_id,start,end,price) => {
     console.log('======> start =====> service',start);
     const defer = $q.defer();
     $http({
@@ -21,7 +21,8 @@ angular.module('myApp').service('roomsListingMainBookingService', function($http
       data: {
         room_id:room_id,
         start:start,
-        end:end
+        end:end,
+        price:price
       }
     }).then(response => {
       console.log('!!!response back in service',response.data);

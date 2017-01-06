@@ -1,4 +1,4 @@
-angular.module('myApp').controller('loginCtrl', ($scope, loginService, $routeParams,$rootScope,navbarDropdownService) => {
+angular.module('myApp').controller('loginCtrl', ($scope, loginService, $routeParams,$rootScope,navbarDropdownService,ngDialog) => {
   $scope.loginUser = function(email,password) {
     console.log('ccreds from the loginCtrl',email,password)
     loginService.loginUser({
@@ -6,6 +6,9 @@ angular.module('myApp').controller('loginCtrl', ($scope, loginService, $routePar
       password:password
     })
     .then(function(res) {
+      if(res.data !== "Not Found"){
+        $scope.closeThisDialog()
+      }
       $scope.email = ''
       $scope.password = ''
       getUser();
@@ -13,7 +16,10 @@ angular.module('myApp').controller('loginCtrl', ($scope, loginService, $routePar
 
   }
 
-
+  $scope.clickToSignup = () => {
+    $scope.closeThisDialog()
+    ngDialog.open({ template: './features/signup/signup.html', className: 'ngdialog-theme-default', controller:'signupCtrl'});
+}
 // ================================================================================================================================
 // check if logged in
 // ================================================================================================================================================================

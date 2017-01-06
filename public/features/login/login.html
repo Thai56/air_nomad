@@ -1,10 +1,27 @@
-<button type="button" name="button">Log In with Facebook</button>
-<button type="button" name="button">Log In with Google</button>
-<br>
-----------------------------or-------------------------------
-<br>
-<input type="text" placeholder="email" ng-model='email'>
-<input type="text" placeholder="password" ng-model='password'>
-<input type="checkbox" name="remember me "> <h5>Forgot password?</h5>
-<button type="btn" name="button" ng-click='loginUser(email,password)'>Log In</button>
-<span>Dont have an account?</span> <button type="button">Sign Up</button>
+<span class='col-md-3' ng-click='clickToSignup()'><u ng-style='{"color":"navy","cursor":"pointer"}'>Sign Up</u></span>
+  <h3>LOGIN</h3>
+        <form class="form-horizontal" role="form">
+          <div class="form-group">
+            <label class="col-md-3 control-label">Email:</label>
+            <div class="col-md-8">
+              <input class="form-control" type="text" ng-model='email' placeholder="Email here">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label">Password:</label>
+            <div class="col-md-8">
+              <input class="form-control" type="password" ng-model='password' placeholder="Password here">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label"></label>
+            <div class="col-md-8">
+              <input type="button" class="btn btn-primary" ng-click='loginUser(email,password)' value="Login">
+              <input type="reset" class="btn btn-default" ng-click='closeThisDialog()' value="Cancel">
+            </div>
+          </div>
+        </form>
+      </div>
+  </div>
+</div>
+<hr>

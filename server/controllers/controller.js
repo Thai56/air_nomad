@@ -106,22 +106,46 @@ module.exports = {
         })
     },
     reserveDate: (req, res, next) => {
-        const data = req.body;
-        console.log('!!!!!data from req.body', req.body);
-        const dataArr = [data.room_id, data.start, data.end]
-          console.log('||||||||||REQ.USER||||||||||',req.user);
-          const user_id = req.user.id;
-          dataArr.push(user_id)
-          console.log('|||||||||DATAARRAY||||||||||',dataArr);
-          db.reserveDate(dataArr, (err, response) => {
-              if (!err) {
-                  console.log('!!!this is response from controller back eend reserveDAte', response);
-                  res.status(200).send('your reservation has been booked')
-              } else {
-                  console.log('!!!!!this is error from backend reserveDAte', err);
-                  res.status(422).send(err)
-              }
-          })
+      // console.log('this is the req.body',req.body);
+      console.log('SESSION', req.session);
+          if(!req.session.bookings || !req.session.bookings.length) {
+            console.log('||||||||||| creating new |||||||||||||',req.session.bookings);
+            req.session.bookings = []
+          // write a price check
+          req.body.id =  (req.session.bookings.length + 1)
+
+          req.session.bookings.push(req.body)
+          console.log('||||||||||| LENGTH new |||||||||||||',req.session.bookings.length);
+          res.send(req.session.bookings)
+          }
+          else {
+                req.body.id =  (req.session.bookings.length + 1)
+                console.log('THIS IS THE REQ>BODY>ID', req.body.id);
+                req.session.bookings.push(req.body)
+                console.log('THIS IS THE REQ>USER>BOOKINGS',req.session.bookings);
+                res.send(req.session.bookings)
+          }
+
+        console.log(req.user, '<===== here is the req.user');
+        //do i need a counter variable when i decided to delete this later
+        // going to user angular $index to delete and target items in the array
+        // const data = req.body;
+        // console.log('!!!!!data from req.body', req.user.bookings);
+        // const dataArr = [data.room_id, data.start, data.end, data.price]
+        //   console.log('||||||||||REQ.USER||||||||||',req.user);
+        //   const user_id = req.user.id;
+        //   dataArr.push(user_id)
+        //   console.log('|||||||||DATAARRAY||||||||||',dataArr);
+        //   db.reserveDate(dataArr, (err, response) => {
+        //       if (!err) {
+        //           console.log('!!!this is response from controller back eend reserveDAte', response);
+        //           res.status(200).send('your reservation is being booked')
+        //
+        //       } else {
+        //           console.log('!!!!!this is error from backend reserveDAte', err);
+        //           res.status(422).send(err)
+        //       }
+        //   })
     },
     getRoomListingCoordinates: (req, res, next) => {
         const room_id = req.params.room_id;
@@ -314,7 +338,7 @@ module.exports = {
       const currentUser = req.user;
       // function() {
         //check to see if room exists
-        
+
         // if not create room set counter variable
 
       // }
@@ -395,5 +419,38 @@ module.exports = {
         res.status(422).send(err)
       }
     })
+  },
+  addUser: (req,res,next) => {
+    console.log('user',req.body);
+    const user = req.body
+    const userArr = [user.first_name,user.last_name,user.email,user.password]
+    //see if user already exists using email because email is used to sign in
+    db.userCheck(user.email, (err,user)=> {
+      if(!err){
+        console.log('THIS IS THE USER FROM USERCHECK', user.length);
+        if(user.length > 0){
+            console.log('this is the user length that was greater than 1',user);
+            res.status(422).send('This User already exists')
+        }
+        else {
+          db.addUser(userArr, (err,user)=> {
+            if(!err){
+              console.log('res',user);
+              res.status(200).send('Your Submission Was A Success!')
+            }
+            else {
+              console.log('this is the error',err);
+              res.status(422).send(err)
+            }
+          })
+        }
+      }
+      else {
+        console.log('This is the error',err);
+        res.status(422).send(err)
+      }
+
+    })
+
   }
 }

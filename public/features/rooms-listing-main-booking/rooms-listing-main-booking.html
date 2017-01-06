@@ -1,4 +1,4 @@
-
+{{bookings_length}}
   <section class='rooms-listing-main-booking-container' ng-style='{
     "margin-right":"25px",
     "border-radius":"28px"
@@ -53,19 +53,20 @@
 <!-- form where our values will go -->
 <!-- ============================================================================================================================= -->
   <!-- <span ng-if='!!startDate.value && !!endDate.value'> -->
+  <!-- <form class='form-group' ng-submit='' method="post" target="_top"> -->
   <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
-  <!-- </span> -->
   <input type="hidden" name="cmd" value="_xclick">
   <input type="hidden" name="item_name" value="{{price.listing_name}}">
   <input type="hidden" name="item_number" value="{{price.room_id}}">
-  <input type="hidden" name="business" value="ppaprogrammer@gmail.com">
-  <!-- <input type="hidden" name="business" value="ppaprogrammer@gmail.com"> -->
+  <input type="hidden" name="business" value="{{user.email}}" required>
   <input type="hidden" name="quantity" value="1">
   <input type="hidden" name="currency_code" value="USD">
-  <input type="hidden" name="first_name" value="Thai">
-  <input type="hidden" name="last_name" value="Tran">
-  <input type="hidden" name="amount" value="{{(endDate.value - startDate.value | date: 'd') * price.nightly_price}}">
-  <button class="btn book-now-btn" ng-click='reserveDate(startDate.value,endDate.value)'>Book Now</button>
+  <input type="hidden" name="first_name" value="{{user.first_name}}" required>
+  {{user_changed.first_name}} user first name
+  {{user_changed.email}} user email <br>
+  {{user_changed}} user
+  <input type="hidden" name="last_name" value="{{user.last_name}}" required>
+  <input type="hidden" name="amount" value="{{(endDate.value - startDate.value | date: 'd') * price.nightly_price}}" required>
+  <button ng-disabled='!startDate.value && !endate.value' class="btn book-now-btn" ng-click='reserveDate(startDate.value,endDate.value)'>Book Now</button>
   </form>
-
   </section>

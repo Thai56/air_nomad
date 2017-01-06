@@ -24,13 +24,23 @@
 .box {
     height: 400px;
     width: 30%;
-    border: 2px solid black;
+    // border: 2px solid black;
 }
 
 body {
   background: lighten(lightgray,10%);
 }
 $pink: #FF7E82;
+
+input[type="date"]:before {
+    content: attr(placeholder) !important;
+    color: #aaa;
+    margin-right: 0.5em;
+  }
+  input[type="date"]:focus:before,
+  input[type="date"]:valid:before {
+    content: "";
+  }
 // ================================================================================================================
 // bootstrap
 // ================================================================================================================================
@@ -49,6 +59,7 @@ $pink: #FF7E82;
 .nav-bar-container-wrapper {
   width: 100%;
   background: white;
+  margin-bottom: 45px;
 }
 .nav-bar-container {
   width: 1140px;
@@ -69,8 +80,8 @@ $pink: #FF7E82;
 
 .nav-bar-float-right {
   float: right;
-  width: 350px;
-  border: 1px solid black;
+  width: 460px;
+  // border: 1px solid black;
   position: absolute;
   right: 56px;
   top:36px;
@@ -193,7 +204,7 @@ home-room-listings {
 
     .home-listing-name-container {
         height: 50px;
-        border: 1px solid black;
+        // border: 1px solid black;
         display: flex;
         flex-flow: row;
         align-items: center;

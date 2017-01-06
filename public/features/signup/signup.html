@@ -1,7 +1,7 @@
 <!-- ============================================================================================================================================================================ -->
 <!-- THE CONTROLS FOR THIS MODAL IS LOCATED INSIDE OF THE CONTROLLER OF NAVBAR DIRECTIVE-->
 <!-- ============================================================================================================================================================================ -->
-signup with <a href="#">facebook</a> or <a href="#">google</a>
+<!-- signup with <a href="#">facebook</a> or <a href="#">google</a>
 <div class="signup-modal panel">
   Email:<input type="text" ng-model="register.email"><br>
   First Name:<input type="text" ng-model="register.firstname"><br>
@@ -10,4 +10,56 @@ signup with <a href="#">facebook</a> or <a href="#">google</a>
   Confirm Password<input type="text" ng-model="register.confirm_pw">
   <button type="button" class='btn signup-btn' name="button" ng-click='registerUser(register)'>signup</button>
   <span>already have a nomad account?</span> <button type="btn signup-login-btn" name="button">login</button>
-</div>
+</div> -->
+
+
+<!-- <div class="container">
+    <h1>Edit Profile</h1>
+  	<hr>-->
+    <div class="row">  <span ng-style='{"color":"navy","cursor":"pointer"}' ng-click='clickToLogin()'><u>Login</u></span>
+        <h3>Sign Up</h3>
+
+        <form class="form-horizontal" role="form">
+          <div class="form-group">
+            <label class="col-lg-3 control-label">First name:</label>
+            <div class="col-lg-8">
+              <input class="form-control" ng-model='register.first_name' type="text" placeholder="first_name">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Last name:</label>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" ng-model='register.last_name' placeholder="last_name">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Email:</label>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" ng-model='register.email' placeholder="email">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label">Password:</label>
+            <div class="col-md-8">
+              <input class="form-control" type="password" ng-model='register.password' placeholder="password">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label">Confirm password:</label>
+            <div class="col-md-8">
+              <input class="form-control" type="password" ng-model='register.confirm_pw' placeholder="password">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label"></label>
+            <div class="col-md-8">
+              <input type="button" class="btn btn-primary" ng-style='{"background":"#FF7E82"}' ng-click='registerUser(register)' value="Submit">
+              <span></span>
+              <input type="reset" class="btn btn-default" ng-click='closeThisDialog()' value="Cancel">
+            </div>
+          </div>
+        </form>
+      </div>
+  </div>
+<!-- </div> -->
+<hr>
