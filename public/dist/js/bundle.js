@@ -762,6 +762,7 @@ angular.module('myApp').controller('roomsListingMainBookingCtrl', function ($sco
         console.log($scope.total_price);
         roomsListingMainBookingService.reserveDate(room_id, $scope.chosenStartDate, $scope.chosenEndDate, $scope.total_price).then(function (response) {
             console.log('response back into the controller on the way back ====> ', response);
+            // $rootScope.all_bookings_for_User = response;
             $rootScope.all_bookings_for_User = response;
             // console.log(`Your reservation has been booked from  ${response.start} to ${response.end} for ${response.length}`);
             $scope.startDate.value = '';
@@ -791,10 +792,22 @@ angular.module('myApp').controller('roomsListingMainBookingCtrl', function ($sco
         console.log($scope.changedDate);
     });
 
-    // $rootScope.$watch('user', (newVal,oldVal) => {
-    //   // loginService.getUser().then()
-    //   // $scope.user_changed= newVal;
-    //   console.log($scope.user);
+    $scope.foo = 'foo';
+    $scope.bar = 'bar';
+
+    $scope.$watchGroup(['foo', 'bar'], function (newValues, oldValues, scope) {
+        // newValues array contains the current values of the watch expressions
+        // with the indexes matching those of the watchExpression array
+        // i.e.
+        // newValues[0] -> $scope.foo
+        // and
+        // newValues[1] -> $scope.bar
+    });
+
+    // $rootScope.$watch('user', (newVal, oldVal) => {
+    // loginService.getUser().then()
+    // $scope.user_changed= newVal;
+    // console.log($scope.user);
     // })
 
 });
