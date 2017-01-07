@@ -50,15 +50,20 @@ angular.module('myApp').controller('roomsListingMainBookingCtrl', ($scope, $stat
     $rootScope.$watch('all_bookings_for_User', (newVal,oldVal) => {
       $rootScope.bookings_length = $rootScope.all_bookings_for_User.length;
       // console.log($rootScope.bookings_length);
+      //run getUser after newVal[1]
     })
     $scope.$watch('startDate.value', (newVal, oldVal) => {
         newVal.setDate(newVal.getDate())
         $scope.changedDate = $filter('date')(newVal, 'yyyy-MM-dd')
         console.log($scope.changedDate);
     })
-    $scope.$watch('user', (newVal,oldVal) => {
-      $scope.user_changed = newVal;
-    })
+
+    // $rootScope.$watch('user', (newVal,oldVal) => {
+    //   // loginService.getUser().then()
+    //   // $scope.user_changed= newVal;
+    //   console.log($scope.user);
+    // })
+
 
 
 })

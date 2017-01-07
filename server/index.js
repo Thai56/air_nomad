@@ -145,7 +145,9 @@ app.get('/auth/me', function(req, res) {
 })
 
 app.get('/logout', function(req, res) {
+  console.log('LOGGING OUT NOW');
   req.logout();
+  console.log(req.user);
   res.redirect('/#/');
 })
 

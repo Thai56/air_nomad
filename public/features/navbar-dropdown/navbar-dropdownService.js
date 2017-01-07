@@ -24,18 +24,18 @@ angular.module('myApp').service('navbarDropdownService', function($http,$q) {
     return defer.promise
   }
 
-  this.logout = () => {
-    console.log('fireing');
-    return $http({
-      method: 'GET',
-      url: '/logout'
-    })
-    .then(function(res) {
-      console.log(res.data);
-      return res.data;
-    })
-    .catch(function(err) {
-      console.log(err);
-    })
-  }
+  // this.logout = () => {
+  //   console.log('fireing');
+  //   return $http({
+  //     method: 'GET',
+  //     url: '/logout'
+  //   })
+  //   .then(function(res) {
+  //     console.log(res.data);
+  //     return res.data;
+  //   })
+  //   .catch(function(err) {
+  //     console.log(err);
+  //   })
+  // }
 })

@@ -1,4 +1,4 @@
-angular.module('myApp').controller('navbarDropdownCtrl', ($scope,$stateParams,$rootScope,navbarDropdownService,$log) => {
+angular.module('myApp').controller('navbarDropdownCtrl', ($scope,$stateParams,$rootScope,navbarDropdownService,loginService,navBarService) => {
   function getUser() {
     navbarDropdownService.getUser().then(function(user) {
       if (user){
@@ -26,7 +26,17 @@ angular.module('myApp').controller('navbarDropdownCtrl', ($scope,$stateParams,$r
 // * logout * //
 //   //    //
 $scope.logout = ()=> {
-  navbarDropdownService.logout();
+  navBarService.logout().then(response => {
+    console.log(response)
+    loginService.getUser().then(user => {
+      if(user){
+        $scope.user = user
+      }
+      else {
+        $scope.user = "NO USER!"
+      }
+    })
+  });
   $rootScope.userNotLoggedIn = true;
 }
 })

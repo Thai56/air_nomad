@@ -12,10 +12,10 @@ angular.module('myApp').directive('myNav', function(){
       $scope.clickToLogin = () => {
         ngDialog.open({ template:'./features/login/login.html', className:'ngdialog-theme-default', controller:'loginCtrl'});
       }
-      $scope.logout = ()=> {
-        navBarService.logout();
-        $rootScope.userNotLoggedIn = true;
-      }
+      // $scope.logout = ()=> {
+      //   navBarService.logout();
+      //   $rootScope.userNotLoggedIn = true;
+      // }
 // ========================================================================================================================
 // get user function
 // ======================================================================================================================================================
@@ -24,7 +24,7 @@ angular.module('myApp').directive('myNav', function(){
           if (user) {
             console.log(user);
             console.log('user not logged in is ===> ', $scope.userNotLoggedIn);
-            $rootScope.user = user.username;
+            $rootScope.user_name = user.username;
             $rootScope.userNotLoggedIn = false;
           }
           else  {

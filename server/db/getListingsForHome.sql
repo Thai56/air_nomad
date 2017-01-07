@@ -1,6 +1,7 @@
-select *, user_images.image_url as profile_pic, room_images.image_url as room_pic from users
-join rooms on users.id = rooms.user_id
-join room_accessories on room_accessories.rooms_id = rooms.id
-join room_images on room_images.room_accessories_id = room_accessories.id
-join user_images on room_images.room_id = user_images.room_id
+select ui.image_url as profile_pic, r.listing_name, r.id as room_id, ri.image_url as room_pic
+from users u
+join rooms r on u.id = r.user_id
+join room_accessories rac on rac.rooms_id = r.id
+join room_images ri on ri.room_accessories_id = rac.id
+join user_images ui on ri.room_id = ui.room_id
 limit 3;

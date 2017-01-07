@@ -47,12 +47,15 @@ angular.module('myApp').controller('conversationsMessageBoxCtrl', ($scope,$state
     socket.on('new message',function(data) {
       console.log('this is the data',data);
       $chat.append(
-        '<div ng-style=' + '"{"width":"100%","background":"white","border-radius":"44px","border-bottom":"1px solid black"}"' + '>'
-        + '<h4>' + $scope.sender.first_name + ':' + '</h4>' + data + '</div>' + '<br/>'
+        '<div ng-style=' + '>'
+        + '<h4>'  + '</h4>' + data + '</div>'
       )
     })
   });
-
+// '"{"width":"100%","background":"white","border-radius":"44px","border-bottom":"1px solid black"}"' +
+// + $scope.sender.first_name
+// ':' +
+// + '<br/>'
   // ==========================================================================================================================================
 
 })

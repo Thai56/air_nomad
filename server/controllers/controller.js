@@ -18,7 +18,8 @@ module.exports = {
     getListingsForHome: (req, res, next) => {
         db.getListingsForHome((err, listings) => {
             if (!err) {
-                console.log('listings from controller backend', listings);
+                console.log(')(*&^%$#@#$%^&*(listings from controller backend');
+                // res.status(200).send({test: 'hi'});
                 res.status(200).send(listings);
             } else {
                 console.log('this is ther err from the contoller backend', err);
@@ -360,9 +361,10 @@ module.exports = {
   getConversation: (req,res,next) => {
     const host_id = req.params.host_id;
     const user_id = req.user.id
+
     db.getConversation([host_id,user_id], (err,messages)=> {
       if(!err){
-        console.log('these are the messages from getCONVERSATIONS',messages);
+        console.log('||||||||||||||||these are the messages from getCONVERSATIONS',messages);
         res.status(200).send(messages)
       }
       else {

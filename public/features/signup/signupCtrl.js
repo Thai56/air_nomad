@@ -10,6 +10,8 @@ angular.module('myApp').controller('signupCtrl', ($scope,signupService,ngDialog)
       signupService.registerUser(register).then(function(response){
         console.log('response from controller', response)
         alert(response)
+        $scope.closeThisDialog();
+        ngDialog.open({ template:'./features/login/login.html', className:'ngdialog-theme-default', controller:'loginCtrl'});
       })
     }
 

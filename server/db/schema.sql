@@ -166,3 +166,17 @@ where lower(rooms.address) like lower('%'|| 'Fairfield' || '%')
         join rooms on rooms.id = listings.room_id
         join room_accessories on rooms.id = room_accessories.rooms_id
         where listings.user_id = 8
+
+        select message.* , users.first_name as reciever_first_name
+              , users.last_name as reciever_last_name from message join users
+          on users.id = message.reciever_id
+           where (message.sender_id = $2  and message.sender_id = $1)
+            or (message.reciever_id = $1 and message.reciever_id  = $2)
+            order by message.id desc;
+
+            select u.first_name as firstName, u.last_name as lastName, r.id as room from users u
+            join rooms r on u.id = r.user_id
+            join room_accessories rac on rac.rooms_id = r.id
+            join room_images ri on ri.room_accessories_id = rac.id
+            join user_images ui on ri.room_id = ui.room_id
+            limit 3;

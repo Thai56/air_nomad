@@ -106,10 +106,13 @@ angular.module('myApp').controller('conversationsMessageBoxCtrl', function ($sco
 
     socket.on('new message', function (data) {
       console.log('this is the data', data);
-      $chat.append('<div ng-style=' + '"{"width":"100%","background":"white","border-radius":"44px","border-bottom":"1px solid black"}"' + '>' + '<h4>' + $scope.sender.first_name + ':' + '</h4>' + data + '</div>' + '<br/>');
+      $chat.append('<div ng-style=' + '>' + '<h4>' + '</h4>' + data + '</div>');
     });
   });
-
+  // '"{"width":"100%","background":"white","border-radius":"44px","border-bottom":"1px solid black"}"' +
+  // + $scope.sender.first_name
+  // ':' +
+  // + '<br/>'
   // ==========================================================================================================================================
 });
 'use strict';
@@ -200,38 +203,6 @@ angular.module('myApp').service('conversationsMessageBoxService', function ($htt
 });
 'use strict';
 
-angular.module('myApp').controller('homeRoomListingsCtrl', function ($scope, homeRoomListingsService) {
-  homeRoomListingsService.getListingsForHome().then(function (response) {
-    console.log('response from homeListingCtrl', response);
-    $scope.listings = response;
-  });
-});
-'use strict';
-
-angular.module('myApp').directive('homeRoomListings', function () {
-  return {
-    restrict: 'AE',
-    controller: 'homeRoomListingsCtrl',
-    templateUrl: './features/home-room-listings/home-room-listings.html'
-  };
-});
-'use strict';
-
-angular.module('myApp').service('homeRoomListingsService', function ($http, $q) {
-  this.getListingsForHome = function () {
-    var defer = $q.defer();
-    $http({
-      method: 'get',
-      url: '/rooms/listings'
-    }).then(function (response) {
-      console.log('response from homeRoomListingsService', response);
-      defer.resolve(response.data);
-    });
-    return defer.promise;
-  };
-});
-'use strict';
-
 angular.module('myApp').controller('conversationsProfilePicCtrl', function ($scope, $stateParams, conversationsProfilePicService) {
   var user_id = $stateParams.user_id;
   conversationsProfilePicService.getConversationProfilePic(user_id).then(function (response) {
@@ -259,6 +230,40 @@ angular.module('myApp').service('conversationsProfilePicService', function ($htt
       console.log('this is the resposne.data', response.data);
       defer.resolve(response.data);
     });
+    return defer.promise;
+  };
+});
+'use strict';
+
+angular.module('myApp').controller('homeRoomListingsCtrl', function ($scope, homeRoomListingsService) {
+  homeRoomListingsService.getListingsForHome().then(function (response) {
+    console.log('response from homeListingCtrl', response);
+    $scope.listings = response;
+  });
+});
+'use strict';
+
+angular.module('myApp').directive('homeRoomListings', function () {
+  return {
+    restrict: 'AE',
+    controller: 'homeRoomListingsCtrl',
+    templateUrl: './features/home-room-listings/home-room-listings.html'
+  };
+});
+'use strict';
+
+angular.module('myApp').service('homeRoomListingsService', function ($http, $q) {
+  this.getListingsForHome = function () {
+    var defer = $q.defer();
+    $http({
+      method: 'get',
+      url: '/rooms/listings'
+    }).then(function (response) {
+      console.log('response from homeRoomListingsService', response);
+      console.log('back');
+      defer.resolve(response.data);
+    });
+    console.log(12, 'back');
     return defer.promise;
   };
 });
@@ -394,10 +399,10 @@ angular.module('myApp').directive('myNav', function () {
       $scope.clickToLogin = function () {
         ngDialog.open({ template: './features/login/login.html', className: 'ngdialog-theme-default', controller: 'loginCtrl' });
       };
-      $scope.logout = function () {
-        navBarService.logout();
-        $rootScope.userNotLoggedIn = true;
-      };
+      // $scope.logout = ()=> {
+      //   navBarService.logout();
+      //   $rootScope.userNotLoggedIn = true;
+      // }
       // ========================================================================================================================
       // get user function
       // ======================================================================================================================================================
@@ -406,7 +411,7 @@ angular.module('myApp').directive('myNav', function () {
           if (user) {
             console.log(user);
             console.log('user not logged in is ===> ', $scope.userNotLoggedIn);
-            $rootScope.user = user.username;
+            $rootScope.user_name = user.username;
             $rootScope.userNotLoggedIn = false;
           } else {
             $scope.user = 'NOT LOGGED IN';
@@ -477,7 +482,7 @@ angular.module('myApp').service('navSearchInputService', function ($http, $q) {
 });
 'use strict';
 
-angular.module('myApp').controller('navbarDropdownCtrl', function ($scope, $stateParams, $rootScope, navbarDropdownService, $log) {
+angular.module('myApp').controller('navbarDropdownCtrl', function ($scope, $stateParams, $rootScope, navbarDropdownService, loginService, navBarService) {
   function getUser() {
     navbarDropdownService.getUser().then(function (user) {
       if (user) {
@@ -504,7 +509,16 @@ angular.module('myApp').controller('navbarDropdownCtrl', function ($scope, $stat
   // * logout * //
   //   //    //
   $scope.logout = function () {
-    navbarDropdownService.logout();
+    navBarService.logout().then(function (response) {
+      console.log(response);
+      loginService.getUser().then(function (user) {
+        if (user) {
+          $scope.user = user;
+        } else {
+          $scope.user = "NO USER!";
+        }
+      });
+    });
     $rootScope.userNotLoggedIn = true;
   };
 });
@@ -543,18 +557,20 @@ angular.module('myApp').service('navbarDropdownService', function ($http, $q) {
     return defer.promise;
   };
 
-  this.logout = function () {
-    console.log('fireing');
-    return $http({
-      method: 'GET',
-      url: '/logout'
-    }).then(function (res) {
-      console.log(res.data);
-      return res.data;
-    }).catch(function (err) {
-      console.log(err);
-    });
-  };
+  // this.logout = () => {
+  //   console.log('fireing');
+  //   return $http({
+  //     method: 'GET',
+  //     url: '/logout'
+  //   })
+  //   .then(function(res) {
+  //     console.log(res.data);
+  //     return res.data;
+  //   })
+  //   .catch(function(err) {
+  //     console.log(err);
+  //   })
+  // }
 });
 'use strict';
 
@@ -767,15 +783,20 @@ angular.module('myApp').controller('roomsListingMainBookingCtrl', function ($sco
     $rootScope.$watch('all_bookings_for_User', function (newVal, oldVal) {
         $rootScope.bookings_length = $rootScope.all_bookings_for_User.length;
         // console.log($rootScope.bookings_length);
+        //run getUser after newVal[1]
     });
     $scope.$watch('startDate.value', function (newVal, oldVal) {
         newVal.setDate(newVal.getDate());
         $scope.changedDate = $filter('date')(newVal, 'yyyy-MM-dd');
         console.log($scope.changedDate);
     });
-    $scope.$watch('user', function (newVal, oldVal) {
-        $scope.user_changed = newVal;
-    });
+
+    // $rootScope.$watch('user', (newVal,oldVal) => {
+    //   // loginService.getUser().then()
+    //   // $scope.user_changed= newVal;
+    //   console.log($scope.user);
+    // })
+
 });
 'use strict';
 
@@ -1413,6 +1434,8 @@ angular.module('myApp').controller('signupCtrl', function ($scope, signupService
       signupService.registerUser(register).then(function (response) {
         console.log('response from controller', response);
         alert(response);
+        $scope.closeThisDialog();
+        ngDialog.open({ template: './features/login/login.html', className: 'ngdialog-theme-default', controller: 'loginCtrl' });
       });
     }
 
@@ -1541,18 +1564,6 @@ angular.module('myApp').service('usersProfilePicService', function ($http, $q) {
 });
 'use strict';
 
-angular.module('myApp').controller('start_datepickerCtrl', function ($scope) {});
-'use strict';
-
-angular.module('myApp').directive('startDatepicker', function () {
-  return {
-    restrict: 'AE',
-    templateUrl: './features/home_header/homeHeader-datepickers/start/start_datepicker.html',
-    controller: 'start_datepickerCtrl'
-  };
-});
-'use strict';
-
 angular.module('myApp').controller('endDatepickerCtrl', function ($scope) {});
 'use strict';
 
@@ -1567,6 +1578,18 @@ angular.module('myApp').directive('endDatepicker', function () {
         return console.log(ngModelCtrl);
       });
     }
+  };
+});
+'use strict';
+
+angular.module('myApp').controller('start_datepickerCtrl', function ($scope) {});
+'use strict';
+
+angular.module('myApp').directive('startDatepicker', function () {
+  return {
+    restrict: 'AE',
+    templateUrl: './features/home_header/homeHeader-datepickers/start/start_datepicker.html',
+    controller: 'start_datepickerCtrl'
   };
 });
 'use strict';
