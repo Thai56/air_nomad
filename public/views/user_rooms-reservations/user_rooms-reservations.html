@@ -1,1 +1,8 @@
-<h2>This is the Users reservations view</h2>
+<h2 ng-style='{"text-align":"center"}'ng-show='userNow '>{{user.first_name}}'s Current Reservations</h2>
+<!-- <h2 ng-style='{"text-align":"center"}'ng-show='!userNow'>Sign Up To Book Your Reservation</h2> -->
+<h2 ng-style='{"text-align":"center"}'ng-show='!userNow'>Compare Your Bookings Here</h2>
+
+<section ng-repeat='booking in userBookings | filter : booking.start'>
+  <h3>Booking Date:{{booking.start}}-{{booking.end}}</h3>
+  <h4>Total Price: ${{booking.price}}</h4>
+</section>

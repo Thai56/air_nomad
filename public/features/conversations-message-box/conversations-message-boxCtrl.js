@@ -2,14 +2,11 @@ angular.module('myApp').controller('conversationsMessageBoxCtrl', ($scope,$state
 
   const current_user_id = $stateParams.user_id;
   console.log($stateParams.user_id);
-  conversationsMessageBoxService.getConversation(current_user_id).then(response => {
-    console.log(response);
-    $scope.messagesFromBackend = response;
-  })
 
   conversationsMessageBoxService.getConversationUsername(current_user_id)
   .then(response => {
     $scope.username = response[0];
+    console.log($scope.username);
   })
 
   loginService.getUser().then(user => {
@@ -20,7 +17,10 @@ angular.module('myApp').controller('conversationsMessageBoxCtrl', ($scope,$state
     else  {
         $scope.user = 'NOT LOGGED IN'
     };
+    console.log($scope.messagesFromBackend);
   })
+
+
 
 
   $scope.insertMessage =(user_message) => {
@@ -48,14 +48,37 @@ angular.module('myApp').controller('conversationsMessageBoxCtrl', ($scope,$state
       console.log('this is the data',data);
       $chat.append(
         '<div ng-style=' + '>'
-        + '<h4>'  + '</h4>' + data + '</div>'
+        + '<h4>' + $scope.sender.first_name +'</h4></div><div>' + data + '</div>'
       )
     })
+    // socket.on('new message',function(data) {
+    //   console.log('this is the data',data);
+    //   $chat.append(
+    //     '<div ng-style=' + '>'
+    //     + '<h4>'  + '</h4>' + data + '</div>'
+    //   )
+    // })
   });
 // '"{"width":"100%","background":"white","border-radius":"44px","border-bottom":"1px solid black"}"' +
 // + $scope.sender.first_name
 // ':' +
 // + '<br/>'
   // ==========================================================================================================================================
-
+  conversationsMessageBoxService.getConversation(current_user_id).then(response => {
+    console.log(response);
+    $scope.messagesFromBackend = response;
+    $scope.messagesFromBackend.forEach((obj) => {
+      console.log(obj);
+      // check reciever id
+      if(obj.sender_id === $scope.username.user_id){
+        console.log($scope.username.first_name)
+        obj.message_name = $scope.username.first_name
+      }
+      else {
+        console.log(obj)
+        obj.message_name = $scope.sender.first_name
+        console.log(obj);
+      }
+    })
+  })
 })

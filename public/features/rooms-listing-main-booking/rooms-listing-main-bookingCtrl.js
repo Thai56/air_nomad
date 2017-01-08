@@ -30,7 +30,7 @@ angular.module('myApp').controller('roomsListingMainBookingCtrl', ($scope, $stat
         roomsListingMainBookingService.reserveDate(room_id, $scope.chosenStartDate, $scope.chosenEndDate, $scope.total_price).then(response => {
             console.log('response back into the controller on the way back ====> ', response);
             let userBookingsArray = [];
-            $rootScope.all_bookings_for_User = response;
+            $scope.all_bookings_for_User = response;
             response.forEach(book => {
                 console.log(book);
                 if (book.buyer_id === $scope.user.id) {
@@ -42,15 +42,14 @@ angular.module('myApp').controller('roomsListingMainBookingCtrl', ($scope, $stat
             console.log(userBookingsArray)
             let latestBooking = userBookingsArray[userBookingsArray.length - 1]
             alert(`YOUR RESERVATION HAS BEEN BOOKED FOR ${$scope.price.listing_name} for the date of ${latestBooking.start} and ${latestBooking.end}`)
-
             // console.log(userBookingsArray)
+            $scope.itemsInCart = userBookingsArray.length;
             alert(`You will now be directed to checkout ${$scope.user.first_name}`)
             $scope.startDate.value = ''
             $scope.endDate.value = ''
         })
 
     }
-
 
 
     $scope.goToPaypal = (userObj, priceObj, total_price) => {
@@ -74,19 +73,23 @@ angular.module('myApp').controller('roomsListingMainBookingCtrl', ($scope, $stat
         //     $scope.foo = 'foo';
         // $scope.bar = 'bar';
 
-    $scope.$watchGroup(['user', 'all_bookings_for_User'], function(newValues, oldValues, scope) {
-        // newValues array contains the current values of the watch expressions
-        $scope.newUser = newValues[0];
-        $scope.all_bookings_for_User = newValues[1]
-        console.log('This is new value [1]', newValues[1]);
-        // with the indexes matching those of the watchExpression array
-        // i.e.
-        // newValues[0] -> $scope.foo
-        // and
-        // newValues[1] -> $scope.bar
-    });
+    // $scope.$watchGroup(['user', 'all_bookings_for_User'], function(newValues, oldValues, scope) {
+    //     // newValues array contains the current values of the watch expressions
+    //     console.log($scope.user);
+    //     $scope.user = newValues[0];
+    //
+    //     $scope.all_bookings_for_User = newValues[1]
+    //     console.log('This is new value [1]', newValues[1]);
+    //     // with the indexes matching those of the watchExpression array
+    //     // i.e.
+    //     // newValues[0] -> $scope.foo
+    //     // and
+    //     // newValues[1] -> $scope.bar
+    // });
 
-
+    // $rootScope.$watch('itemsInCart',(newVal,oldVal) => {
+    //   $scope.itemsInCart = newVal;
+    // })
 
 
 })

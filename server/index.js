@@ -144,7 +144,7 @@ app.get('/auth/me', function(req, res) {
 
 })
 
-app.get('/logout', function(req, res) {
+app.get('/logout',Ctrl.logSession, function(req, res) {
   console.log('LOGGING OUT NOW');
   req.logout();
   console.log(req.user);
@@ -203,4 +203,8 @@ app.post('/users/profile/edit', isAuthenticated, Ctrl.saveChanges)
 
 app.get('/user_rooms/user_listings', isAuthenticated, Ctrl.getListingsForView)
 
-app.post('/users/edit', Ctrl.addUser)
+app.post('/users/edit',isAuthenticated, Ctrl.addUser)
+
+app.get('/user_rooms/bookings/:id',isAuthenticated, Ctrl.getUserBookingsById)
+
+app.get('/user_rooms/reservations/rooms', isAuthenticated, Ctrl.getRoomInfoByIdForReservations)
