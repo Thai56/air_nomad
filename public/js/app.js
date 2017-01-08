@@ -1,4 +1,4 @@
-angular.module('myApp',['ui.router','ui.bootstrap','ngDialog','angular-input-stars','ngRoute','ngStorage']).config(function($stateProvider,$urlRouterProvider) {
+angular.module('myApp',['ui.router','ui.bootstrap','ngDialog','angular-input-stars','ngRoute','ngStorage']).config(function($stateProvider,$urlRouterProvider,) {
   $stateProvider
   .state('home', {
     url:'/',
@@ -45,6 +45,7 @@ angular.module('myApp',['ui.router','ui.bootstrap','ngDialog','angular-input-sta
   .state('user_rooms.user_reservations', {
     url:'/user_reservations',
     templateUrl:'./views/user_rooms-reservations/user_rooms-reservations.html',
+    controller:'userRoomsReservationsCtrl',
     params:{viewParam:null}
   })
   .state('user_rooms.user_trips', {
@@ -65,6 +66,9 @@ angular.module('myApp',['ui.router','ui.bootstrap','ngDialog','angular-input-sta
 
   $urlRouterProvider
   .otherwise('/')
+
+
+
 });
 //  dependency of ui-bootstrap carousel from DEMO 'ngSanitize' / ,'ngAnimate'
 // Now going to check index.html for any script tags or links that may help carousel

@@ -29,53 +29,63 @@ angular.module('myApp').controller('roomsListingMainBookingCtrl', ($scope, $stat
         console.log($scope.total_price);
         roomsListingMainBookingService.reserveDate(room_id, $scope.chosenStartDate, $scope.chosenEndDate, $scope.total_price).then(response => {
             console.log('response back into the controller on the way back ====> ', response);
-            // $rootScope.all_bookings_for_User = response;
+            let userBookingsArray = [];
             $rootScope.all_bookings_for_User = response;
-            // console.log(`Your reservation has been booked from  ${response.start} to ${response.end} for ${response.length}`);
+            response.forEach(book => {
+                console.log(book);
+                if (book.buyer_id === $scope.user.id) {
+                  userBookingsArray.push(book)
+                  console.log(userBookingsArray);
+                }
+
+            })
+            console.log(userBookingsArray)
+            let latestBooking = userBookingsArray[userBookingsArray.length - 1]
+            alert(`YOUR RESERVATION HAS BEEN BOOKED FOR ${$scope.price.listing_name} for the date of ${latestBooking.start} and ${latestBooking.end}`)
+
+            // console.log(userBookingsArray)
+            alert(`You will now be directed to checkout ${$scope.user.first_name}`)
             $scope.startDate.value = ''
             $scope.endDate.value = ''
         })
+
     }
 
-    $scope.goToPaypal = (a, b, c) => {
-            console.log(a);
-            console.log(b);
-            console.log(c);
-            // alert('this is working paypal function')
+
+
+    $scope.goToPaypal = (userObj, priceObj, total_price) => {
+            console.log(userObj);
+            console.log(priceObj);
+            console.log(total_price);
+            roomsListingMainBookingService.goToPaypal(userObj, priceObj, total_price)
+            alert('this is working paypal function')
         }
         // =====================================================================================================================
 
 
     $scope.today = $filter('date')(new Date(), 'yyyy-MM-dd');
 
-    $rootScope.$watch('all_bookings_for_User', (newVal, oldVal) => {
-        $rootScope.bookings_length = $rootScope.all_bookings_for_User.length;
-        // console.log($rootScope.bookings_length);
-        //run getUser after newVal[1]
-    })
     $scope.$watch('startDate.value', (newVal, oldVal) => {
-        newVal.setDate(newVal.getDate())
-        $scope.changedDate = $filter('date')(newVal, 'yyyy-MM-dd')
-        console.log($scope.changedDate);
-    })
+            newVal.setDate(newVal.getDate())
+            $scope.changedDate = $filter('date')(newVal, 'yyyy-MM-dd')
+            console.log($scope.changedDate);
+        })
+        //dummy demo
+        //     $scope.foo = 'foo';
+        // $scope.bar = 'bar';
 
-    $scope.foo = 'foo';
-$scope.bar = 'bar';
+    $scope.$watchGroup(['user', 'all_bookings_for_User'], function(newValues, oldValues, scope) {
+        // newValues array contains the current values of the watch expressions
+        $scope.newUser = newValues[0];
+        $scope.all_bookings_for_User = newValues[1]
+        console.log('This is new value [1]', newValues[1]);
+        // with the indexes matching those of the watchExpression array
+        // i.e.
+        // newValues[0] -> $scope.foo
+        // and
+        // newValues[1] -> $scope.bar
+    });
 
-$scope.$watchGroup(['foo', 'bar'], function(newValues, oldValues, scope) {
-  // newValues array contains the current values of the watch expressions
-  // with the indexes matching those of the watchExpression array
-  // i.e.
-  // newValues[0] -> $scope.foo
-  // and
-  // newValues[1] -> $scope.bar
-});
-
-    // $rootScope.$watch('user', (newVal, oldVal) => {
-        // loginService.getUser().then()
-        // $scope.user_changed= newVal;
-        // console.log($scope.user);
-    // })
 
 
 

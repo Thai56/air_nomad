@@ -47,7 +47,7 @@ table {
 
 .box {
   height: 400px;
-  width: 30%; }
+  width: 350px; }
 
 body {
   background: #ededed; }
@@ -97,6 +97,9 @@ input[type="date"]:valid:before {
   flex-direction: row;
   justify-content: space-between;
   align-items: center; }
+
+#nomad_desc {
+  display: none; }
 
 nav-search-input {
   position: absolute;
@@ -509,5 +512,135 @@ user-profile-pic {
     left: 106px; }
   .conversations-message-box-container #message {
     margin-top: 16px; }
+
+.fa-heart {
+  display: none; }
+
+@media (max-width: 1157px) {
+  .nav-bar-container {
+    width: 90%;
+    border: 1px solid black; }
+    .nav-bar-container .nav-bar-float-right {
+      width: 413px;
+      background: lightgray;
+      position: absolute;
+      top: 20px; } }
+
+@media (max-width: 954px) {
+  .nav-bar-container .nav-bar-float-right {
+    width: 404px;
+    position: absolute;
+    right: 0;
+    top: 25px;
+    border: 1px solid black;
+    padding-right: 5px; }
+    .nav-bar-container .nav-bar-float-right navbar-dropdown {
+      width: 424px; }
+  .nav-bar-container .nav-bar-float-left {
+    width: 358px; } }
+
+@media (max-width: 867px) {
+  .nav-bar-container {
+    position: relative;
+    height: 400px;
+    margin: 0;
+    width: 100%; }
+    .nav-bar-container .nav-bar-float-right {
+      height: 80px;
+      border: 1px solid black;
+      margin-top: 8px;
+      position: absolute;
+      top: 0;
+      right: 64px;
+      width: 540px; }
+      .nav-bar-container .nav-bar-float-right navbar-dropdown {
+        position: absolute;
+        top: 19px;
+        left: 125px; }
+      .nav-bar-container .nav-bar-float-right #nav-messages-text {
+        position: absolute;
+        right: 190px; }
+    .nav-bar-container .fa-heart {
+      position: absolute;
+      display: block;
+      color: #FF7E82;
+      width: 60px;
+      text-align: center;
+      border: 1px solid black;
+      margin-top: 24px;
+      margin-left: 24px;
+      -webkit-transform: rotateX(180deg);
+      transform: rotateX(180deg);
+      transition: transform 1s; }
+      .nav-bar-container .fa-heart:hover {
+        transform: rotate(1080deg); }
+    .nav-bar-container .nav-bar-float-left {
+      width: 90%;
+      margin: auto;
+      border: 1px solid black;
+      height: 180px;
+      position: relative;
+      top: 90px;
+      margin-left: 20px; }
+      .nav-bar-container .nav-bar-float-left nav-search-input {
+        display: block;
+        clear: both;
+        position: absolute;
+        bottom: 0;
+        border: 1px solid black;
+        width: 100%; }
+        .nav-bar-container .nav-bar-float-left nav-search-input #nav-search-input {
+          width: 100% !important; }
+      .nav-bar-container .nav-bar-float-left #logo {
+        cursor: pointer;
+        position: absolute;
+        top: 0;
+        left: 16px;
+        margin-top: 0; }
+        .nav-bar-container .nav-bar-float-left #logo #nomad_desc {
+          display: inline;
+          font-size: 26px;
+          color: #b3b3b3; }
+  .room-listing-content-wrapper {
+    height: 650px;
+    width: 104%;
+    position: relative;
+    display: inline-block; }
+    .room-listing-content-wrapper .rooms-listing-main-booking-container {
+      float: right;
+      position: absolute;
+      top: 0;
+      right: 0; }
+    .room-listing-content-wrapper rooms-listing-main-desc {
+      position: absolute;
+      bottom: 0; }
+      .room-listing-content-wrapper rooms-listing-main-desc .description-container {
+        bottom: 0;
+        width: 100%; }
+        .room-listing-content-wrapper rooms-listing-main-desc .description-container .icon-wrapper .glyph-container {
+          margin-right: 4em; }
+    .room-listing-content-wrapper description-container {
+      position: absolute;
+      bottom: 0; }
+    .room-listing-content-wrapper .rooms-profile-pic-container {
+      float: left; }
+    .room-listing-content-wrapper .container {
+      position: relative; } }
+
+@media (max-width: 437px) {
+  .box {
+    width: 100%; }
+  #amsterdam {
+    width: 100%; }
+  #new_york {
+    width: 100%; }
+  #amsterdam {
+    width: 100%; }
+  .nav-bar-container {
+    display: flex; }
+  .nav-bar-float-right a {
+    display: none; }
+  .nav-bar-container {
+    display: none; } }
 
 /*# sourceMappingURL=maps/styles.css.map */

@@ -1,11 +1,15 @@
-<!-- ============================================================================================================================================================================ -->
+<!-- ======================================================================h====================================================================================================== -->
 <!-- THIS IS A TEMPLATE FOR THE NAVBAR DIRECTIVE -->
 <!-- ============================================================================================================================================================================ -->
 <div class="nav-bar-container-wrapper">
-  <section class="nav-bar-container">
+  <section class="nav-bar-container row-fluid">
+    <div class="">
+      <i class="fa fa-heart fa-3x" aria-hidden="true"></i>
+    </div>
     <div class="nav-bar-float-left">
-      <h2 id='logo'>Air Nomad</h2>
-      <nav-search-input></nav-search-input>
+      <h2 id='logo'ui-sref='home'>Air Nomad <span id="nomad_desc">Book unique homes and experience a city like a local.</span></h2>
+      <nav-search-input class='nav-search-input'></nav-search-input>
+      <!-- <i class="fa fa-heart fa-2x-ls" aria-hidden="true"></i> -->
     </div>
     <div class="nav-bar-float-right">
         <a ui-sref='home' ng-style='{
@@ -25,7 +29,7 @@
         <div ng-show='!userNotLoggedIn'>
           <navbar-dropdown></navbar-dropdown>
         </div>
-        <a ng-show='!userNotLoggedIn' href="#">messages</a>
+        <a ng-show='!userNotLoggedIn' id='nav-messages-text' href="#">messages</a>
         <a ng-style='{"font-size":"16px"}' href="#">Become a host</a>
     </div>
 

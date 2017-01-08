@@ -16,6 +16,9 @@
     flex-wrap: wrap;
     justify-content: space-around;
 }
+@mixin display_none{
+  display:none;
+}
 
 * {
     box-sizing: border-box;
@@ -23,7 +26,8 @@
 
 .box {
     height: 400px;
-    width: 30%;
+    width: 350px;
+    // width: 30%;
     // border: 2px solid black;
 }
 
@@ -90,7 +94,9 @@ input[type="date"]:before {
   justify-content: space-between;
   align-items: center;
 }
-
+#nomad_desc {
+  display: none;
+}
 nav-search-input {
   position:absolute;
   right: 0;
@@ -667,8 +673,243 @@ user-profile-pic {
   }
 }
 
+.fa-heart {
+  display:none;
+}
 // on of Corey's media queries
 // @media (max-width: 1920px) {
 //     .menu {
 //         display:none;
 //     }
+
+@media (max-width:1157px) {
+  .nav-bar-container {
+    width:90%;
+    border: 1px solid black;
+    .nav-bar-float-right {
+      width:413px;
+      background: lightgray;
+      position: absolute;
+      top: 20px;
+    }
+  }
+}
+@media (max-width:954px) {
+  .nav-bar-container {
+    .nav-bar-float-right {
+      width:404px;
+      position: absolute;
+      right: 0;
+      top: 25px;
+      border: 1px solid black;
+      padding-right:5px;
+      navbar-dropdown {
+        width:424px;
+
+      }
+    }
+    .nav-bar-float-left {
+      width: 358px;
+    }
+  }
+
+
+}
+@media (max-width:867px) {
+
+  .nav-bar-container {
+    position: relative;
+    height: 400px;
+    margin:0;
+    width:100%;
+    .nav-bar-float-right {
+      height:80px;
+      border: 1px solid black;
+      margin-top:8px;
+      position: absolute;
+      top:0;
+      right: 64px;
+      width:540px;
+      navbar-dropdown {
+        position: absolute;
+        top:19px;
+        left:125px;
+      }
+      #nav-messages-text {
+        position: absolute;
+        right:190px;
+      }
+    }
+    .fa-heart {
+      position:absolute;
+      display:block;
+      color:$pink;
+      width: 60px;
+      text-align: center;
+      border:1px solid black;
+      margin-top: 24px;
+      margin-left:24px;
+      -webkit-transform: rotateX(180deg);
+      transform: rotateX(180deg);
+      transition:transform 1s;
+      &:hover {
+        // -webkit-transform: rotateX(180deg);
+        // transform: rotateX(180deg);
+        transform:rotate(1080deg)
+      }
+    }
+
+    .nav-bar-float-left {
+      width: 90%;
+      margin: auto;
+      border:1px solid black;
+      height:180px;
+      position: relative;
+      top: 90px;
+      margin-left:20px;
+      nav-search-input {
+        display: block;
+        clear: both;
+        position:absolute;
+        bottom:0;
+        border:1px solid black;
+        width: 100%;
+        #nav-search-input {
+          // height:100% !important;
+          width:100% !important;
+        }
+      }
+      #logo {
+        cursor:pointer;
+        position: absolute;
+        top:0;
+        left:16px;
+        margin-top: 0;
+        #nomad_desc {
+          display: inline;
+          font-size: 26px;
+          color:lighten(gray,20%);
+        }
+      }
+
+    }
+
+  }
+
+  .room-listing-content-wrapper {
+    // display: flex;
+    height: 650px;
+    width: 104%;
+    position: relative;
+    .rooms-listing-main-booking-container {
+      float:right;
+      position:absolute;
+      top:0;
+      right:0;
+
+    }
+
+    rooms-listing-main-desc {
+      position:absolute;
+      bottom:0;
+      .description-container {
+        bottom: 0;
+        width: 100%;
+        .icon-wrapper {
+          .glyph-container {
+            margin-right: 4em;
+          }
+        }
+      }
+    }
+description-container {
+  position: absolute;
+  bottom:0;
+}
+
+
+    display: inline-block;
+    .rooms-profile-pic-container {
+      float: left;
+    }
+    .container {
+      position: relative;
+    }
+  }
+//   .home-img-container {
+//     white-space: nowrap !important;
+//     overflow-x: auto !important;
+//     overflow-y: hidden !important;
+//     padding: 0 18px !important;
+//     margin-bottom: -30px !important;
+//     -webkit-transition: -webkit-transform 0.5s,transform 0.5s !important;
+//     .box {
+//       width: 100%;
+//     }
+//     #amsterdam {
+//       position: absolute !important;
+// background-position: 50% 50% !important;
+// background-repeat: no-repeat !important;
+// animation-name: keyframe_cwjpzv !important;
+// animation-duration: 300ms !important;
+// animation-timing-function: ease-out !important;
+// background-size: contain !important;
+// -webkit-animation-name: keyframe_cwjpzv !important;
+// -webkit-animation-duration: 300ms !important;
+// -webkit-animation-timing-function: ease-out !important;
+//     }
+//     #new_york{
+//       position: absolute !important;
+//     background-position: 50% 50% !important;
+//     background-repeat: no-repeat !important;
+//     animation-name: keyframe_cwjpzv !important;
+//     animation-duration: 300ms !important;
+//     animation-timing-function: ease-out !important;
+//     background-size: contain !important;
+//     -webkit-animation-name: keyframe_cwjpzv !important;
+//     -webkit-animation-duration: 300ms !important;
+//     -webkit-animation-timing-function: ease-out !important;
+//     }
+//     #london {
+//       position: absolute !important;
+//     background-position: 50% 50% !important;
+//     background-repeat: no-repeat !important;
+//     animation-name: keyframe_cwjpzv !important;
+//     animation-duration: 300ms !important;
+//     animation-timing-function: ease-out !important;
+//     background-size: contain !important;
+//     -webkit-animation-name: keyframe_cwjpzv !important;
+//     -webkit-animation-duration: 300ms !important;
+//     -webkit-animation-timing-function: ease-out !important;
+//     }
+//   }
+
+}
+@media (max-width:437px) {
+
+  .box {
+    width::100%;
+  }
+  #amsterdam {
+    width: 100%;
+  }
+  #new_york {
+    width: 100%;
+  }
+  #amsterdam {
+    width: 100%;
+  }
+  .nav-bar-container {
+    display:flex;
+  }
+  .nav-bar-float-right {
+    a {
+      display: none;
+    }
+
+  }
+  .nav-bar-container {
+    display: none;
+  }
+
+}

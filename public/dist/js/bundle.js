@@ -38,6 +38,7 @@ angular.module('myApp', ['ui.router', 'ui.bootstrap', 'ngDialog', 'angular-input
   }).state('user_rooms.user_reservations', {
     url: '/user_reservations',
     templateUrl: './views/user_rooms-reservations/user_rooms-reservations.html',
+    controller: 'userRoomsReservationsCtrl',
     params: { viewParam: null }
   }).state('user_rooms.user_trips', {
     url: '/user_trips',
@@ -57,150 +58,6 @@ angular.module('myApp', ['ui.router', 'ui.bootstrap', 'ngDialog', 'angular-input
 });
 //  dependency of ui-bootstrap carousel from DEMO 'ngSanitize' / ,'ngAnimate'
 // Now going to check index.html for any script tags or links that may help carousel
-'use strict';
-
-angular.module('myApp').controller('conversationsMessageBoxCtrl', function ($scope, $stateParams, $location, $localStorage, conversationsMessageBoxService, loginService) {
-
-  var current_user_id = $stateParams.user_id;
-  console.log($stateParams.user_id);
-  conversationsMessageBoxService.getConversation(current_user_id).then(function (response) {
-    console.log(response);
-    $scope.messagesFromBackend = response;
-  });
-
-  conversationsMessageBoxService.getConversationUsername(current_user_id).then(function (response) {
-    $scope.username = response[0];
-  });
-
-  loginService.getUser().then(function (user) {
-    if (user) {
-      $scope.sender = user;
-      console.log($scope.sender);
-    } else {
-      $scope.user = 'NOT LOGGED IN';
-    };
-  });
-
-  $scope.insertMessage = function (user_message) {
-    console.log($scope.user_message, current_user_id);
-    var message_time = new Date();
-    conversationsMessageBoxService.insertMessage(user_message, current_user_id, message_time).then(function (response) {
-      return console.log(response.data);
-    });
-  };
-  // ===================================================================================================================
-  // jQuery
-  // ==========================================================================================================================================
-
-  jQuery(function ($) {
-    var socket = io.connect();
-    var $messageForm = $('#send-message');
-    var $messageBox = $('#message');
-    var $chat = $('#chat');
-
-    $messageForm.submit(function (e) {
-      e.preventDefault();
-      socket.emit('send message', $messageBox.val());
-      $messageBox.val('');
-    });
-
-    socket.on('new message', function (data) {
-      console.log('this is the data', data);
-      $chat.append('<div ng-style=' + '>' + '<h4>' + '</h4>' + data + '</div>');
-    });
-  });
-  // '"{"width":"100%","background":"white","border-radius":"44px","border-bottom":"1px solid black"}"' +
-  // + $scope.sender.first_name
-  // ':' +
-  // + '<br/>'
-  // ==========================================================================================================================================
-});
-'use strict';
-
-angular.module('myApp').directive('conversationMessageBox', function () {
-  return {
-    restrict: 'AE',
-    templateUrl: './features/conversations-message-box/conversations-message-box.html',
-    controller: 'conversationsMessageBoxCtrl'
-  };
-});
-'use strict';
-
-angular.module('myApp').service('conversationsMessageBoxService', function ($http, $q, $rootScope) {
-  this.getConversationUsername = function (user_id) {
-    var defer = $q.defer();
-    $http({
-      method: 'get',
-      url: 'conversations/username/' + user_id
-    }).then(function (response) {
-      defer.resolve(response.data);
-    });
-    return defer.promise;
-  };
-
-  this.insertMessage = function (user_message, message_recepient, message_time) {
-    console.log(user_message, message_recepient, message_time);
-    var defer = $q.defer();
-    $http({
-      method: 'post',
-      url: '/conversations/insert_message',
-      data: {
-        message_recepient: message_recepient * 1,
-        user_message: user_message,
-        message_time: message_time
-      }
-    }).then(function (response) {
-      console.log('response'.response.data);
-      defer.resolve(response.data);
-    });
-    return defer.promise;
-  };
-  // ================================================================
-  // get conversations
-  // ========================================================================
-  this.getConversation = function (host_id) {
-    var defer = $q.defer();
-    $http({
-      method: 'get',
-      url: '/conversations/messages/' + host_id
-    }).then(function (response) {
-      console.log('this is the response . data', response.data);
-      defer.resolve(response.data);
-    });
-    return defer.promise;
-  };
-  // ===========================================================================================v==========================
-  // angular socket.io still trying to make work but too tired at the moment
-  // ==================================================================================================================================
-  //   this.socket = ($rootScope) => {
-  //   let socket =io.connect()
-  //
-  //   return {
-  //     on:on,
-  //     emit:emit
-  //   }
-  // //Socket 'on' and 'emit' methods here
-  // this.on = (eventName,callBack) => {
-  //   socket.on(eventname, () => {
-  //     let args = arguments;
-  //     $rootScope.$apply(() => {
-  //       callback.apply(socket,args);
-  //     });
-  //   });
-  // };
-  //
-  // this.emit =(eventName,data,callback) => {
-  //   socket.emit(evenName,data,() => {
-  //     let args = arguments;
-  //     $rootScope.$apply(() => {
-  //       if(callback){
-  //         callback.apply(socket,args);
-  //       }
-  //     });
-  //   });
-  // };
-  // }
-});
 'use strict';
 
 angular.module('myApp').controller('conversationsProfilePicCtrl', function ($scope, $stateParams, conversationsProfilePicService) {
@@ -762,54 +619,58 @@ angular.module('myApp').controller('roomsListingMainBookingCtrl', function ($sco
         console.log($scope.total_price);
         roomsListingMainBookingService.reserveDate(room_id, $scope.chosenStartDate, $scope.chosenEndDate, $scope.total_price).then(function (response) {
             console.log('response back into the controller on the way back ====> ', response);
-            // $rootScope.all_bookings_for_User = response;
+            var userBookingsArray = [];
             $rootScope.all_bookings_for_User = response;
-            // console.log(`Your reservation has been booked from  ${response.start} to ${response.end} for ${response.length}`);
+            response.forEach(function (book) {
+                console.log(book);
+                if (book.buyer_id === $scope.user.id) {
+                    userBookingsArray.push(book);
+                    console.log(userBookingsArray);
+                }
+            });
+            console.log(userBookingsArray);
+            var latestBooking = userBookingsArray[userBookingsArray.length - 1];
+            alert('YOUR RESERVATION HAS BEEN BOOKED FOR ' + $scope.price.listing_name + ' for the date of ' + latestBooking.start + ' and ' + latestBooking.end);
+
+            // console.log(userBookingsArray)
+            alert('You will now be directed to checkout ' + $scope.user.first_name);
             $scope.startDate.value = '';
             $scope.endDate.value = '';
         });
     };
 
-    $scope.goToPaypal = function (a, b, c) {
-        console.log(a);
-        console.log(b);
-        console.log(c);
-        // alert('this is working paypal function')
+    $scope.goToPaypal = function (userObj, priceObj, total_price) {
+        console.log(userObj);
+        console.log(priceObj);
+        console.log(total_price);
+        roomsListingMainBookingService.goToPaypal(userObj, priceObj, total_price);
+        alert('this is working paypal function');
     };
     // =====================================================================================================================
 
 
     $scope.today = $filter('date')(new Date(), 'yyyy-MM-dd');
 
-    $rootScope.$watch('all_bookings_for_User', function (newVal, oldVal) {
-        $rootScope.bookings_length = $rootScope.all_bookings_for_User.length;
-        // console.log($rootScope.bookings_length);
-        //run getUser after newVal[1]
-    });
     $scope.$watch('startDate.value', function (newVal, oldVal) {
         newVal.setDate(newVal.getDate());
         $scope.changedDate = $filter('date')(newVal, 'yyyy-MM-dd');
         console.log($scope.changedDate);
     });
+    //dummy demo
+    //     $scope.foo = 'foo';
+    // $scope.bar = 'bar';
 
-    $scope.foo = 'foo';
-    $scope.bar = 'bar';
-
-    $scope.$watchGroup(['foo', 'bar'], function (newValues, oldValues, scope) {
+    $scope.$watchGroup(['user', 'all_bookings_for_User'], function (newValues, oldValues, scope) {
         // newValues array contains the current values of the watch expressions
+        $scope.newUser = newValues[0];
+        $scope.all_bookings_for_User = newValues[1];
+        console.log('This is new value [1]', newValues[1]);
         // with the indexes matching those of the watchExpression array
         // i.e.
         // newValues[0] -> $scope.foo
         // and
         // newValues[1] -> $scope.bar
     });
-
-    // $rootScope.$watch('user', (newVal, oldVal) => {
-    // loginService.getUser().then()
-    // $scope.user_changed= newVal;
-    // console.log($scope.user);
-    // })
-
 });
 'use strict';
 
@@ -824,39 +685,57 @@ angular.module('myApp').directive('roomListingMainBooking', function () {
 
 angular.module('myApp').service('roomsListingMainBookingService', function ($http, $q) {
 
-  this.getRoomListingNightlyPrice = function (room_id) {
-    var defer = $q.defer();
-    $http({
-      method: 'get',
-      url: '/rooms/nightly_price/' + room_id
-    }).then(function (response) {
-      console.log('this is response in service Booking', response);
-      defer.resolve(response.data);
-    });
-    return defer.promise;
-  };
+    this.getRoomListingNightlyPrice = function (room_id) {
+        var defer = $q.defer();
+        $http({
+            method: 'get',
+            url: '/rooms/nightly_price/' + room_id
+        }).then(function (response) {
+            console.log('this is response in service Booking', response);
+            defer.resolve(response.data);
+        });
+        return defer.promise;
+    };
 
-  this.reserveDate = function (room_id, start, end, price) {
-    console.log('======> start =====> service', start);
-    var defer = $q.defer();
-    $http({
-      method: 'post',
-      url: '/rooms/reservations',
-      data: {
-        room_id: room_id,
-        start: start,
-        end: end,
-        price: price
-      }
-    }).then(function (response) {
-      console.log('!!!response back in service', response.data);
-      defer.resolve(response.data);
-    }).catch(function (err) {
-      alert('please log in or click to sign up ');
-      console.log('ERROR LOGGING IN!', err);
-    });
-    return defer.promise;
-  };
+    this.reserveDate = function (room_id, start, end, price) {
+        console.log('======> start =====> service', start);
+        var defer = $q.defer();
+        $http({
+            method: 'post',
+            url: '/rooms/reservations',
+            data: {
+                room_id: room_id,
+                start: start,
+                end: end,
+                price: price
+            }
+        }).then(function (response) {
+            console.log('!!!response back in service', response.data);
+            defer.resolve(response.data);
+        }).catch(function (err) {
+            alert('please log in or click to sign up ');
+            console.log('ERROR LOGGING IN!', err);
+        });
+        return defer.promise;
+    };
+
+    this.goToPaypal = function (userObj, priceObj, total_price) {
+        return $http({
+            method: 'post',
+            url: 'https://www.sandbox.paypal.com/cgi-bin/webscr',
+            data: {
+                cmd: "x_click",
+                item_name: priceObj.listing_name,
+                item_number: priceObj.room_id,
+                business: userObj.email,
+                quantity: 1,
+                currency_code: "USD",
+                first_name: userObj.first_name,
+                last_name: userObj.last_name,
+                amount: total_price
+            }
+        });
+    };
 });
 'use strict';
 
@@ -1577,6 +1456,162 @@ angular.module('myApp').service('usersProfilePicService', function ($http, $q) {
 });
 'use strict';
 
+angular.module('myApp').controller('conversationsMessageBoxCtrl', function ($scope, $stateParams, $location, $localStorage, conversationsMessageBoxService, loginService) {
+
+  var current_user_id = $stateParams.user_id;
+  console.log($stateParams.user_id);
+  conversationsMessageBoxService.getConversation(current_user_id).then(function (response) {
+    console.log(response);
+    $scope.messagesFromBackend = response;
+  });
+
+  conversationsMessageBoxService.getConversationUsername(current_user_id).then(function (response) {
+    $scope.username = response[0];
+  });
+
+  loginService.getUser().then(function (user) {
+    if (user) {
+      $scope.sender = user;
+      console.log($scope.sender);
+    } else {
+      $scope.user = 'NOT LOGGED IN';
+    };
+  });
+
+  $scope.insertMessage = function (user_message) {
+    console.log($scope.user_message, current_user_id);
+    var message_time = new Date();
+    conversationsMessageBoxService.insertMessage(user_message, current_user_id, message_time).then(function (response) {
+      return console.log(response.data);
+    });
+  };
+  // ===================================================================================================================
+  // jQuery
+  // ==========================================================================================================================================
+
+  jQuery(function ($) {
+    var socket = io.connect();
+    var $messageForm = $('#send-message');
+    var $messageBox = $('#message');
+    var $chat = $('#chat');
+
+    $messageForm.submit(function (e) {
+      e.preventDefault();
+      socket.emit('send message', $messageBox.val());
+      $messageBox.val('');
+    });
+
+    socket.on('new message', function (data) {
+      console.log('this is the data', data);
+      $chat.append('<div ng-style=' + '>' + '<h4>' + '</h4>' + data + '</div>');
+    });
+  });
+  // '"{"width":"100%","background":"white","border-radius":"44px","border-bottom":"1px solid black"}"' +
+  // + $scope.sender.first_name
+  // ':' +
+  // + '<br/>'
+  // ==========================================================================================================================================
+});
+'use strict';
+
+angular.module('myApp').directive('conversationMessageBox', function () {
+  return {
+    restrict: 'AE',
+    templateUrl: './features/conversations-message-box/conversations-message-box.html',
+    controller: 'conversationsMessageBoxCtrl'
+  };
+});
+'use strict';
+
+angular.module('myApp').service('conversationsMessageBoxService', function ($http, $q, $rootScope) {
+  this.getConversationUsername = function (user_id) {
+    var defer = $q.defer();
+    $http({
+      method: 'get',
+      url: 'conversations/username/' + user_id
+    }).then(function (response) {
+      defer.resolve(response.data);
+    });
+    return defer.promise;
+  };
+
+  this.insertMessage = function (user_message, message_recepient, message_time) {
+    console.log(user_message, message_recepient, message_time);
+    var defer = $q.defer();
+    $http({
+      method: 'post',
+      url: '/conversations/insert_message',
+      data: {
+        message_recepient: message_recepient * 1,
+        user_message: user_message,
+        message_time: message_time
+      }
+    }).then(function (response) {
+      console.log('response'.response.data);
+      defer.resolve(response.data);
+    });
+    return defer.promise;
+  };
+  // ================================================================
+  // get conversations
+  // ========================================================================
+  this.getConversation = function (host_id) {
+    var defer = $q.defer();
+    $http({
+      method: 'get',
+      url: '/conversations/messages/' + host_id
+    }).then(function (response) {
+      console.log('this is the response . data', response.data);
+      defer.resolve(response.data);
+    });
+    return defer.promise;
+  };
+  // ===========================================================================================v==========================
+  // angular socket.io still trying to make work but too tired at the moment
+  // ==================================================================================================================================
+  //   this.socket = ($rootScope) => {
+  //   let socket =io.connect()
+  //
+  //   return {
+  //     on:on,
+  //     emit:emit
+  //   }
+  // //Socket 'on' and 'emit' methods here
+  // this.on = (eventName,callBack) => {
+  //   socket.on(eventname, () => {
+  //     let args = arguments;
+  //     $rootScope.$apply(() => {
+  //       callback.apply(socket,args);
+  //     });
+  //   });
+  // };
+  //
+  // this.emit =(eventName,data,callback) => {
+  //   socket.emit(evenName,data,() => {
+  //     let args = arguments;
+  //     $rootScope.$apply(() => {
+  //       if(callback){
+  //         callback.apply(socket,args);
+  //       }
+  //     });
+  //   });
+  // };
+  // }
+});
+'use strict';
+
+angular.module('myApp').controller('start_datepickerCtrl', function ($scope) {});
+'use strict';
+
+angular.module('myApp').directive('startDatepicker', function () {
+  return {
+    restrict: 'AE',
+    templateUrl: './features/home_header/homeHeader-datepickers/start/start_datepicker.html',
+    controller: 'start_datepickerCtrl'
+  };
+});
+'use strict';
+
 angular.module('myApp').controller('endDatepickerCtrl', function ($scope) {});
 'use strict';
 
@@ -1591,18 +1626,6 @@ angular.module('myApp').directive('endDatepicker', function () {
         return console.log(ngModelCtrl);
       });
     }
-  };
-});
-'use strict';
-
-angular.module('myApp').controller('start_datepickerCtrl', function ($scope) {});
-'use strict';
-
-angular.module('myApp').directive('startDatepicker', function () {
-  return {
-    restrict: 'AE',
-    templateUrl: './features/home_header/homeHeader-datepickers/start/start_datepicker.html',
-    controller: 'start_datepickerCtrl'
   };
 });
 'use strict';
@@ -1765,6 +1788,9 @@ angular.module('myApp').service('userRoomsListingsService', function ($http, $q,
     return defer.promise;
   };
 });
+'use strict';
+
+angular.module('myApp').controller('userRoomsReservationsCtrl', function ($scope) {});
 'use strict';
 
 angular.module('myApp').controller('usersCtrl', function ($scope, $stateParams, usersService) {
