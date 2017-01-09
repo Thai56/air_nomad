@@ -32,6 +32,7 @@ angular.module('myApp').controller('roomsListingMainReviewsCtrl', ($scope,$state
     else {
       roomsListingMainReviewsService.addReview(stars,text,room_id).then(response => {
         console.log('this is the response from addReview',response)
+        $scope.getReviews(room_id)
       })
     }
   }

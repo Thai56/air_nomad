@@ -54,7 +54,7 @@ Bookings You have now {{itemsInCart}}
 <!-- ============================================================================================================================= -->
   <!-- <span ng-if='!!startDate.value && !!endDate.value'> -->
   <!-- <form class='form-group' ng-submit='goToPaypal(price,user)' method="post" target="_top"> -->
-  <!-- <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top"> -->
+  <form ng-submit='!!submit' action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
   <input type="hidden" name="cmd" value="_xclick">
   <input type="hidden" name="item_name" value="{{price.listing_name}}">
   <input type="hidden" name="item_number" value="{{price.room_id}}">
@@ -64,6 +64,7 @@ Bookings You have now {{itemsInCart}}
   <input type="hidden" name="first_name" value="{{user.first_name}}" required>
   <input type="hidden" name="last_name" value="{{user.last_name}}" required>
   <input type="hidden" name="amount" value="{{(endDate.value - startDate.value | date: 'd') * price.nightly_price}}" required>
-  <button ng-disabled='!startDate.value && !endate.value' class="btn book-now-btn" ng-click='reserveDate(startDate.value,endDate.value)'>Book Now</button>
   <!-- </form> -->
+  <button ng-disabled='!startDate.value && !endate.value' class="btn book-now-btn" ng-click='reserveDate(startDate.value,endDate.value)'>Book Now</button>
+
   </section>

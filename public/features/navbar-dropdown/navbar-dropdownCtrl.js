@@ -1,4 +1,4 @@
-angular.module('myApp').controller('navbarDropdownCtrl', ($scope,$stateParams,$rootScope,navbarDropdownService,loginService,navBarService) => {
+angular.module('myApp').controller('navbarDropdownCtrl', ($scope,$stateParams,$rootScope,navbarDropdownService,loginService,navBarService,ngDialog) => {
   function getUser() {
     navbarDropdownService.getUser().then(function(user) {
       if (user){
@@ -7,7 +7,7 @@ angular.module('myApp').controller('navbarDropdownCtrl', ($scope,$stateParams,$r
         console.log('This is the use that is signed in ===>',$rootScope.user);
          $scope.user = user.username;
          navbarDropdownService.getUserById(user.id).then(response => {
-           $scope.userData = response
+           $rootScope.userData = response
            console.log($scope.userData);
          })
       }
@@ -20,7 +20,11 @@ angular.module('myApp').controller('navbarDropdownCtrl', ($scope,$stateParams,$r
     console.log('This function is firing/working');
       getUser()
   })
-
+  // $rootScope.$watch('userData',(newVal,oldVal) => {
+  //   if(newVal){
+  //     oldVal = newVal;
+  //   }
+  // })
   getUser();
   //   //    //
 // * logout * //
@@ -38,5 +42,9 @@ $scope.logout = ()=> {
     })
   });
   $rootScope.userNotLoggedIn = true;
+}
+$scope.accountSettings = () => {
+  console.log('working');
+  ngDialog.open({ template:'./features/accountSettings/accountSettings.html', className:'ngdialog-theme-default', controller:'accountSettingsCtrl'});
 }
 })

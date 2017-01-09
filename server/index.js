@@ -146,9 +146,17 @@ app.get('/auth/me', function(req, res) {
 
 app.get('/logout',Ctrl.logSession, function(req, res) {
   console.log('LOGGING OUT NOW');
-  req.logout();
-  console.log(req.user);
-  res.redirect('/#/');
+  // =========
+  req.logOut();
+ req.session.destroy(function (err) {
+        // res.redirect('/'); //Inside a callback… bulletproof!
+        res.send({redirect:'home'}); //Inside a callback… bulletproof!
+    });
+  // =========
+  // req.logout();
+  // console.log(req.user);
+  // res.send({redirect:'home'});
+  // res.redirect('/#/');
 })
 
 app.get('/rooms/search/:keyword', Ctrl.findLocationByKeyword)
@@ -203,8 +211,12 @@ app.post('/users/profile/edit', isAuthenticated, Ctrl.saveChanges)
 
 app.get('/user_rooms/user_listings', isAuthenticated, Ctrl.getListingsForView)
 
-app.post('/users/edit',isAuthenticated, Ctrl.addUser)
+app.post('/users/edit', Ctrl.addUser)
 
 app.get('/user_rooms/bookings/:id',isAuthenticated, Ctrl.getUserBookingsById)
 
 app.get('/user_rooms/reservations/rooms', isAuthenticated, Ctrl.getRoomInfoByIdForReservations)
+
+app.delete('/user_rooms/cancel/:booking_id', Ctrl.cancelBooking)
+
+app.delete('/account_settings/delete/:id', Ctrl.deleteAccount)

@@ -28,4 +28,15 @@ angular.module('myApp').service('userRoomsReservationsService', function($http,$
       return defer.promise;
 
     }
+    this.cancelBooking = (booking_id) => {
+     const defer = $q.defer()
+     $http({
+       method:'delete',
+       url:'/user_rooms/cancel/' + booking_id
+     }).then(response => {
+       console.log(response.data)
+       defer.resolve(response.data)
+     })
+     return defer.promise
+    }
 })

@@ -1,4 +1,4 @@
-angular.module('myApp').service('navBarService', function($http,$q) {
+angular.module('myApp').service('navBarService', function($http,$q,$state,$rootScope) {
   this.logout = () => {
     console.log('fireing');
     return $http({
@@ -7,6 +7,8 @@ angular.module('myApp').service('navBarService', function($http,$q) {
     })
     .then(function(res) {
       console.log(res.data);
+      $rootScope.itemsInCart = 0;
+      $state.go(res.data.redirect)
       return res.data;
     })
     .catch(function(err) {

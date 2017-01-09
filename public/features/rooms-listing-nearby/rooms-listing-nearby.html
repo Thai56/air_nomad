@@ -6,7 +6,11 @@
 
     </div>
     <div ui-sref='rooms({room_id:room.room_id})' class='rooms-nearby-text-container'>
-      <a href="#"><h5>{{room.listing_name}} ({{room.dist}})</h5></a>
+      <a ui-sref='rooms({room_id:room.room_id})'><h5 ng-style='{
+        "margin-top":"0",
+        "padding-top":"5px",
+        "font-size":"17px"
+      }'>{{room.listing_name}} ({{room.dist}})</h5></a>
     </div>
 
   </div>

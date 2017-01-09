@@ -46,9 +46,9 @@ angular.module('myApp').controller('conversationsMessageBoxCtrl', ($scope,$state
 
     socket.on('new message',function(data) {
       console.log('this is the data',data);
-      $chat.append(
+      $chat.prepend(
         '<div ng-style=' + '>'
-        + '<h4>' + $scope.sender.first_name +'</h4></div><div>' + data + '</div>'
+        + '<h4>' + $scope.sender.first_name +'</h4></div><div>' + data + '</div><br>'
       )
     })
     // socket.on('new message',function(data) {

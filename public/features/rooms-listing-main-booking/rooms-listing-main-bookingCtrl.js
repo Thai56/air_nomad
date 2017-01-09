@@ -1,5 +1,6 @@
 angular.module('myApp').controller('roomsListingMainBookingCtrl', ($scope, $stateParams, $rootScope, $filter, roomsListingMainBookingService, loginService) => {
     const room_id = $stateParams.room_id;
+    $scope.submit = false;
     $scope.message = roomsListingMainBookingService.getRoomListingNightlyPrice(room_id).then(response => {
         console.log('this is the price', response);
         $scope.price = response[0]
@@ -41,23 +42,23 @@ angular.module('myApp').controller('roomsListingMainBookingCtrl', ($scope, $stat
             })
             console.log(userBookingsArray)
             let latestBooking = userBookingsArray[userBookingsArray.length - 1]
-            alert(`YOUR RESERVATION HAS BEEN BOOKED FOR ${$scope.price.listing_name} for the date of ${latestBooking.start} and ${latestBooking.end}`)
+            alert(`YOUR RESERVATION HAS BEEN BOOKED FOR (${$scope.price.listing_name}) for the date of (${latestBooking.start} and ${latestBooking.end})`)
             // console.log(userBookingsArray)
-            $scope.itemsInCart = userBookingsArray.length;
+            $rootScope.itemsInCart = userBookingsArray.length;
             alert(`You will now be directed to checkout ${$scope.user.first_name}`)
             $scope.startDate.value = ''
             $scope.endDate.value = ''
+            // $scope.goToPaypal($scope.user,$scope.price,$scope.total_price)
+            $scope.submit = true;
         })
 
     }
-
-
     $scope.goToPaypal = (userObj, priceObj, total_price) => {
             console.log(userObj);
             console.log(priceObj);
             console.log(total_price);
             roomsListingMainBookingService.goToPaypal(userObj, priceObj, total_price)
-            alert('this is working paypal function')
+            // alert('this is working paypal function')
         }
         // =====================================================================================================================
 
@@ -72,7 +73,7 @@ angular.module('myApp').controller('roomsListingMainBookingCtrl', ($scope, $stat
         //dummy demo
         //     $scope.foo = 'foo';
         // $scope.bar = 'bar';
-
+    //
     // $scope.$watchGroup(['user', 'all_bookings_for_User'], function(newValues, oldValues, scope) {
     //     // newValues array contains the current values of the watch expressions
     //     console.log($scope.user);
@@ -87,9 +88,9 @@ angular.module('myApp').controller('roomsListingMainBookingCtrl', ($scope, $stat
     //     // newValues[1] -> $scope.bar
     // });
 
-    // $rootScope.$watch('itemsInCart',(newVal,oldVal) => {
-    //   $scope.itemsInCart = newVal;
-    // })
+    $rootScope.$watch('itemsInCart',(newVal,oldVal) => {
+      $scope.itemsInCart = newVal;
+    })
 
 
 })

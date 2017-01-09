@@ -1,8 +1,10 @@
-<section class='container'>
+<section class='container' ng-style='{"padding":"0px"}'>
   <div class="jumbotron" ng-style='{
+    "top":"-40px",
     "padding":"24px",
     "background":"#efefef",
-    "position":"relative"
+    "position":"relative",
+    "padding":"0px"
     }'>
     <div search-map ng-style='{
       "margin-left":"40px",
@@ -12,7 +14,7 @@
     }'>
     </div>
     <search-filter></search-filter>
-    <div ng-style='{"width":"680px","border":"1px solid black"}' ui-view></div>
+    <div ng-style='{"width":"686px"}' ui-view></div>
 
   </div>
 </section>

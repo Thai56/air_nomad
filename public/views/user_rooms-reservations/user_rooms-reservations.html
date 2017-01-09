@@ -5,4 +5,5 @@
 <section ng-repeat='booking in userBookings | filter : booking.start'>
   <h3>Booking Date:{{booking.start}}-{{booking.end}}</h3>
   <h4>Total Price: ${{booking.price}}</h4>
+  <button type="button" class='btn' ng-click='cancelBooking(booking.id)'>Cancel Booking</button>
 </section>

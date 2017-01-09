@@ -30,6 +30,10 @@ angular.module('myApp').service('roomsListingMainReviewsService', function($http
       alert(response.data)
       defer.resolve(response.data)
     })
+    .catch(err => {
+      console.log(err);
+      alert('Forget to log in ? Sign up if you don\'t have a login')
+    })
     return defer.promise
   }
 })

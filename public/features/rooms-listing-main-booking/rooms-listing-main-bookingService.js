@@ -35,22 +35,34 @@ angular.module('myApp').service('roomsListingMainBookingService', function($http
         return defer.promise
     }
 
-    this.goToPaypal = (userObj, priceObj, total_price) => {
-        return $http({
-            method: 'post',
-            url: 'https://www.sandbox.paypal.com/cgi-bin/webscr',
-            data: {
-                cmd: "x_click",
-                item_name: priceObj.listing_name,
-                item_number: priceObj.room_id,
-                business: userObj.email,
-                quantity: 1,
-                currency_code: "USD",
-                first_name: userObj.first_name,
-                last_name: userObj.last_name,
-                amount: total_price
-            }
-        })
-    }
+    
+    // this.goToPaypal = (userObj, priceObj, total_price) => {
+    //   console.log('GO TO PAY PAL',userObj,priceObj,total_price);
+    //  return $http({
+    //         method: 'post',
+    //         url: 'http://www.sandbox.paypal.com/cgi-bin/webscr',
+    //         headers: {
+    //           'Access-Control-Allow-Origin':'Post',
+    //           'Content-Type': 'application/x-www-form-urlencoded'
+    //         },
+    //         data: {
+    //             cmd: "x_click",
+    //             item_name: priceObj.listing_name,
+    //             item_number: priceObj.room_id,
+    //             business: userObj.email,
+    //             quantity: 1,
+    //             currency_code: "USD",
+    //             first_name: userObj.first_name,
+    //             last_name: userObj.last_name,
+    //             amount: total_price
+    //         }
+    //     })
+    // }
 
 })
+// ACCESS-control-request-method:'POST',
+// ORIGIN: null,
+// USER-AGESNT
+// 'Accept': 'application/json;odata=verbose',
+// cliend_id:"AaTzJbBVMSmv7RFC6vDWukKGZGhgav45D9ylFD6RJCEv_90d4XsXwtAXzVGxa_vcaB7iZV82vmyDP9iU",
+// secret:"F_1ja7096TF7vtP4bXKQNDL0qXLbYDi_h3vVE4kjRgfVbQ7lOb69VoI1mqnlULgQT"

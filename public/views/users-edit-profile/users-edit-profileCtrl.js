@@ -20,7 +20,12 @@ angular.module('myApp').controller('usersEditProfileCtrl',($scope,$rootScope,$st
     console.log(confirm);
     if(confirm !== null){
       // call usersEditProfileService.saveChanges and pass editObj
-      usersEditProfileService.saveChanges(editObj).then(res => alert(res))
+      usersEditProfileService.saveChanges(editObj).then(res => {
+
+          // $rootScope.userData = $scope.user;
+
+        alert(res)
+      })
     }
 
   }

@@ -471,6 +471,11 @@ module.exports = {
         //try returning here next
     },
     logSession: (req, res, next) => {
+      if(!req.session.bookings || req.session.bookings.length < 1){
+        console.log('#$%^&* THIS USER HAD NO BOOKINGS )(*&^%$#)', req.user, req.session.bookings);
+        next();
+      }
+      else {
         console.log("$%^&* THIS IS THE REQ.SESSION (*&^%)", req.session);
         var myArray = []
         req.session.bookings.forEach(booking => {
@@ -497,5 +502,68 @@ module.exports = {
                 }
             })
         })
+      }
+
+    },
+    cancelBooking: (req, res, next) => {
+        // var myArray = [];
+        // console.log('@#$%^&*( THIS IS THE REQ.PARAMS.BOOKING_ID)', req.params.booking_id);
+        // console.log('#$%^&*() THIS IS THE REQ.USER.id ()*&^%$', req.user.id);
+        // console.log('$%^&*( THUS US REQ.SESSION.BOOKINGS)', req.session.bookings);
+        // for (var i = 0; i < req.session.bookings.length; i++) {
+        //     console.log('$%^&*( THIS IS req.session.bookings[i])', req.session.bookings[i]);
+        //     if (req.session.bookings[i].buyer_id === req.user.id) {
+        //         console.log('#$%^&*( THIS IS THE req.session.bookings[i].buyer_id that = req.user.id)', req.session.bookings[i].buyer_id);
+        //         for (var k in req.session.bookings[i]) {
+        //             if (req.session.bookings[i].id === req.params.booking_id) {
+        //                 console.log('$%^&*( THIS IS REQ.SESSIONS BOOKING ID THAT MATCHES REQ.PARAMS ROOM ID)');
+        //                 req.session.bookings.splice(i, 1)
+        //                 console.log('#$%^&*( This is req.session.bookings after the splice)',req.session.bookings);
+        //             }
+        //         }
+        //     }
+        // }
+        console.log('@#$%^&*( THIS IS THE REQ.PARAMS.BOOKING_ID)', req.params.booking_id);
+        console.log('#$%^&*() THIS IS THE REQ.USER.id ()*&^%$', req.user.id);
+        console.log('$%^&*( THUS US REQ.SESSION.BOOKINGS)', req.session.bookings);
+        var myArray = []
+        req.session.bookings.forEach((booking,index) => {
+          console.log('#$%^&* THIS IS EACH BOOKING )(*&^%$)', booking);
+          if(booking.buyer_id === req.user.id){
+            console.log('#$%^&*( THIS booking matches the user.id)', booking);
+            if((booking.id * 1) === (req.params.booking_id * 1)){
+              console.log("#$%^&*( THERE WAS A MATCH )", booking);
+              req.session.bookings.splice(index,1)
+            }
+          }
+          console.log('@#$%^& THIS IS BOOKINGS OUTSIDE OF FOREACHLOOP', req.session.bookings);
+          // res.status(200).end(req.session.bookings)
+        })
+
+        res.status(200).send(req.session.bookings)
+
+
+
+
+        console.log('#$%^&*( THIS IS THE req.session.bookings after splice )', req.session.bookings);
+
+    },
+    deleteAccount: (req,res,next)=> {
+      console.log('#$%^&* req.params.id', req.params.id);
+      const id = req.params.id;
+      console.log('#$%^&*( ID ) )(*&^%$)', id);
+      db.deleteAccount(id,(err,del)=> {
+        if(!err){
+          console.log('#$%^&* THIS IS THE deleted', del);
+
+            req.logout();
+            console.log(req.user);
+            res.send({redirect:'home'});
+        }
+        else {
+          console.log('#$%^&* THIS IS THE ERR )(*&^%$)', err);
+          res.status(422).send(err)
+        }
+      })
     }
 }

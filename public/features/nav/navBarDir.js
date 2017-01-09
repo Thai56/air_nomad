@@ -2,8 +2,8 @@ angular.module('myApp').directive('myNav', function(){
   return {
     restrict:'E',
     templateUrl:'./features/nav/navbarTmpl.html',
-    controller: function($scope,ngDialog,navBarService,$rootScope) {
-
+    controller: function($scope,ngDialog,navBarService,$rootScope,userRoomsReservationsService) {
+      $rootScope.itemsInCart = 0;
       $rootScope.userNotLoggedIn = true;
 
       $scope.clickToRegister = () => {
@@ -26,6 +26,10 @@ angular.module('myApp').directive('myNav', function(){
             console.log('user not logged in is ===> ', $scope.userNotLoggedIn);
             $rootScope.user_name = user.username;
             $rootScope.userNotLoggedIn = false;
+            userRoomsReservationsService.getUserBookingsById(user.id).then(response => {
+              console.log(response);
+              $rootScope.itemsInCart = response.length;
+            })
           }
           else  {
             $scope.user = 'NOT LOGGED IN';
@@ -33,12 +37,16 @@ angular.module('myApp').directive('myNav', function(){
         })
       }
       getUser()
+
       // $rootScope.$watch('userNotLoggedIn', (oldVal,newVal) => {
       //   if(newVal){
       //     getUser();
       //     oldVal = newVal;
       //   }
       // })
+      $rootScope.$watch('itemsInCart',(newVal,oldVal) => {
+        $rootScope.itemsInCart = newVal;
+      })
 
     }
 
