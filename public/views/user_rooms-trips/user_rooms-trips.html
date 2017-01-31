@@ -1,1 +1,8 @@
-This is the Users Trips View
+<h4 ng-style='{"margin-left":"16px", "line-height":"1.5em"}'><u>View Your Trips Here!</u></h4>
+<hr>
+<div ng-repeat='book in bookings' class="col trip_wrapper">
+  <h4><b><u>Listing</u>:</b> {{book.listing_name}}</h4>
+  <h5><b><u>Date</u>:</b> {{book.start_date}}-{{book.end_date}}</h5>
+  <h4><b><u>Price</u>:</b> ${{book.total_price}}</h6>
+  <button id='DeleteTrip' type="button" class='btn btn-large'ng-click='deleteTripFromDB(book.id)'>Delete This Trip</button>
+</div>

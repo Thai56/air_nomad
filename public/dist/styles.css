@@ -552,6 +552,15 @@ user-profile-pic {
   .conversations-message-box-container #message {
     margin-top: 16px; }
 
+.trip_wrapper {
+  border: 1px solid black;
+  text-align: center;
+  padding-bottom: 16px; }
+
+#DeleteTrip {
+  background: #FF7E82;
+  color: white; }
+
 .fa-heart {
   display: none; }
 

@@ -39,4 +39,29 @@ angular.module('myApp').service('userRoomsReservationsService', function($http,$
      })
      return defer.promise
     }
+    this.getBookingsFromDBforTrips = (user_id) => {
+      console.log(user_id);
+      const defer = $q.defer();
+      $http({
+        method:'get',
+        url:'/user_rooms/user_trips/' + user_id
+      }).then(response => {
+        console.log(response.data);
+        defer.resolve(response.data)
+      })
+      return defer.promise
+    }
+
+    this.deleteTripFromDB = (res_id) => {
+      console.log(res_id);
+      const defer = $q.defer()
+      $http({
+        method:'delete',
+        url:'/user_rooms/user_trips/'+res_id
+      }).then(response => {
+        console.log(response);
+        defer.resolve(response.data)
+      })
+      return defer.promise
+    }
 })

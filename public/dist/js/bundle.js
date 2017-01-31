@@ -43,6 +43,7 @@ angular.module('myApp', ['ui.router', 'ui.bootstrap', 'ngDialog', 'angular-input
   }).state('user_rooms.user_trips', {
     url: '/user_trips',
     templateUrl: './views/user_rooms-trips/user_rooms-trips.html',
+    controller: 'userRoomsTripsCtrl',
     params: { viewParam: null }
   }).state('users_edit_profile', {
     url: '/users/profile/edit',
@@ -268,38 +269,6 @@ angular.module('myApp').service('conversationsMessageBoxService', function ($htt
 });
 'use strict';
 
-angular.module('myApp').controller('conversationsProfilePicCtrl', function ($scope, $stateParams, conversationsProfilePicService) {
-  var user_id = $stateParams.user_id;
-  conversationsProfilePicService.getConversationProfilePic(user_id).then(function (response) {
-    $scope.profilePic = response;
-  });
-});
-'use strict';
-
-angular.module('myApp').directive('conversationProfilePic', function () {
-  return {
-    restrict: 'AE',
-    templateUrl: './features/conversations-profile-pic/conversations-profile-pic.html',
-    controller: 'conversationsProfilePicCtrl'
-  };
-});
-'use strict';
-
-angular.module('myApp').service('conversationsProfilePicService', function ($http, $q) {
-  this.getConversationProfilePic = function (user_id) {
-    var defer = $q.defer();
-    $http({
-      method: 'get',
-      url: '/conversations/profile-pic/' + user_id
-    }).then(function (response) {
-      console.log('this is the resposne.data', response.data);
-      defer.resolve(response.data);
-    });
-    return defer.promise;
-  };
-});
-'use strict';
-
 angular.module('myApp').controller('homeRoomListingsCtrl', function ($scope, homeRoomListingsService) {
   homeRoomListingsService.getListingsForHome().then(function (response) {
     console.log('response from homeListingCtrl', response);
@@ -329,6 +298,38 @@ angular.module('myApp').service('homeRoomListingsService', function ($http, $q) 
       defer.resolve(response.data);
     });
     console.log(12, 'back');
+    return defer.promise;
+  };
+});
+'use strict';
+
+angular.module('myApp').controller('conversationsProfilePicCtrl', function ($scope, $stateParams, conversationsProfilePicService) {
+  var user_id = $stateParams.user_id;
+  conversationsProfilePicService.getConversationProfilePic(user_id).then(function (response) {
+    $scope.profilePic = response;
+  });
+});
+'use strict';
+
+angular.module('myApp').directive('conversationProfilePic', function () {
+  return {
+    restrict: 'AE',
+    templateUrl: './features/conversations-profile-pic/conversations-profile-pic.html',
+    controller: 'conversationsProfilePicCtrl'
+  };
+});
+'use strict';
+
+angular.module('myApp').service('conversationsProfilePicService', function ($http, $q) {
+  this.getConversationProfilePic = function (user_id) {
+    var defer = $q.defer();
+    $http({
+      method: 'get',
+      url: '/conversations/profile-pic/' + user_id
+    }).then(function (response) {
+      console.log('this is the resposne.data', response.data);
+      defer.resolve(response.data);
+    });
     return defer.promise;
   };
 });
@@ -533,30 +534,6 @@ angular.module('myApp').service('navBarService', function ($http, $q, $state, $r
 });
 'use strict';
 
-angular.module('myApp').controller('navSearchInputCtrl', function ($scope, $state, $stateParams, navSearchInputService) {
-  $scope.goToSearchState = function (search_id) {
-    console.log('search_id', search_id);
-    $state.go('search.listings', { search_id: search_id });
-  };
-});
-'use strict';
-
-angular.module('myApp').directive('navSearchInput', function () {
-  return {
-    restrict: 'AE',
-    templateUrl: './features/nav-search-input/nav-search-input.html',
-    controller: 'navSearchInputCtrl'
-  };
-});
-'use strict';
-
-angular.module('myApp').service('navSearchInputService', function ($http, $q) {
-  this.getMessage = function () {
-    return 'Hello from the nav search input service there willl be an input form here to search for nearest cities and maybe states and countries ';
-  };
-});
-'use strict';
-
 angular.module('myApp').controller('navbarDropdownCtrl', function ($scope, $stateParams, $rootScope, navbarDropdownService, loginService, navBarService, ngDialog) {
   function getUser() {
     navbarDropdownService.getUser().then(function (user) {
@@ -657,6 +634,30 @@ angular.module('myApp').service('navbarDropdownService', function ($http, $q) {
 });
 'use strict';
 
+angular.module('myApp').controller('navSearchInputCtrl', function ($scope, $state, $stateParams, navSearchInputService) {
+  $scope.goToSearchState = function (search_id) {
+    console.log('search_id', search_id);
+    $state.go('search.listings', { search_id: search_id });
+  };
+});
+'use strict';
+
+angular.module('myApp').directive('navSearchInput', function () {
+  return {
+    restrict: 'AE',
+    templateUrl: './features/nav-search-input/nav-search-input.html',
+    controller: 'navSearchInputCtrl'
+  };
+});
+'use strict';
+
+angular.module('myApp').service('navSearchInputService', function ($http, $q) {
+  this.getMessage = function () {
+    return 'Hello from the nav search input service there willl be an input form here to search for nearest cities and maybe states and countries ';
+  };
+});
+'use strict';
+
 angular.module('myApp').controller('roomListingMainDescCtrl', function ($scope, $stateParams, roomListingMainDescService) {
   var room_id = $stateParams.room_id;
 
@@ -690,6 +691,298 @@ angular.module('myApp').service('roomListingMainDescService', function ($http, $
     return defer.promise;
   };
 });
+'use strict';
+
+angular.module('myApp').controller('roomsListingCarouselCtrl', function ($scope, $stateParams, roomsListingCarouselService) {
+    // ==========================================================================================
+    // variables
+    // ============================================================================================================
+    var room_id = $stateParams.room_id;
+
+    // ============================================================================================================
+    // carousel
+    // ============================================================================================================
+    roomsListingCarouselService.getCarouselImages(room_id).then(function (response) {
+        $scope.myInterval = 3000;
+        $scope.slides = [];
+        console.log('resonse that is back from the carousel endpoint', response);
+
+        $scope.image_Array = response;
+
+        for (var i = 0, j = $scope.image_Array.length; i < j; i++) {
+            $scope.slides.push({
+                image: '../../' + $scope.image_Array[i].image_url,
+                type: 'room images',
+                text: $scope.image_Array[i].image_desc
+            });
+        }
+        console.log('thiss is the scope slides within controller', $scope.slides);
+    });
+});
+
+// // // //
+// Test
+// // // //
+
+// $scope.slides.push({
+//   image:'../../'+$scope.obj.image_url,
+//   type:'room_images',
+//   text:$scope.obj.image_desc
+// })
+
+
+// $scope.slides = [
+
+// ,
+// {
+//   image:'../../IMG/caps/teepers-cap_back_blackred-color-white.jpg',
+//   type:'caps',
+//   text:'Caps'
+// },
+// {
+//   image:'../../IMG/sweaters/naksweat-black-yellow.jpg',
+//   type:'sweaters',
+//   text:'Hoodies'
+// },
+// {
+//   image:'../../IMG/shorts/nakshorts-black-gold.jpg',
+//   type:'shorts',
+//   text:'Thai Shorts'
+// }
+// ]
+'use strict';
+
+angular.module('myApp').directive('roomListingCarousel', function () {
+  //  //  //
+  //  THIS ROOM LISTINGCAROUSEL IS MISSING AN S AT THE END OF 'ROOM'
+  //  //  //
+  return {
+    restrict: 'AE',
+    templateUrl: './features/rooms-listing-carousel/rooms-listing-carousel.html',
+    controller: 'roomsListingCarouselCtrl'
+  };
+});
+'use strict';
+
+angular.module('myApp').service('roomsListingCarouselService', function ($http, $q) {
+  this.getCarouselImages = function (room_id) {
+    var defer = $q.defer();
+    console.log('room_id from service on way out', room_id);
+    $http({
+      method: 'get',
+      url: '/rooms/carousel/' + room_id
+    }).then(function (response) {
+      console.log('resoinse from serviceCarouselImage', response);
+      defer.resolve(response.data);
+    });
+    return defer.promise;
+  };
+});
+'use strict';
+
+angular.module('myApp').controller('roomsListingMainAboutCtrl', function ($scope, $stateParams, roomsListingMainAboutService) {
+  var room_id = $stateParams.room_id;
+  roomsListingMainAboutService.getRoomListingMainAccessories(room_id).then(function (response) {
+    console.log('response from about CTrl', response);
+    $scope.accessories = response;
+    console.log('response [0]', $scope.accessories[0]);
+    $scope.obj = $scope.accessories[0];
+  });
+});
+'use strict';
+
+angular.module('myApp').directive('roomListingMainAbout', function () {
+  return {
+    restrict: 'AE',
+    templateUrl: './features/rooms-listing-main-about/rooms-listing-main-about.html',
+    controller: 'roomsListingMainAboutCtrl'
+  };
+});
+'use strict';
+
+angular.module('myApp').service('roomsListingMainAboutService', function ($http, $q) {
+  this.getRoomListingMainAccessories = function (room_id) {
+    var defer = $q.defer();
+    $http({
+      method: 'GET',
+      url: '/rooms/about/' + room_id
+    }).then(function (response) {
+      console.log('this is response from service on way bak', response);
+      defer.resolve(response.data);
+    });
+    return defer.promise;
+  };
+});
+'use strict';
+
+angular.module('myApp').controller('roomsListingMainBookingCtrl', function ($scope, $stateParams, $rootScope, $filter, roomsListingMainBookingService, loginService) {
+    var room_id = $stateParams.room_id;
+    $scope.submit = false;
+    $scope.message = roomsListingMainBookingService.getRoomListingNightlyPrice(room_id).then(function (response) {
+        console.log('this is the price', response);
+        $scope.price = response[0];
+    });
+    loginService.getUser().then(function (user) {
+        console.log('ths us firing');
+        if (user) {
+            $scope.user = user;
+            console.log(user);
+        } else {
+            $scope.user = 'User not logged in';
+        }
+    });
+
+    $scope.reserveDate = function (start, end) {
+        if (!start || !end) {
+            alert('please pick a valid date');
+        } else {
+            $scope.chosenStartDate = $filter('date')(start, 'shortDate');
+            $scope.chosenEndDate = $filter('date')(end, 'shortDate');
+        }
+        var startDate = $filter('date')(start, 'd');
+        var endDate = $filter('date')(end, 'd');
+        console.log(startDate, endDate);
+        $scope.total_price = (endDate - startDate) * $scope.price.nightly_price;
+        console.log($scope.total_price);
+        console.log($scope.total_price);
+        roomsListingMainBookingService.reserveDate(room_id, $scope.chosenStartDate, $scope.chosenEndDate, $scope.total_price).then(function (response) {
+            console.log('response back into the controller on the way back ====> ', response);
+            var userBookingsArray = [];
+            $scope.all_bookings_for_User = response;
+            response.forEach(function (book) {
+                console.log(book);
+                if (book.buyer_id === $scope.user.id) {
+                    userBookingsArray.push(book);
+                    console.log(userBookingsArray);
+                }
+            });
+            console.log(userBookingsArray);
+            var latestBooking = userBookingsArray[userBookingsArray.length - 1];
+            alert('YOUR RESERVATION HAS BEEN BOOKED FOR (' + $scope.price.listing_name + ') for the date of (' + latestBooking.start + ' and ' + latestBooking.end + ')');
+            // console.log(userBookingsArray)
+            $rootScope.itemsInCart = userBookingsArray.length;
+            alert('You will now be directed to checkout ' + $scope.user.first_name);
+            $scope.startDate.value = '';
+            $scope.endDate.value = '';
+            // $scope.goToPaypal($scope.user,$scope.price,$scope.total_price)
+            $scope.submit = true;
+        });
+    };
+    $scope.goToPaypal = function (userObj, priceObj, total_price) {
+        console.log(userObj);
+        console.log(priceObj);
+        console.log(total_price);
+        roomsListingMainBookingService.goToPaypal(userObj, priceObj, total_price);
+        // alert('this is working paypal function')
+    };
+    // =====================================================================================================================
+
+
+    $scope.today = $filter('date')(new Date(), 'yyyy-MM-dd');
+
+    $scope.$watch('startDate.value', function (newVal, oldVal) {
+        newVal.setDate(newVal.getDate());
+        $scope.changedDate = $filter('date')(newVal, 'yyyy-MM-dd');
+        console.log($scope.changedDate);
+    });
+    //dummy demo
+    //     $scope.foo = 'foo';
+    // $scope.bar = 'bar';
+    //
+    // $scope.$watchGroup(['user', 'all_bookings_for_User'], function(newValues, oldValues, scope) {
+    //     // newValues array contains the current values of the watch expressions
+    //     console.log($scope.user);
+    //     $scope.user = newValues[0];
+    //
+    //     $scope.all_bookings_for_User = newValues[1]
+    //     console.log('This is new value [1]', newValues[1]);
+    //     // with the indexes matching those of the watchExpression array
+    //     // i.e.
+    //     // newValues[0] -> $scope.foo
+    //     // and
+    //     // newValues[1] -> $scope.bar
+    // });
+
+    $rootScope.$watch('itemsInCart', function (newVal, oldVal) {
+        $scope.itemsInCart = newVal;
+    });
+});
+'use strict';
+
+angular.module('myApp').directive('roomListingMainBooking', function () {
+  return {
+    restrict: 'AE',
+    templateUrl: './features/rooms-listing-main-booking/rooms-listing-main-booking.html',
+    controller: 'roomsListingMainBookingCtrl'
+  };
+});
+'use strict';
+
+angular.module('myApp').service('roomsListingMainBookingService', function ($http, $q) {
+
+    this.getRoomListingNightlyPrice = function (room_id) {
+        var defer = $q.defer();
+        $http({
+            method: 'get',
+            url: '/rooms/nightly_price/' + room_id
+        }).then(function (response) {
+            console.log('this is response in service Booking', response);
+            defer.resolve(response.data);
+        });
+        return defer.promise;
+    };
+
+    this.reserveDate = function (room_id, start, end, price) {
+        console.log('======> start =====> service', start);
+        var defer = $q.defer();
+        $http({
+            method: 'post',
+            url: '/rooms/reservations',
+            data: {
+                room_id: room_id,
+                start: start,
+                end: end,
+                price: price
+            }
+        }).then(function (response) {
+            console.log('!!!response back in service', response.data);
+            defer.resolve(response.data);
+        }).catch(function (err) {
+            alert('please log in or click to sign up ');
+            console.log('ERROR LOGGING IN!', err);
+        });
+        return defer.promise;
+    };
+
+    // this.goToPaypal = (userObj, priceObj, total_price) => {
+    //   console.log('GO TO PAY PAL',userObj,priceObj,total_price);
+    //  return $http({
+    //         method: 'post',
+    //         url: 'http://www.sandbox.paypal.com/cgi-bin/webscr',
+    //         headers: {
+    //           'Access-Control-Allow-Origin':'Post',
+    //           'Content-Type': 'application/x-www-form-urlencoded'
+    //         },
+    //         data: {
+    //             cmd: "x_click",
+    //             item_name: priceObj.listing_name,
+    //             item_number: priceObj.room_id,
+    //             business: userObj.email,
+    //             quantity: 1,
+    //             currency_code: "USD",
+    //             first_name: userObj.first_name,
+    //             last_name: userObj.last_name,
+    //             amount: total_price
+    //         }
+    //     })
+    // }
+});
+// ACCESS-control-request-method:'POST',
+// ORIGIN: null,
+// USER-AGESNT
+// 'Accept': 'application/json;odata=verbose',
+// cliend_id:"AaTzJbBVMSmv7RFC6vDWukKGZGhgav45D9ylFD6RJCEv_90d4XsXwtAXzVGxa_vcaB7iZV82vmyDP9iU",
+// secret:"F_1ja7096TF7vtP4bXKQNDL0qXLbYDi_h3vVE4kjRgfVbQ7lOb69VoI1mqnlULgQT"
 'use strict';
 
 angular.module('myApp').controller('roomsListingMainCtrl', function ($scope, $stateParams, roomListingMainPicService) {
@@ -927,86 +1220,83 @@ angular.module('myApp').service('roomsListingMapService', function ($http, $q) {
 });
 'use strict';
 
-angular.module('myApp').controller('roomsListingCarouselCtrl', function ($scope, $stateParams, roomsListingCarouselService) {
-    // ==========================================================================================
-    // variables
-    // ============================================================================================================
-    var room_id = $stateParams.room_id;
+angular.module('myApp').controller('roomsListingNearbyCtrl', function ($scope, $stateParams, roomsListingNearbyService) {
+  console.log($stateParams.room_id);
+  var room_id = $stateParams.room_id;
+  roomsListingNearbyService.getRoomThisLocationInfo(room_id).then(function (response) {
+    var current_location = response[0];
+    console.log('!!!!!!!!!!CURRENT_LOCATION', current_location);
+    var origin1 = {
+      lat: current_location.latitude * 1,
+      lng: current_location.longitude * 1
+    };
+    roomsListingNearbyService.getRoomsNearby(room_id, current_location.city).then(function (response) {
 
-    // ============================================================================================================
-    // carousel
-    // ============================================================================================================
-    roomsListingCarouselService.getCarouselImages(room_id).then(function (response) {
-        $scope.myInterval = 3000;
-        $scope.slides = [];
-        console.log('resonse that is back from the carousel endpoint', response);
+      console.log('RESPONSE.LENGTH', response.length);
+      if (response.length > 0) {
 
-        $scope.image_Array = response;
+        var destinationA = { lat: response[0].latitude * 1, lng: response[0].longitude * 1 };
+        var destinationB = { lat: response[1].latitude * 1, lng: response[1].longitude * 1 };
+        $scope.roomsNearby = response;
+        console.log("RESPONSE", response[0]);
+        var service = new google.maps.DistanceMatrixService();
 
-        for (var i = 0, j = $scope.image_Array.length; i < j; i++) {
-            $scope.slides.push({
-                image: '../../' + $scope.image_Array[i].image_url,
-                type: 'room images',
-                text: $scope.image_Array[i].image_desc
+        var my_distance = service.getDistanceMatrix({
+          origins: [origin1],
+          destinations: [destinationA, destinationB],
+          travelMode: 'DRIVING',
+          // unitSystem: google.maps.UnitSystem.METRIC
+          unitSystem: google.maps.UnitSystem.IMPERIAL
+        }, function (response, status) {
+          if (status !== 'OK') {
+            alert('Error was: ' + status);
+          } else {
+            console.log(response);
+            console.log(response.rows[0].elements[0].distance.text);
+            $scope.distance = response.rows[0].elements;
+            var myArray = [];
+            $scope.distance.forEach(function (obj) {
+              myArray.push(obj.distance.text);
             });
-        }
-        console.log('thiss is the scope slides within controller', $scope.slides);
+            $scope.roomsNearby[0].dist = myArray[0];
+            $scope.roomsNearby[1].dist = myArray[1];
+            console.log($scope.roomsNearby);
+          }
+        });
+        // if statement closing bracket below
+      }
     });
+  });
 });
-
-// // // //
-// Test
-// // // //
-
-// $scope.slides.push({
-//   image:'../../'+$scope.obj.image_url,
-//   type:'room_images',
-//   text:$scope.obj.image_desc
-// })
-
-
-// $scope.slides = [
-
-// ,
-// {
-//   image:'../../IMG/caps/teepers-cap_back_blackred-color-white.jpg',
-//   type:'caps',
-//   text:'Caps'
-// },
-// {
-//   image:'../../IMG/sweaters/naksweat-black-yellow.jpg',
-//   type:'sweaters',
-//   text:'Hoodies'
-// },
-// {
-//   image:'../../IMG/shorts/nakshorts-black-gold.jpg',
-//   type:'shorts',
-//   text:'Thai Shorts'
-// }
-// ]
 'use strict';
 
-angular.module('myApp').directive('roomListingCarousel', function () {
-  //  //  //
-  //  THIS ROOM LISTINGCAROUSEL IS MISSING AN S AT THE END OF 'ROOM'
-  //  //  //
+angular.module('myApp').directive('roomListingNearby', function () {
   return {
     restrict: 'AE',
-    templateUrl: './features/rooms-listing-carousel/rooms-listing-carousel.html',
-    controller: 'roomsListingCarouselCtrl'
+    templateUrl: './features/rooms-listing-nearby/rooms-listing-nearby.html',
+    controller: 'roomsListingNearbyCtrl'
   };
 });
 'use strict';
 
-angular.module('myApp').service('roomsListingCarouselService', function ($http, $q) {
-  this.getCarouselImages = function (room_id) {
+angular.module('myApp').service('roomsListingNearbyService', function ($http, $q) {
+  this.getRoomThisLocationInfo = function (room_id) {
     var defer = $q.defer();
-    console.log('room_id from service on way out', room_id);
     $http({
       method: 'get',
-      url: '/rooms/carousel/' + room_id
+      url: '/rooms/listings/current_location/' + room_id
     }).then(function (response) {
-      console.log('resoinse from serviceCarouselImage', response);
+      defer.resolve(response.data);
+    });
+    return defer.promise;
+  };
+  this.getRoomsNearby = function (room_id, city_name) {
+    var defer = $q.defer();
+    $http({
+      method: 'get',
+      url: '/rooms/listings/nearby/' + room_id + '/' + city_name
+    }).then(function (response) {
+      console.log('response back from getRoomsNearyby Service function', response.data);
       defer.resolve(response.data);
     });
     return defer.promise;
@@ -1045,41 +1335,6 @@ angular.module('myApp').service('roomsListingProfilePicService', function ($http
       url: '/rooms/profile-pic/' + room_id
     }).then(function (response) {
       console.log('this is the response from the profile pic service', response);
-      defer.resolve(response.data);
-    });
-    return defer.promise;
-  };
-});
-'use strict';
-
-angular.module('myApp').controller('roomsListingMainAboutCtrl', function ($scope, $stateParams, roomsListingMainAboutService) {
-  var room_id = $stateParams.room_id;
-  roomsListingMainAboutService.getRoomListingMainAccessories(room_id).then(function (response) {
-    console.log('response from about CTrl', response);
-    $scope.accessories = response;
-    console.log('response [0]', $scope.accessories[0]);
-    $scope.obj = $scope.accessories[0];
-  });
-});
-'use strict';
-
-angular.module('myApp').directive('roomListingMainAbout', function () {
-  return {
-    restrict: 'AE',
-    templateUrl: './features/rooms-listing-main-about/rooms-listing-main-about.html',
-    controller: 'roomsListingMainAboutCtrl'
-  };
-});
-'use strict';
-
-angular.module('myApp').service('roomsListingMainAboutService', function ($http, $q) {
-  this.getRoomListingMainAccessories = function (room_id) {
-    var defer = $q.defer();
-    $http({
-      method: 'GET',
-      url: '/rooms/about/' + room_id
-    }).then(function (response) {
-      console.log('this is response from service on way bak', response);
       defer.resolve(response.data);
     });
     return defer.promise;
@@ -1353,253 +1608,31 @@ angular.module('myApp').service('signupService', function ($http, $q) {
 });
 'use strict';
 
-angular.module('myApp').controller('roomsListingMainBookingCtrl', function ($scope, $stateParams, $rootScope, $filter, roomsListingMainBookingService, loginService) {
-    var room_id = $stateParams.room_id;
-    $scope.submit = false;
-    $scope.message = roomsListingMainBookingService.getRoomListingNightlyPrice(room_id).then(function (response) {
-        console.log('this is the price', response);
-        $scope.price = response[0];
-    });
-    loginService.getUser().then(function (user) {
-        console.log('ths us firing');
-        if (user) {
-            $scope.user = user;
-            console.log(user);
-        } else {
-            $scope.user = 'User not logged in';
-        }
-    });
-
-    $scope.reserveDate = function (start, end) {
-        if (!start || !end) {
-            alert('please pick a valid date');
-        } else {
-            $scope.chosenStartDate = $filter('date')(start, 'shortDate');
-            $scope.chosenEndDate = $filter('date')(end, 'shortDate');
-        }
-        var startDate = $filter('date')(start, 'd');
-        var endDate = $filter('date')(end, 'd');
-        console.log(startDate, endDate);
-        $scope.total_price = (endDate - startDate) * $scope.price.nightly_price;
-        console.log($scope.total_price);
-        console.log($scope.total_price);
-        roomsListingMainBookingService.reserveDate(room_id, $scope.chosenStartDate, $scope.chosenEndDate, $scope.total_price).then(function (response) {
-            console.log('response back into the controller on the way back ====> ', response);
-            var userBookingsArray = [];
-            $scope.all_bookings_for_User = response;
-            response.forEach(function (book) {
-                console.log(book);
-                if (book.buyer_id === $scope.user.id) {
-                    userBookingsArray.push(book);
-                    console.log(userBookingsArray);
-                }
-            });
-            console.log(userBookingsArray);
-            var latestBooking = userBookingsArray[userBookingsArray.length - 1];
-            alert('YOUR RESERVATION HAS BEEN BOOKED FOR (' + $scope.price.listing_name + ') for the date of (' + latestBooking.start + ' and ' + latestBooking.end + ')');
-            // console.log(userBookingsArray)
-            $rootScope.itemsInCart = userBookingsArray.length;
-            alert('You will now be directed to checkout ' + $scope.user.first_name);
-            $scope.startDate.value = '';
-            $scope.endDate.value = '';
-            // $scope.goToPaypal($scope.user,$scope.price,$scope.total_price)
-            $scope.submit = true;
-        });
-    };
-    $scope.goToPaypal = function (userObj, priceObj, total_price) {
-        console.log(userObj);
-        console.log(priceObj);
-        console.log(total_price);
-        roomsListingMainBookingService.goToPaypal(userObj, priceObj, total_price);
-        // alert('this is working paypal function')
-    };
-    // =====================================================================================================================
-
-
-    $scope.today = $filter('date')(new Date(), 'yyyy-MM-dd');
-
-    $scope.$watch('startDate.value', function (newVal, oldVal) {
-        newVal.setDate(newVal.getDate());
-        $scope.changedDate = $filter('date')(newVal, 'yyyy-MM-dd');
-        console.log($scope.changedDate);
-    });
-    //dummy demo
-    //     $scope.foo = 'foo';
-    // $scope.bar = 'bar';
-    //
-    // $scope.$watchGroup(['user', 'all_bookings_for_User'], function(newValues, oldValues, scope) {
-    //     // newValues array contains the current values of the watch expressions
-    //     console.log($scope.user);
-    //     $scope.user = newValues[0];
-    //
-    //     $scope.all_bookings_for_User = newValues[1]
-    //     console.log('This is new value [1]', newValues[1]);
-    //     // with the indexes matching those of the watchExpression array
-    //     // i.e.
-    //     // newValues[0] -> $scope.foo
-    //     // and
-    //     // newValues[1] -> $scope.bar
-    // });
-
-    $rootScope.$watch('itemsInCart', function (newVal, oldVal) {
-        $scope.itemsInCart = newVal;
-    });
-});
-'use strict';
-
-angular.module('myApp').directive('roomListingMainBooking', function () {
-  return {
-    restrict: 'AE',
-    templateUrl: './features/rooms-listing-main-booking/rooms-listing-main-booking.html',
-    controller: 'roomsListingMainBookingCtrl'
-  };
-});
-'use strict';
-
-angular.module('myApp').service('roomsListingMainBookingService', function ($http, $q) {
-
-    this.getRoomListingNightlyPrice = function (room_id) {
-        var defer = $q.defer();
-        $http({
-            method: 'get',
-            url: '/rooms/nightly_price/' + room_id
-        }).then(function (response) {
-            console.log('this is response in service Booking', response);
-            defer.resolve(response.data);
-        });
-        return defer.promise;
-    };
-
-    this.reserveDate = function (room_id, start, end, price) {
-        console.log('======> start =====> service', start);
-        var defer = $q.defer();
-        $http({
-            method: 'post',
-            url: '/rooms/reservations',
-            data: {
-                room_id: room_id,
-                start: start,
-                end: end,
-                price: price
-            }
-        }).then(function (response) {
-            console.log('!!!response back in service', response.data);
-            defer.resolve(response.data);
-        }).catch(function (err) {
-            alert('please log in or click to sign up ');
-            console.log('ERROR LOGGING IN!', err);
-        });
-        return defer.promise;
-    };
-
-    // this.goToPaypal = (userObj, priceObj, total_price) => {
-    //   console.log('GO TO PAY PAL',userObj,priceObj,total_price);
-    //  return $http({
-    //         method: 'post',
-    //         url: 'http://www.sandbox.paypal.com/cgi-bin/webscr',
-    //         headers: {
-    //           'Access-Control-Allow-Origin':'Post',
-    //           'Content-Type': 'application/x-www-form-urlencoded'
-    //         },
-    //         data: {
-    //             cmd: "x_click",
-    //             item_name: priceObj.listing_name,
-    //             item_number: priceObj.room_id,
-    //             business: userObj.email,
-    //             quantity: 1,
-    //             currency_code: "USD",
-    //             first_name: userObj.first_name,
-    //             last_name: userObj.last_name,
-    //             amount: total_price
-    //         }
-    //     })
-    // }
-});
-// ACCESS-control-request-method:'POST',
-// ORIGIN: null,
-// USER-AGESNT
-// 'Accept': 'application/json;odata=verbose',
-// cliend_id:"AaTzJbBVMSmv7RFC6vDWukKGZGhgav45D9ylFD6RJCEv_90d4XsXwtAXzVGxa_vcaB7iZV82vmyDP9iU",
-// secret:"F_1ja7096TF7vtP4bXKQNDL0qXLbYDi_h3vVE4kjRgfVbQ7lOb69VoI1mqnlULgQT"
-'use strict';
-
-angular.module('myApp').controller('roomsListingNearbyCtrl', function ($scope, $stateParams, roomsListingNearbyService) {
-  console.log($stateParams.room_id);
-  var room_id = $stateParams.room_id;
-  roomsListingNearbyService.getRoomThisLocationInfo(room_id).then(function (response) {
-    var current_location = response[0];
-    console.log('!!!!!!!!!!CURRENT_LOCATION', current_location);
-    var origin1 = {
-      lat: current_location.latitude * 1,
-      lng: current_location.longitude * 1
-    };
-    roomsListingNearbyService.getRoomsNearby(room_id, current_location.city).then(function (response) {
-
-      console.log('RESPONSE.LENGTH', response.length);
-      if (response.length > 0) {
-
-        var destinationA = { lat: response[0].latitude * 1, lng: response[0].longitude * 1 };
-        var destinationB = { lat: response[1].latitude * 1, lng: response[1].longitude * 1 };
-        $scope.roomsNearby = response;
-        console.log("RESPONSE", response[0]);
-        var service = new google.maps.DistanceMatrixService();
-
-        var my_distance = service.getDistanceMatrix({
-          origins: [origin1],
-          destinations: [destinationA, destinationB],
-          travelMode: 'DRIVING',
-          // unitSystem: google.maps.UnitSystem.METRIC
-          unitSystem: google.maps.UnitSystem.IMPERIAL
-        }, function (response, status) {
-          if (status !== 'OK') {
-            alert('Error was: ' + status);
-          } else {
-            console.log(response);
-            console.log(response.rows[0].elements[0].distance.text);
-            $scope.distance = response.rows[0].elements;
-            var myArray = [];
-            $scope.distance.forEach(function (obj) {
-              myArray.push(obj.distance.text);
-            });
-            $scope.roomsNearby[0].dist = myArray[0];
-            $scope.roomsNearby[1].dist = myArray[1];
-            console.log($scope.roomsNearby);
-          }
-        });
-        // if statement closing bracket below
-      }
-    });
+angular.module('myApp').controller('usersProfileDescHeaderCtrl', function ($scope, $stateParams, usersProfileDescHeaderService) {
+  var user_id = $stateParams.id;
+  usersProfileDescHeaderService.getHostDesc(user_id).then(function (response) {
+    $scope.hostDesc = response[0];
+    console.log($scope.hostDesc);
   });
 });
 'use strict';
 
-angular.module('myApp').directive('roomListingNearby', function () {
+angular.module('myApp').directive('userProfileDescHeader', function () {
   return {
     restrict: 'AE',
-    templateUrl: './features/rooms-listing-nearby/rooms-listing-nearby.html',
-    controller: 'roomsListingNearbyCtrl'
+    templateUrl: './features/users-profile-desc-header/users-profile-desc-header.html',
+    controller: 'usersProfileDescHeaderCtrl'
   };
 });
 'use strict';
 
-angular.module('myApp').service('roomsListingNearbyService', function ($http, $q) {
-  this.getRoomThisLocationInfo = function (room_id) {
+angular.module('myApp').service('usersProfileDescHeaderService', function ($http, $q) {
+  this.getHostDesc = function (user_id) {
     var defer = $q.defer();
     $http({
       method: 'get',
-      url: '/rooms/listings/current_location/' + room_id
+      url: '/users/desc-header/' + user_id
     }).then(function (response) {
-      defer.resolve(response.data);
-    });
-    return defer.promise;
-  };
-  this.getRoomsNearby = function (room_id, city_name) {
-    var defer = $q.defer();
-    $http({
-      method: 'get',
-      url: '/rooms/listings/nearby/' + room_id + '/' + city_name
-    }).then(function (response) {
-      console.log('response back from getRoomsNearyby Service function', response.data);
       defer.resolve(response.data);
     });
     return defer.promise;
@@ -1666,38 +1699,6 @@ angular.module('myApp').service('usersProfilePicService', function ($http, $q) {
       url: '/users/profile-pic/' + user_id
     }).then(function (response) {
       console.log(response.data);
-      defer.resolve(response.data);
-    });
-    return defer.promise;
-  };
-});
-'use strict';
-
-angular.module('myApp').controller('usersProfileDescHeaderCtrl', function ($scope, $stateParams, usersProfileDescHeaderService) {
-  var user_id = $stateParams.id;
-  usersProfileDescHeaderService.getHostDesc(user_id).then(function (response) {
-    $scope.hostDesc = response[0];
-    console.log($scope.hostDesc);
-  });
-});
-'use strict';
-
-angular.module('myApp').directive('userProfileDescHeader', function () {
-  return {
-    restrict: 'AE',
-    templateUrl: './features/users-profile-desc-header/users-profile-desc-header.html',
-    controller: 'usersProfileDescHeaderCtrl'
-  };
-});
-'use strict';
-
-angular.module('myApp').service('usersProfileDescHeaderService', function ($http, $q) {
-  this.getHostDesc = function (user_id) {
-    var defer = $q.defer();
-    $http({
-      method: 'get',
-      url: '/users/desc-header/' + user_id
-    }).then(function (response) {
       defer.resolve(response.data);
     });
     return defer.promise;
@@ -1857,6 +1858,44 @@ angular.module('myApp').controller('userRoomsCtrl', function ($scope, $statePara
 angular.module('myApp').service('userRoomsService', function ($http, $q) {});
 'use strict';
 
+angular.module('myApp').controller('userRoomsListingsCtrl', function ($scope, $stateParams, $rootScope, userRoomsListingsService, loginService) {
+  loginService.getUser().then(function (user) {
+    if (user) {
+      $scope.user = user;
+      console.log(user);
+      userRoomsListingsService.getListingsForView($scope.user.id).then(function (response) {
+        $scope.yourlistings = response;
+        console.log($scope.yourlistings);
+      });
+    } else {
+      $scope.user = 'NOT LOGGED IN';
+    };
+  });
+});
+// select * from listing_images
+// join listings on listings.id = listing_images.listing_id
+// join rooms on rooms.id = listings.room_id
+// where listings.user_id = 6
+'use strict';
+
+angular.module('myApp').service('userRoomsListingsService', function ($http, $q, $state) {
+  this.getListingsForView = function (user_id) {
+    console.log(user_id);
+    var defer = $q.defer();
+    $http({
+      method: 'get',
+      url: '/user_rooms/user_listings' + '?user_id=' + user_id
+    }).then(function (response) {
+      console.log(response.data);
+      defer.resolve(response.data);
+    }).catch(function (err) {
+      state.go('err');
+    });
+    return defer.promise;
+  };
+});
+'use strict';
+
 angular.module('myApp').controller('userRoomsReservationsCtrl', function ($scope, $rootScope, userRoomsReservationsService, loginService) {
   $scope.userNow = false;
   // get all the sessions with this user id
@@ -1933,6 +1972,54 @@ angular.module('myApp').service('userRoomsReservationsService', function ($http,
     });
     return defer.promise;
   };
+  this.getBookingsFromDBforTrips = function (user_id) {
+    console.log(user_id);
+    var defer = $q.defer();
+    $http({
+      method: 'get',
+      url: '/user_rooms/user_trips/' + user_id
+    }).then(function (response) {
+      console.log(response.data);
+      defer.resolve(response.data);
+    });
+    return defer.promise;
+  };
+
+  this.deleteTripFromDB = function (res_id) {
+    console.log(res_id);
+    var defer = $q.defer();
+    $http({
+      method: 'delete',
+      url: '/user_rooms/user_trips/' + res_id
+    }).then(function (response) {
+      console.log(response);
+      defer.resolve(response.data);
+    });
+    return defer.promise;
+  };
+});
+'use strict';
+
+angular.module('myApp').controller('userRoomsTripsCtrl', function ($scope, loginService, userRoomsReservationsService) {
+  loginService.getUser().then(function (user) {
+    if (user) {
+      console.log(user);
+      $scope.user = user;
+      userRoomsReservationsService.getBookingsFromDBforTrips($scope.user.id).then(function (response) {
+        console.log(response);
+        $scope.bookings = response;
+      });
+    } else {
+      $scope.user = 'USER NOT FOUND';
+    }
+  });
+
+  $scope.deleteTripFromDB = function (res_id) {
+    console.log(res_id);
+    userRoomsReservationsService.deleteTripFromDB(res_id).then(function (response) {
+      $scope.bookings = response;
+    });
+  };
 });
 'use strict';
 
@@ -1994,44 +2081,6 @@ angular.module('myApp').service('usersEditProfileService', function ($http, $q) 
       defer.resolve(response.data);
     }).catch(function (err) {
       alert(err.data);
-    });
-    return defer.promise;
-  };
-});
-'use strict';
-
-angular.module('myApp').controller('userRoomsListingsCtrl', function ($scope, $stateParams, $rootScope, userRoomsListingsService, loginService) {
-  loginService.getUser().then(function (user) {
-    if (user) {
-      $scope.user = user;
-      console.log(user);
-      userRoomsListingsService.getListingsForView($scope.user.id).then(function (response) {
-        $scope.yourlistings = response;
-        console.log($scope.yourlistings);
-      });
-    } else {
-      $scope.user = 'NOT LOGGED IN';
-    };
-  });
-});
-// select * from listing_images
-// join listings on listings.id = listing_images.listing_id
-// join rooms on rooms.id = listings.room_id
-// where listings.user_id = 6
-'use strict';
-
-angular.module('myApp').service('userRoomsListingsService', function ($http, $q, $state) {
-  this.getListingsForView = function (user_id) {
-    console.log(user_id);
-    var defer = $q.defer();
-    $http({
-      method: 'get',
-      url: '/user_rooms/user_listings' + '?user_id=' + user_id
-    }).then(function (response) {
-      console.log(response.data);
-      defer.resolve(response.data);
-    }).catch(function (err) {
-      state.go('err');
     });
     return defer.promise;
   };

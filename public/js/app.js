@@ -51,6 +51,7 @@ angular.module('myApp',['ui.router','ui.bootstrap','ngDialog','angular-input-sta
   .state('user_rooms.user_trips', {
     url:'/user_trips',
     templateUrl:'./views/user_rooms-trips/user_rooms-trips.html',
+    controller:'userRoomsTripsCtrl',
     params:{viewParam:null}
   })
   .state('users_edit_profile', {

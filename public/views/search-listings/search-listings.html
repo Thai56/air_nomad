@@ -19,7 +19,14 @@
 
     </div>
     <!-- div for listing name -->
-    <div ui-sref='rooms({room_id:listing.room_id})' ng-style='{"width":"100%","border":"1px solid black"}'>
+    <div ui-sref='rooms({room_id:listing.room_id})' ng-style='{
+      "width":"100%",
+      "border-bottom":"2px solid gray",
+      "border-right":"2px solid gray",
+      "border-left":"2px solid gray",
+      "text-align":"center",
+      "font-size":"16px"
+    }'>
       {{listing.listing_name}}
     </div>
 

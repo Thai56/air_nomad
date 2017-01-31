@@ -565,5 +565,41 @@ module.exports = {
           res.status(422).send(err)
         }
       })
+    },
+    getBookingsFromDBforTrips: (req,res,next) => {
+      console.log(req.params.user_id);
+      const user_id = req.params.user_id;
+      db.getBookingsFromDBforTrips(user_id, (err,bookings) => {
+        if(!err){
+          res.status(200).send(bookings)
+        }
+        else {
+          res.status(422).send(err)
+        }
+      })
+    },
+    deleteTripFromDB: (req,res,next)=> {
+      console.log('#$%^&* THIS IS REQ>PARAMS>RES>ID', req.params.res_id);
+      const res_id = req.params.res_id;
+      db.deleteTripFromDB(res_id, (err,succ)=> {
+        if(!err){
+          console.log('$%^&* THIS IS SUCCESS (*&^)', succ);
+          db.getBookingsFromDBforTrips(req.user.id, (err,bookings)=> {
+            console.log('#$%^& THIS IS ERR (*&^%)', err);
+            if(!err){
+              console.log('#$%^&* THIS IS BOOKINGS (*&^%)', bookings);
+              res.status(200).send(bookings)
+            }
+            else {
+              console.log('#$%^&* THIS IS ERR', err);
+              res.status(422).send(err)
+            }
+          })
+        }
+        else {
+          console.log('#$%^&* THIS IS ERR FROM DELET TRIPDB', err);
+          res.status(422).send(err)
+        }
+      })
     }
 }

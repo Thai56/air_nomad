@@ -10,7 +10,7 @@ const express = require('express'),
     massive = require('massive'),
     passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
-    cookieParser = require('cookie-parser')
+    cookieParser = require('cookie-parser'),
     session = require('express-session'),
     config = require('./config'),
     path = require('path');
@@ -220,3 +220,7 @@ app.get('/user_rooms/reservations/rooms', isAuthenticated, Ctrl.getRoomInfoByIdF
 app.delete('/user_rooms/cancel/:booking_id', Ctrl.cancelBooking)
 
 app.delete('/account_settings/delete/:id', Ctrl.deleteAccount)
+
+app.get('/user_rooms/user_trips/:user_id', isAuthenticated, Ctrl.getBookingsFromDBforTrips)
+
+app.delete('/user_rooms/user_trips/:res_id', isAuthenticated, Ctrl.deleteTripFromDB)
