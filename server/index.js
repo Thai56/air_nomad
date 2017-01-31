@@ -11,7 +11,6 @@ const express = require('express'),
     passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
     cookieParser = require('cookie-parser'),
-    session = require('express-session'),
     config = require('./config'),
     path = require('path');
 // ===========================================================================================
